@@ -4,7 +4,7 @@ $general->logged_out_protect();
 $username = htmlentities($user['username']);
 
 $invoice_id =$_GET['invoice_id'];
-$view_invoice = $invoice->invoicedata($invoice_id);	
+$view_invoice = $invoices->invoicedata($invoice_id);	
 global $num;
 
 ?>

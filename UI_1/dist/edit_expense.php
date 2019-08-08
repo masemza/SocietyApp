@@ -16,12 +16,12 @@ if (isset($_POST['submit'])) {
         $amount      = $_POST['amount'];
         //$expense_id     = $_POST['expense_id'];
 
-    $expenses->updateexpense($description, $name, $categories, $amount, $expenses_id);
+        $expenses->updateexpense($description, $name, $categories, $amount, $expenses_id);
         {
             Print '<script>alert("expense Successfully edited");;
             window.location.assign("view_expense.php")</script>';
 
-      exit();    
+            exit();    
         }
     exit();
   }
@@ -85,9 +85,8 @@ if (isset($_POST['submit'])) {
 
                        <div class="form-group">
                             <label class="form-label">Category</label>
-                            <Select name="categories" class="form-control custom-select" > 
-                                <option ><?php echo $row['categories'] ?>  </option>
-                                <Option Value="">Select Category</Option>
+                            <Select name="categories" class="form-control custom-select" >
+                                <Option Value="<?php if(isset($_POST['categories'])) echo htmlentities($_POST['categories']); ?>" disabled selected >Select Category</Option>
                                 <Option Value="Repair Maintanance">Repair Maintanance</Option>
                                 <Option Value="Petrol">Petrol</Option>
                                 <Option Value="Cleaning Materials">Cleaning Materials</Option>
@@ -115,6 +114,15 @@ if (isset($_POST['submit'])) {
                       <button onclick ="return confirm('Are you sure you want to edit that expense?')" type="submit" name="submit" class="btn btn-primary btn-block" > Update expense</button>
                     </div>
                   </form>
+
+                  <br>
+                  <?php 
+                    if(empty($errors) === false)
+                    {
+                      echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                    }
+                  ?>
+
                 </div>
               </div>
             </div>    

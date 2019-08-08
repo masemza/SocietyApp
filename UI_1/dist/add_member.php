@@ -150,20 +150,20 @@ if (isset($_POST['submit']))
                     <div class="col-sm-6 col-md-12">
                       <div class="form-group">
                         <label class="form-label">Society Name</label>
-                        <input type="text" name="society_name" required="required" class="form-control" placeholder="Society Name" value="">
+                        <input type="text" name="society_name" required="required" class="form-control" placeholder="Society Name" value="<?php if(isset($_POST['society_name'])) echo htmlentities($_POST['society_name']); ?>">
                       </div>
                     </div>
                     
                     <div class="col-sm-6 col-md-6">
                       <div class="form-group">
                         <label class="form-label">First Name</label>
-                        <input type="text" name="first_name" required="required" class="form-control" placeholder="First Name" value="">
+                        <input type="text" name="first_name" required="required" class="form-control" placeholder="First Name" value="<?php if(isset($_POST['first_name'])) echo htmlentities($_POST['first_name']); ?>">
                       </div>
                     </div>
                     <div class="col-sm-6 col-md-6">
                       <div class="form-group">
                         <label class="form-label">Last Name</label>
-                        <input type="text" name="last_name" required="required" class="form-control" placeholder="Last Name" value="">
+                        <input type="text" name="last_name" required="required" class="form-control" placeholder="Last Name" value="<?php if(isset($_POST['last_name'])) echo htmlentities($_POST['last_name']); ?>">
                       </div>
                     </div>
 
@@ -171,7 +171,7 @@ if (isset($_POST['submit']))
                       <div class="form-group">
                         <label class="form-label">Gender</label>
                         <select class="form-control custom-select" name="gender" required="required">
-                                <option value="">-Select-</option>
+                                <option value="<?php if(isset($_POST['gender'])) echo htmlentities($_POST['gender']); ?>" disabled selected>Select Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                         </select>
@@ -181,14 +181,14 @@ if (isset($_POST['submit']))
                     <div class="col-md-6">
                       <div class="form-group">
                         <label class="form-label">Contact Number</label>
-                        <input type="number" name="contact_num" required="required" class="form-control" placeholder="Contact Number" value="">
+                        <input type="number" name="contact_num" required="required" class="form-control" placeholder="Contact Number" value="<?php if(isset($_POST['contact_num'])) echo htmlentities($_POST['contact_num']); ?>">
                       </div>
                     </div> 
 
                     <div class="col-md-12">
                       <div class="form-group">
                         <label class="form-label">ID Number</label>
-                        <input type="number" name="id_number" required="required" class="form-control" placeholder="ID NUmber" value="">
+                        <input type="number" name="id_number" required="required" class="form-control" placeholder="ID NUmber" value="<?php if(isset($_POST['id_number'])) echo htmlentities($_POST['id_number']); ?>">
                       </div>
                     </div>                    
 <!--                     <div class="col-md-5">

@@ -7,19 +7,27 @@ $society_id = $_GET['society_id'];
 
 if (isset($_POST['submit'])) 
 {
-	$flower 		        = $_POST['flower'];
-	$coffin 		    	= $_POST['coffin'];
-	$grave_marker 	    	= $_POST['grave_marker'];
-  $transport          	= $_POST['transport'];
-  $funeral_service 		= $_POST['funeral_service'];
+    if(empty($_POST['flower']) === true || empty($_POST['coffin']) === true || empty($_POST['grave_marker']) === true || empty($_POST['transport']) === true || empty($_POST['funeral_service']) )
+    {
+      $errors[] = 'You must fill in all of the fields';
+    }
 
 		if(empty($errors) === true)
 		{			
-            $package->create_package($society_id, $flower, $coffin, $grave_marker, $transport, $funeral_service);
-        }
-        
-        Print '<script>alert("Package Successfully created");;
-        window.location.assign("index.php")</script>';
+      $flower 		        = $_POST['flower'];
+      $coffin 		    	= $_POST['coffin'];
+      $grave_marker 	    	= $_POST['grave_marker'];
+      $transport          	= $_POST['transport'];
+      $funeral_service 		= $_POST['funeral_service'];
+      
+      $package->create_package($society_id, $flower, $coffin, $grave_marker, $transport, $funeral_service);
+
+      Print '<script>alert("Package Successfully created");;
+      window.location.assign("index.php")</script>';
+
+      exit();
+    }
+              
 }
 ?>
 
@@ -38,10 +46,7 @@ if (isset($_POST['submit']))
 
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                  <!-- <li class="nav-item">
-                    <a href="./index.php" class="nav-link"><i class="fe fe-home"></i> Home</a>
-                  </li> -->
-                  
+
                   <li class="nav-item dropdown">
                     <a href="javascript:void(0)" class="nav-link active"><i class="fe fe-layers"></i>Create Package</a>
                   </li>
@@ -68,42 +73,42 @@ if (isset($_POST['submit']))
                     <div class="col-sm-6 col-md-6">
                       <div class="form-group">
                         <label class="form-label">Flower</label>
-                        <input type="number" name="flower" class="form-control" placeholder="Flower" >
+                        <input type="number" name="flower" class="form-control" placeholder="Flower" value="<?php if(isset($_POST['flower'])) echo htmlentities($_POST['flower']); ?>">
                       </div>
                     </div>
 
                     <div class="col-sm-6 col-md-6">
                       <div class="form-group">
                         <label class="form-label">Coffin</label>
-                        <input type="number" name="coffin" class="form-control" placeholder="Coffin" >
+                        <input type="number" name="coffin" class="form-control" placeholder="Coffin" value="<?php if(isset($_POST['coffin'])) echo htmlentities($_POST['coffin']); ?>">
                       </div>
                     </div>
 
                     <div class="col-sm-6 col-md-6">
                       <div class="form-group">
                         <label class="form-label">Grave Marker</label>
-                        <input type="number" name="grave_marker" class="form-control" placeholder="Grave Marker" >
+                        <input type="number" name="grave_marker" class="form-control" placeholder="Grave Marker" value="<?php if(isset($_POST['grave_marker'])) echo htmlentities($_POST['grave_marker']); ?>">
                       </div>
                     </div>
 
                     <div class="col-sm-6 col-md-6">
                       <div class="form-group">
                         <label class="form-label">Transport</label>
-                        <input type="number" name="transport" class="form-control" placeholder="Transport" >
+                        <input type="number" name="transport" class="form-control" placeholder="Transport" value="<?php if(isset($_POST['transport'])) echo htmlentities($_POST['transport']); ?>">
                       </div>
                     </div>
 
                     <div class="col-md-6">
                       <div class="form-group">
                         <label class="form-label">Funeral Service</label>
-                        <input type="number" name="funeral_service" class="form-control" placeholder="Funeral Service">
+                        <input type="number" name="funeral_service" class="form-control" placeholder="Funeral Service" value="<?php if(isset($_POST['funeral_service'])) echo htmlentities($_POST['funeral_service']); ?>">
                       </div>
                     </div>
 
                     <div class="col-sm-6 col-md-6">
                       <div class="form-group">
                         <label class="form-label">Programmes</label>
-                        <input type="number" disabled="true" name="programmes" class="form-control" placeholder="No Amount" >
+                        <input type="number" disabled="true" name="programmes" class="form-control" placeholder="No Amount" value="<?php if(isset($_POST['programmes'])) echo htmlentities($_POST['programmes']); ?>">
                       </div>
                     </div>
 
@@ -114,14 +119,16 @@ if (isset($_POST['submit']))
                   <input type="reset" class="btn btn-primary" value="Reset" />
                 </div>
 
-                <?php 
-			if(empty($errors) === false)
-			{
-				echo '<p>' . implode('</p><p>', $errors) . '</p>';	
-			}
-    ?>
-    
               </form>
+
+              <br>
+              <?php 
+			          if(empty($errors) === false)
+                {
+                  echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                }
+              ?>
+
             </div>
             
           </div>

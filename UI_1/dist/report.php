@@ -188,6 +188,8 @@ if(isset($_POST['submit']))
 
 <br>
 
+<?php foreach ($deposits as $view_deposit)?>
+<?php foreach ($invoices as $view_invoice)?>
 
                           <div class="col-lg-12">
                                   <div class="card">
@@ -202,7 +204,7 @@ if(isset($_POST['submit']))
 
                                         <div class="table-responsive push">
                                         
-                                        <?php if(isset($_POST['submit']) &&  empty($_POST['transaction']) === false )
+                                        <?php if(isset($_POST['submit']) &&  empty($_POST['transaction']) === false && !empty($view_deposit['date_transaction']) || !empty($view_invoice['invoice_date']) )
                                         {?> 
                                             <!-- <div class="card-header">
                                                 <div class="card-options">
@@ -311,30 +313,27 @@ if(isset($_POST['submit']))
 </script>
                                         <tr>
                                             <?php 
-                                            if(isset($_POST['submit'])) 
+                                            if(isset($_POST['submit']) && !empty($view_deposit['date_transaction']) ) 
                                             { 
-                                                echo $choice_selected ?> Deposits Total <?php
+                                                echo $choice_selected ?> Deposits Total: R<?php echo number_format($deposits_total,2);
                                             } 
-                                            else echo "Daily Total" ?>: R<?php echo number_format($deposits_total,2); ?>
-
-                                            <br>
-                                            <?php 
-                                            if(isset($_POST['submit'])) 
-                                            { 
-                                                echo $choice_selected ?> Invoice Total <?php 
-                                            } 
-                                            else echo "Daily Total" ?>: R<?php echo number_format($invoices_total,2); ?>
-
-                                            <br>
-                                            <!-- Weekly Total of Deposits and Invoices: R<?php //echo number_format($total,2) ?> -->
-                                            <?php 
-                                                //$date = new DateTime('7 days ago');
-                                                //echo $date->format('Y-m-d'); 
-                                            
-                                                // $date = strtotime("-6 day");
-                                                // echo date('Y-m-d', $date);
+                                            else if (!empty($view_deposit['date_transaction'])) 
+                                            {
+                                                echo "Daily Deposit Total" ?>: R<?php echo number_format($deposits_total,2); 
+                                            }
                                             ?>
-                                            </td>
+
+                                            <br>
+                                            <?php 
+                                            if(isset($_POST['submit'])  && !empty($view_invoice['invoice_date']) ) 
+                                            { 
+                                                echo $choice_selected ?> Invoice Total: R<?php echo number_format($invoices_total,2); 
+                                            } 
+                                            else if (!empty($view_invoice['invoice_date'])) 
+                                            {
+                                                echo "Daily Invoice Total" ?>: R<?php echo number_format($invoices_total,2); 
+                                            }?>
+
                                         </tr> 
 
 
@@ -342,10 +341,10 @@ if(isset($_POST['submit']))
                                         <?php 
                                     } 
                                     else 
-                                        if(isset($_POST['submit']) &&  empty($_POST['transaction']) === true ){?> 
+                                        if(isset($_POST['submit']) && empty($_POST['transaction']) === true){?> 
                                             Select a transaction 
                                         <?php } 
-                                        else
+                                        else if (!empty($view_deposit['date_transaction']) || !empty($view_invoice['invoice_date']))
                                         {?>
                                         <table class="table table-bordered table-hover" id="myTable">
                                             <tr>
@@ -407,7 +406,7 @@ if(isset($_POST['submit']))
                                             
                                             </tr> 
 
-                                        <?php } ?>
+                                        <?php } else echo "No deposits and invoices made today";?>
 
                                         </div>                                            
                                     </form>

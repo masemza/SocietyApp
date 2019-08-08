@@ -26,12 +26,12 @@ if (isset($_POST['submit'])) {
         $gender       = $_POST['gender'];
         $contact_num  = $_POST['contact_num'];
 
-		$member->updateMember($first_name, $last_name, $gender, $contact_num, $member_id);
+		    $member->updateMember($first_name, $last_name, $gender, $contact_num, $member_id);
         {
             Print '<script>alert("Member Successfully edited");;
             window.location.assign("index.php")</script>';
 
-			exit();    
+			    exit();    
         }
 		exit();
 	}
@@ -1189,14 +1189,16 @@ if (isset($_POST['submit'])) {
                       <button onclick ="return confirm('Are you sure you want to edit that member?')" type="submit" name="submit" class="btn btn-primary btn-block" > Update Member</button>
                     </div>
 
-                    <?php 
-                        if(empty($errors) === false)
-                        {
-                          echo '<p>' . implode('</p><p>', $errors) . '</p>';	
-                        }
-                    ?>
-
                   </form>
+
+                  <br>
+                  <?php 
+                    if(empty($errors) === false)
+                    {
+                      echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                    }
+                  ?>
+
                 </div>
               </div>
             </div>    

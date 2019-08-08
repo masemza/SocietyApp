@@ -5,40 +5,50 @@ $username = htmlentities($user['username']);
 
 if (isset($_POST['submit'])) 
 {
-	$society_name 		= $_POST['society_name'];
-	//$location 			= $_POST['location'];
-  $addr1            = $_POST['addr1'];
-  $addr2            = $_POST['addr2'];
-  $addr3            = $_POST['addr3'];
-  $addr4            = $_POST['addr4'];
-
-	$init_capital 		= $_POST['init_capital'];
-	$date_inception 	= $_POST['date_inception'];
-	
 	global $payment_id;
 	global $society_id;
 
-	    if (strlen($_POST['init_capital']) <2)
+	  if (strlen($_POST['init_capital']) <2)
 		{
 			$errors[] = 'Initial capital must be at least 2 characters';
-        } 
+    } 
 		
-		if(!preg_match("/^[a-zA-Z ]*$/",$society_name))
-		{
-			$errors[] = 'Only letters and white space allowed for society name';
-		}
+    else
+      if(!preg_match("/^[a-zA-Z ]*$/",$_POST['society_name']))
+      {
+        $errors[] = 'Only letters and white space allowed for society name';
+      }
+      
+      else
+        if(!preg_match("/^[a-zA-Z ]*$/",$_POST['addr3']))
+        {
+          $errors[] = 'Only letters allowed for city';
+        }
+        
+        else
+          if(!preg_match("/^[a-zA-Z ]*$/",$_POST['addr4']))
+          {
+            $errors[] = 'Only letters and allowed for province';
+          }
 
-		if($society->society_name_exists($society_name) === true)
-		{
-			$errors[] = 'Sorry that society name already exist, select another society name';
-		}
+          else
+            if($society->society_name_exists($_POST['society_name']) === true)
+            {
+              $errors[] = 'Sorry that society name already exist, select another society name';
+            }
 
-		if(empty($errors) === true)
-		{			
-	
-			$society->register_society($society_id, $society_name, $addr1 , $addr2 , $addr3, $addr4, $init_capital, $date_inception);
-	
-		}
+    if(empty($errors) === true)
+    {		
+      $society_name 		= $_POST['society_name'];
+      $addr1            = $_POST['addr1'];
+      $addr2            = $_POST['addr2'];
+      $addr3            = $_POST['addr3'];
+      $addr4            = $_POST['addr4'];
+      $init_capital 		= $_POST['init_capital'];
+      $date_inception 	= $_POST['date_inception'];
+
+      $society->register_society($society_id, $society_name, $addr1 , $addr2 , $addr3, $addr4, $init_capital, $date_inception); 
+    }
 }
 ?>
 
@@ -234,14 +244,16 @@ But that's the difference in our opinions.</textarea>
                   <input type="reset" class="btn btn-primary" value="Reset" />
                 </div>
 
-                <?php 
-			if(empty($errors) === false)
-			{
-				echo '<p>' . implode('</p><p>', $errors) . '</p>';	
-			}
-    ?>
-    
               </form>
+
+              <br>
+              <?php 
+			          if(empty($errors) === false)
+                {
+                  echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                }
+              ?>
+              
             </div>
             <!-- <div class="col-lg-4">
               <script>

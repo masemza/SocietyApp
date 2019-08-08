@@ -35,72 +35,37 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
     } 
     
 }
+// $timezone = date_default_timezone_get();
+// echo "The current server timezone is: " . $timezone;
+
+echo date("Y-m-d");
 ?>
 
 <!doctype html>
 <html lang="en" dir="ltr">
 <?php include 'incl/head.php' ;?>
 <?php include 'incl/header.php' ;?>
+
   <body class="">
     <div class="page">
       <div class="page-main">
-        <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">        
-          <div class="container">           
+
+        <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+          <div class="container">
             <div class="row align-items-center">
-
-              <div class="col-lg-3 ml-auto">
-
-                <!-- <form class="input-icon my-3 my-lg-0" action="" method="post">
-
-                   <input type="search" class="form-control header-search" placeholder="Search&hellip;" tabindex="1">
-                  <div class="input-icon-addon">
-                    <i class="fe fe-search"></i>
-                  </div> 
-
-                  <br>
-                  <div class="form-group">
-                           <label class="form-label">Separated inputs</label> 
-                          <div class="row gutters-xs">
-                            <div class="col">
-                              <input type="text" name="search" class="form-control" required="required" placeholder="Enter Society Name">
-                            </div>
-                            <span class="col-auto">
-                              <button class="btn btn-secondary" type="submit" name="submit"><i class="fe fe-search"></i></button><br>
-                            
-                              
-                            </span>
-                          </div>
-                        </div>
-
-                </form> -->
-
-              </div>
-
+              
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                
                   <li class="nav-item">
                     <a href="./index.php" class="nav-link"><i class="fe fe-home"></i> Home</a>
                   </li>
-
                   <li class="nav-item dropdown">
                     <a href="./create_expense.php" class="nav-link" ><i class="fe fe-file-plus"></i>Create a new Expense</a>
                   </li>
-
-                  <!-- <li class="nav-item dropdown">
-                    <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i>View Invoices</a>
-                  </li> -->
-
                   <li class="nav-item dropdown">
                     <a href="./view_expense.php" class="nav-link active"><i class="fe fe-check-square"></i> View Expenses</a>
                   </li>
-
-                  <!-- <li class="nav-item dropdown">
-                    <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-check-square"></i> View Withdrawals</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./report.php" class="nav-link"><i class="fe fe-check-square"></i> View Transactions</a>
-                  </li> -->
 
                 </ul>
               </div>
@@ -108,11 +73,8 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
           </div>
         </div>
 
-        
-        
-        
         <div class="my-3 my-md-5">
-                <div class="container">
+        <div class="container">
                   <div class="page-header">
                   <h1 class="page-title">
                           <a href="index.php" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Home</a> | 
@@ -162,6 +124,8 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
 </form>
 <br>
 
+<?php foreach ($expense as $view_expense) ?>
+
                           <div class="col-lg-12">
                                   <div class="card">
 
@@ -170,7 +134,7 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
                                     <form action="" method="post" class="text-center">
 
                                         <div class="table-responsive push">
-                                        <?php if(isset($_POST['submit']) &&  empty($_POST['expense']) === false )
+                                        <?php if(isset($_POST['submit']) &&  empty($_POST['expense']) === false && !empty($view_expense['expense_date']) )
                                         {?>
                                             <table class="table table-bordered table-hover">
                                                 <tr>
@@ -226,11 +190,11 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
                                         </div> 
                                         <?php } 
                                         else 
-                                        if(isset($_POST['submit']) &&  empty($_POST['transaction']) === true )
+                                        if(isset($_POST['submit']) &&  empty($_POST['expense']) === true )//&& !empty($view_expense['expense_date']))
                                         {?> 
                                             Select a transaction 
                                         <?php } 
-                                        else
+                                        else if(!empty($view_expense['expense_date']))
                                         {?>  <table class="table table-bordered table-hover">
                                           <tr>
                                             <th class="text-center" style="width: 0.5%"></th>
@@ -274,12 +238,13 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
 
                                           </tr>
                                     
-                                          <td colspan="5" class="font-weight-bold text-uppercase text-right">Total</td>
-                                              <td class="font-weight-bold text-center">R<?php echo $expense_total; ?> </td>
+                                              
                                           <?php 
-                                          } 
+                                          }?><td colspan="5" class="font-weight-bold text-uppercase text-right">Total</td>
+                                          <td class="font-weight-bold text-center">R<?php echo $expense_total; ?> </td>
                                         
-                                        }
+                                        <?php }
+                                        else echo "No expanses made today"; 
                                           ?>
                                               
                                        
@@ -289,14 +254,12 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
                   
                                   </div>
                                   </div>
-                                </div>
+                                </div></div>
       
                 </div>
-        
-        
-        
-                </div>
-      </div>     
+        </div>
+      </div>
+      
 
       <?php include 'incl/footer.php' ;?>
     </div>

@@ -206,7 +206,7 @@ if (isset($_POST['submit']))
                       <div class="form-group">
                         <label class="form-label">Gender</label>
                         <select name="gender" class="form-control custom-select" >
-                                <option value="<?php if(isset($_POST['gender'])) echo htmlentities($_POST['gender']); ?>"> <?php if(isset($_POST['gender'])) echo htmlentities($_POST['gender']); ?> </option>
+                                <option value="<?php if(isset($_POST['gender'])) echo htmlentities($_POST['gender']); ?>" disabled selected>Select Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                         </select>
@@ -237,15 +237,16 @@ if (isset($_POST['submit']))
 
                   <input type="reset" class="btn btn-primary" value="Reset" />
                 </div>
-  
-                <?php 
-			if(empty($errors) === false)
-			{
-				echo '<p>' . implode('</p><p>', $errors) . '</p>';	
-			}
-        ?>
-        
+
               </form>
+
+              <?php 
+			          if(empty($errors) === false)
+                {
+                  echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                }
+              ?>
+
             </div>
             <div class="col-lg-4">
 

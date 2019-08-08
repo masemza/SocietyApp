@@ -102,16 +102,18 @@ if (empty($_POST) === false) {
                   <div class="form-footer">
                     <button type="submit" name="submit" class="btn btn-primary btn-block">Sign in</button>
                   </div>
-                </div>
-
-                <?php 
-                  if(empty($errors) === false)
-                  {
-                    echo '<p>' . implode('</p><p>', $errors) . '</p>';	
-                  }
-                ?>    
+                </div> 
         
               </form>
+
+              <br>
+              <?php 
+			          if(empty($errors) === false)
+                {
+                  echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                }
+              ?>
+              
               <div class="text-center text-muted">
                 Don't have account yet? <a href="./register.php">Sign up</a>
               </div>

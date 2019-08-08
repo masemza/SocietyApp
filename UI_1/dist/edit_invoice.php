@@ -92,6 +92,15 @@ if (isset($_POST['submit'])) {
                       <button onclick ="return confirm('Are you sure you want to edit that Invoice?')" type="submit" name="submit" class="btn btn-primary btn-block" > Update Invoice</button>
                     </div>
                   </form>
+
+                  <br>
+                  <?php 
+                    if(empty($errors) === false)
+                    {
+                      echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                    }
+                  ?>
+
                 </div>
               </div>
             </div>    

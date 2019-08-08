@@ -5,26 +5,28 @@ $username = htmlentities($user['username']);
 
 if (isset($_POST['submit'])) 
 {
-	$description 		= $_POST['description'];
-	$name 			= $_POST['name'];
-	$amount 		= $_POST['amount'];
-		
-		if(!preg_match("/^[a-zA-Z ]*$/",$name))
+		if(!preg_match("/^[a-zA-Z ]*$/",$_POST['name']))
 		{
 			$errors[] = 'Only letters and white space allowed for name';
-		}
+    }
+    
+    else
+      if(empty($_POST['description']) === true || empty($_POST['name']) === true || empty($_POST['amount']) === true)
+      {
+        $errors[] = 'You must fill in all of the fields';
+      }
 
 		if(empty($errors) === true)
 		{			
-	
-            $invoice->create_invoice($description, $name, $amount);
-            {
-                Print '<script>alert("Invoice Successfully created");;
-                window.location.assign("invoice.php")</script>';
-    
-                exit();    
-            }
-	
+      $description 		= $_POST['description'];
+      $name 			= $_POST['name'];
+      $amount 		= $_POST['amount'];
+
+      $invoices->create_invoice($description, $name, $amount);
+      Print '<script>alert("Invoice Successfully created");;
+      window.location.assign("invoice.php")</script>';
+  
+      exit();
 		}
 }
 ?>
@@ -90,21 +92,21 @@ if (isset($_POST['submit']))
                     <div class="col-sm-6 col-md-12">
                       <div class="form-group">
                         <label class="form-label">Description</label>
-                        <input type="text" name="description" class="form-control" placeholder="Description" required="required" >
+                        <input type="text" name="description" class="form-control" placeholder="Description" required="required" value="<?php if(isset($_POST['description'])) echo htmlentities($_POST['description']); ?>">
                       </div>
                     </div>
 
                     <div class="col-sm-6 col-md-6">
                       <div class="form-group">
                         <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" placeholder="Name" required="required" >
+                        <input type="text" name="name" class="form-control" placeholder="Name" required="required" value="<?php if(isset($_POST['name'])) echo htmlentities($_POST['name']); ?>">
                       </div>
                     </div>
 
                     <div class="col-sm-6 col-md-6">
                       <div class="form-group">
                         <label class="form-label">Amount</label>
-                        <input type="number" name="amount" class="form-control" placeholder="Amount" required="required" >
+                        <input type="number" name="amount" class="form-control" placeholder="Amount" required="required" value="<?php if(isset($_POST['amount'])) echo htmlentities($_POST['amount']); ?>">
                       </div>
                     </div>
 
@@ -115,14 +117,16 @@ if (isset($_POST['submit']))
                   <input type="reset" class="btn btn-primary" value="Reset" />
                 </div>
 
-                <?php 
-			if(empty($errors) === false)
-			{
-				echo '<p>' . implode('</p><p>', $errors) . '</p>';	
-			}
-    ?>
-    
               </form>
+
+              <br>
+              <?php 
+			          if(empty($errors) === false)
+                {
+                  echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                }
+              ?>
+              
             </div>
             
           </div>

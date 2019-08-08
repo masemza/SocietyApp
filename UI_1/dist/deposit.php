@@ -13,10 +13,16 @@ if (isset($_POST['submit']))
 	global $payment_id;
 
 	
-		if (strlen($_POST['amount']) <2)
+		if (strlen($amount) <2)
 		{
       $errors[] = 'Your amount must be atleast 2 characters';
     }
+
+    else
+      if(!preg_match("/^[a-zA-Z ]*$/",$name))
+      {
+        $errors[] = 'Only letters and white space allowed for name';
+      }
 		
 				// else
 				// 	if($amount > 10000)
@@ -347,7 +353,7 @@ if (isset($_POST['submit']))
                                         </div> -->
                                         <div class="form-group">
                                           <label class="form-label">Full Name<span class="form-required">*</span></label>
-                                          <input type="text" name="name" required="required" class="form-control" placeholder="Enter your names"/>
+                                          <input type="text" name="name" required="required" class="form-control" placeholder="Enter your names" />
                                         </div>
                                         <div class="form-group">
                                           <label class="form-label">Amount<span class="form-required">*</span></label>
@@ -362,14 +368,18 @@ if (isset($_POST['submit']))
                                 <input type="reset" class="btn btn-primary" value="Reset" />
 		
                             </div>
-                            <?php 
-			if(empty($errors) === false)
-			{
-				echo '<p>' . implode('</p><p>', $errors) . '</p>';	
-			}
-		?>
+                            
+                            
        
                         </form>
+
+                        <br>
+                        <?php 
+                          if(empty($errors) === false)
+                          {
+                            echo '<p class="text-center">' . implode('</p><p class="text-center">', $errors) . '</p>';	
+                          }
+                        ?>
 
                 </div>
                 </div>

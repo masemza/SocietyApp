@@ -12,7 +12,7 @@ class Expenses
     {
 		global $db;
         
-        $expense_date = date("Y-m-d");
+        $expense_date = date('Y-m-d');
 		$query 	= $this->db->prepare("INSERT INTO `expense` (`description`, `name`, `categories` , `amount`, `expense_date`) VALUES (?, ?, ?, ? , ?) ");
 		
 		$query->bindValue(1, $description);

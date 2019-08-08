@@ -14,10 +14,16 @@ if (isset($_POST['submit']))
 	
 	global $payment_id;
 			
-	    if (strlen($_POST['amount']) <2)
+	    if (strlen($amount) <2)
 		{
 			$errors[] = 'Your amount must be atleast 2 characters';
-        }
+		}
+		
+		else
+			if(!preg_match("/^[a-zA-Z ]*$/",$name))
+      		{
+        	$errors[] = 'Only letters and white space allowed for name';
+      		}
 	
 		if(empty($errors) === true)
 		{

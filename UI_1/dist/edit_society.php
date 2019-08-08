@@ -1207,14 +1207,16 @@ if (isset($_POST['submit'])) {
                       <button onclick ="return confirm('Are you sure you want to edit that society?')" type="submit" name="submit" class="btn btn-primary btn-block" > Update Society</button>
                     </div>
 
-                    <?php 
-                        if(empty($errors) === false)
-                        {
-                          echo '<p>' . implode('</p><p>', $errors) . '</p>';	
-                        }
-                    ?>
-
                   </form>
+
+                  <br>
+                  <?php 
+                    if(empty($errors) === false)
+                    {
+                      echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                    }
+                  ?>
+
                 </div>
               </div>
             </div>    

@@ -129,6 +129,7 @@ if(isset($_POST['submit']))
 
 <br>
 
+<?php foreach ($withdrawal as $view_withdrawal) ?>
 
                           <div class="col-lg-12">
                                   <div class="card">
@@ -143,15 +144,8 @@ if(isset($_POST['submit']))
 
                                         <div class="table-responsive push">
                                         
-                                        <?php if(isset($_POST['submit']) &&  empty($_POST['withdrawal']) === false )
+                                        <?php if(isset($_POST['submit']) &&  empty($_POST['withdrawal']) === false && !empty($view_withdrawal['date_transaction']))
                                         {?> 
-
-
-
-
-
-
-                                        
                                             <table class="table table-bordered table-hover" id="myTable">
                                             <tr>
                                                 <th class="text-center" style="width: 1%">Date of withdrawal</th>
@@ -188,9 +182,10 @@ if(isset($_POST['submit']))
                                             <?php 
                                         } 
                                         else 
-                                        if(isset($_POST['submit']) &&  empty($_POST['transaction']) === true ){?> 
+                                        if(isset($_POST['submit']) &&  empty($_POST['transaction']) === true && !empty($view_withdrawal['date_transaction'])){?> 
                                             Select a transaction 
-                                        <?php } 
+                                        <?php }   
+                                             
                                         else  if(!empty($view_withdrawal['date_transaction']) )
                                         {?>
                                         <table class="table table-bordered table-hover" id="myTable">
@@ -224,7 +219,7 @@ if(isset($_POST['submit']))
                                                 <td class="font-weight-bold text-center">R<?php echo number_format($withdrawal_total,2); ?> </td>
 
                                             </table>
-                                            <?php } ?>
+                                            <?php } else echo"No transaction made today";?>
                                         </div>                                            
                                     </form>
                                     

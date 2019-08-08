@@ -170,8 +170,9 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
 
 <div class="table-responsive push">
 
+<?php  foreach ($invoice as $view_invoice)?>
 
-    <?php if(isset($_POST['submit']) &&  empty($_POST['invoice']) === false )
+    <?php if(isset($_POST['submit']) &&  empty($_POST['invoice']) === false && !empty($view_invoice['invoice_date']) )
     {?>
     <table class="table table-bordered table-hover">
       <tr>
@@ -224,11 +225,11 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
     <?php } 
 
                                         else 
-                                        if(isset($_POST['submit']) &&  empty($_POST['transaction']) === true )
+                                        if(isset($_POST['submit']) &&  empty($_POST['invoice']) === true && !empty($view_invoicel['invoice_date']))
                                         {?> 
                                             Select a transaction 
                                         <?php } 
-                                        else
+                                        else if(!empty($view_invoice['invoice_date']))
                                         {?>
                                         <table class="table table-bordered table-hover">
       <tr>
@@ -247,7 +248,7 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
       <tr>
         <td class="text-center"><?php echo $num += 1 ?></td>
         <td>
-          <p class="font-w600 mb-1 text-center"><?php echo $row['invoice_date']; ?></p>
+          <p class="font-w600 mb-1 text-center"><?php echo $view_invoice['invoice_date']; ?></p>
           <!-- <div class="text-muted">Logo and business cards design</div> -->
         </td>
         <td class="text-center">
@@ -278,7 +279,7 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
 <td colspan="5" class="font-weight-bold text-uppercase text-right">Total</td>
       <td class="font-weight-bold text-center">R<?php echo $invoice_total; ?> </td>
     </table>
-    <?php }?>
+    <?php } else echo "No invoice made today";?>
     
   </div> 
                                              
