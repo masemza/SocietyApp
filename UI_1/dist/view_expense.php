@@ -215,6 +215,7 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
                                     <Option value="Stationary">Stationary</Option>
                                     <Option value="categories">Maintanance Equipments</Option>
                                     <Option value="Dry-Clean">Dry-Clean</Option>
+                                    <Option value="Dry-Clean">Wages</Option>
                                     <Option value="Tollgate">Tollgate</Option>
                                     <Option value="Transport">Transport</Option>
                                     <Option value="Grave-Mark">Grave-Mark</Option>
