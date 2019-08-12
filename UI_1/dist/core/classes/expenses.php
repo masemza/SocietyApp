@@ -208,5 +208,119 @@ class Expenses
 		
 	}
 
+	public function search_daily_category($category) 
+	{
+		$query = $this->db->prepare("SELECT * FROM `expense` where `categories` = ? AND `expense_date` > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY `expense_date` DESC");
+		$query->bindValue(1, $category);
+
+		try{
+
+			$query->execute();
+
+			return $query->fetchAll();
+
+		} catch(PDOException $e){
+
+			die($e->getMessage());
+		}
+	}
+
+	public function sum_of_daily_category($category)
+	{
+
+		// $today = date("Y-m-d");
+		// $newDate = date("Y-m-d",strtotime($today."-6 day"));
+
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = ? AND `expense_date` > DATE_SUB(NOW(), INTERVAL 1 DAY) ORDER BY `expense_date` DESC");
+		$query->bindValue(1, $category);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function search_weekkly_category($category) 
+	{
+		$query = $this->db->prepare("SELECT * FROM `expense` where `categories` = ? AND `expense_date` > DATE_SUB(NOW(), INTERVAL 1 WEEK) ORDER BY `expense_date` DESC");
+		$query->bindValue(1, $category);
+
+		try{
+
+			$query->execute();
+
+			return $query->fetchAll();
+
+		} catch(PDOException $e){
+
+			die($e->getMessage());
+		}
+	}
+
+	public function sum_of_weekly_category($category)
+	{
+
+		// $today = date("Y-m-d");
+		// $newDate = date("Y-m-d",strtotime($today."-6 day"));
+
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = ? AND `expense_date` > DATE_SUB(NOW(), INTERVAL 1 WEEK) ORDER BY `expense_date` DESC");
+		$query->bindValue(1, $category);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function search_monthly_category($category) 
+	{
+		$query = $this->db->prepare("SELECT * FROM `expense` where `categories` = ? AND `expense_date` > DATE_SUB(NOW(), INTERVAL 1 MONTH) ORDER BY `expense_date` DESC");
+		$query->bindValue(1, $category);
+
+		try{
+
+			$query->execute();
+
+			return $query->fetchAll();
+
+		} catch(PDOException $e){
+
+			die($e->getMessage());
+		}
+	}
+
+	public function sum_of_monthly_category($category)
+	{
+
+		// $today = date("Y-m-d");
+		// $newDate = date("Y-m-d",strtotime($today."-6 day"));
+
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = ? AND `expense_date` > DATE_SUB(NOW(), INTERVAL 1 MONTH) ORDER BY `expense_date` DESC");
+		$query->bindValue(1, $category);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
 
 }

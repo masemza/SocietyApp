@@ -115,7 +115,6 @@ if (isset($_POST['submit']))
           <div class="form-group">
             <label class="form-label">Category</label>
             <Select name="categories" class="form-control custom-select" > 
-            
               <Option Value="<?php if(isset($_POST['categories'])) echo htmlentities($_POST['categories']); ?>" disabled selected >Select Category</Option>
               <Option Value="Repair Maintanance">Repair Maintanance</Option>
               <Option Value="Petrol">Petrol</Option>
