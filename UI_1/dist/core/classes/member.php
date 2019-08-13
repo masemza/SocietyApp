@@ -199,6 +199,24 @@ class Member{
 		
 	}
 
+
+
+	public function searching_member($search) {
+
+		$query = $this->db->prepare("SELECT * FROM member WHERE first_name LIKE CONCAT('%',?,'%') OR last_name LIKE CONCAT('%',?,'%')");
+		$query->bindValue(1, $search);
+		$query->bindValue(2, $search);
+		try{
+
+			$query->execute();
+
+		} catch(PDOException $e){
+
+			die($e->getMessage());
+		}
+		return $query->fetchAll();
+	}
+
 }
 
 ?>

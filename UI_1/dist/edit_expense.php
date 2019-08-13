@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 
         $expenses->updateexpense($description, $name, $categories, $amount, $expenses_id);
         {
-            Print '<script>alert("expense Successfully edited");;
+            Print '<script>alert("Expense Successfully Edited");;
             window.location.assign("view_expense.php")</script>';
 
             exit();    
@@ -86,7 +86,8 @@ if (isset($_POST['submit'])) {
                        <div class="form-group">
                             <label class="form-label">Category</label>
                             <Select name="categories" class="form-control custom-select" >
-                                <Option Value="<?php if(isset($_POST['categories'])) echo htmlentities($_POST['categories']); ?>" disabled selected >Select Category</Option>
+                                <Option Value="" disabled checked>---Select Category---</Option>
+                                <Option Value="<?php if(isset($_POST['categories'])) echo htmlentities($_POST['categories']); ?>"><?php echo $row['categories']?></Option>
                                 <Option Value="Repair Maintanance">Repair Maintanance</Option>
                                 <Option Value="Petrol">Petrol</Option>
                                 <Option Value="Cleaning Materials">Cleaning Materials</Option>
@@ -94,7 +95,7 @@ if (isset($_POST['submit'])) {
                                 <Option Value="Stationary">Stationary</Option>
                                 <Option Value="Maintanance Equipments">Maintanance Equipments</Option>
                                 <Option Value="Dry-clean">Dry-Clean</Option>
-                                <Option value="Dry-Clean">Wages</Option>
+                                <Option value="Wages">Wages</Option>
                                 <Option Value="Tollgate">Tollgate</Option>
                                 <Option Value="Transport">Transport</Option>
                                 <Option Value="Grave-Mark">Grave-Mark</Option>

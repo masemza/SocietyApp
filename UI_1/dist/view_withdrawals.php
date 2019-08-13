@@ -162,8 +162,7 @@ if(isset($_POST['submit']))
                                                 <td>
                                                 <p class="font-w600 mb-1 text-center"><?php echo $view_withdrawal['date_transaction']; ?></p>
                                                 </td>
-                                                <td class="text-center">
-                                                Society name: <?php echo $view_withdrawal['society_name']; ?>
+                                                <td class="text-center"><?php echo $view_withdrawal['society_name']; ?>
                                                 </td>
                                                 <td class="text-center"><?php echo $view_withdrawal['name']; ?></td>
                                                 <td class="text-center"><?php echo $view_withdrawal['debit']; ?></td>

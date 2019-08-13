@@ -120,11 +120,11 @@ if (isset($_POST['submit1']))
                   </li>
 
                   <li class="nav-item dropdown">
-                    <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-check-square"></i> View Withdrawals</a>
+                    <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-shopping-cart"></i> View Withdrawals</a>
                   </li>
 
                   <li class="nav-item dropdown">
-                    <a href="./report.php" class="nav-link"><i class="fe fe-check-square"></i> View Transactions</a>
+                    <a href="./report.php" class="nav-link"><i class="fe fe-file-text"></i> View Transactions</a>
                   </li>
 
                  

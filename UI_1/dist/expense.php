@@ -3,8 +3,8 @@ require 'core/init.php';
 $general->logged_out_protect();
 $username = htmlentities($user['username']);
 
-$package_id =$_GET['package_id'];
-$view_package = $package->package_data($package_id);	
+$expenses_id =$_GET['expenses_id'];
+$view_expense = $expenses->expensedata($expenses_id);	
 
 // foreach($view_receipt as $row)
 // {
@@ -41,22 +41,6 @@ $view_package = $package->package_data($package_id);
                     <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
                   </li>
 
-                  <li class="nav-item dropdown">
-                    <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i>View Invoices</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./view_expense.php" class="nav-link"><i class="fe fe-check-square"></i> View Expenses</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-shopping-cart"></i> View Withdrawals</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./report.php" class="nav-link"><i class="fe fe-file-text"></i> View Transactions</a>
-                  </li>
-
                 </ul>
               </div>
             </div>
@@ -67,17 +51,17 @@ $view_package = $package->package_data($package_id);
             <div class="page-header">
               <h1 class="page-title">
 
-              <?php foreach ($view_package as $row) ?>
-                <a href="./view_package.php?society_id=<?php echo $row['society_id'] ?>" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>View Package History</a> | Package
+              <?php foreach ($view_expense as $row) ?>
+                <a href="./view_expense.php" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>View Expenses</a> | Expense
               <?php ?>
 
               </h1>
             </div>
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title"> View Package </h3>
+                <h3 class="card-title"> View Expense </h3>
                 <div class="card-options">
-                  <button type="button" class="btn btn-primary btn-sm" onclick="javascript:window.print();"><i class="fe fe-download"></i> Download Package</button>
+                  <button type="button" class="btn btn-primary btn-sm" onclick="javascript:window.print();"><i class="fe fe-download"></i> Download Expense</button>
                 </div>
               </div>
               <div class="card-body">
@@ -90,7 +74,7 @@ $view_package = $package->package_data($package_id);
                 <div class="row my-6">
                   <div class="col-6">
                     <!-- <p class="h3">Company</p> -->
-                    <?php foreach ($view_package as $row) ?>
+                    <?php foreach ($view_expense as $row) ?>
                     <p class="h2">Seshego Funerals</p><?php //echo $row['society_name'] ?></p>
                     <address>
                     <?php //    foreach ($view_society as $row)?>
@@ -109,43 +93,33 @@ $view_package = $package->package_data($package_id);
                 <div class="table-responsive push">
                   <table class="table table-bordered table-hover">
                     <tr>
-                      <th class="text-left" >Package was Created On</th>
+                      <th class="text-left" >Expense made On</th>
                         <td class="text-center">
                         <?php
-                            $date = date_create($row['package_created']);
+                            $date = date_create($row['expense_date']);
                             echo date_format($date, 'd-m-Y');
                         ?>
                         </td>
                     </tr>
 
                     <tr>
-                      <th class="text-left" >Flower</th>
-                      <td class="text-center">R<?php echo number_format($row['flower'],2); ?></td>
+                      <th class="text-left" >Description</th>
+                      <td class="text-center"><?php echo $row['description']; ?></td>
                     </tr>
 
                     <tr>
-                        <th class="text-left" >Coffin</th>
-                        <td class="text-center">R<?php echo number_format($row['coffin'],2); ?></td>
+                        <th class="text-left" >Name</th>
+                        <td class="text-center"><?php echo $row['name']; ?></td>
                     </tr>
 
                     <tr>
-                        <th class="text-left" >Grave Marker</th>
-                        <td class="text-center">R<?php echo number_format($row['grave_marker'],2); ?></td>
+                        <th class="text-left" >Category</th>
+                        <td class="text-center"><?php echo $row['categories']; ?></td>
                     </tr>
 
                     <tr>
-                        <th class="text-left" >Transport</th>
-                        <td class="text-center">R<?php echo number_format($row['transport'],2); ?></td>
-                    </tr>
-
-                    <tr>
-                        <th class="text-left" >Funeral Service</th>
-                        <td class="text-center">R<?php echo number_format($row['funeral_service'],2); ?></td>
-                    </tr>
-
-                    <tr>
-                        <th class="text-left font-weight-bold text-uppercase text-left" >Total</th>
-                        <td class="text-center font-weight-bold text-uppercase text-right" >R<?php echo number_format($row['total'],2); ?></td>
+                        <th class="text-left font-weight-bold text-uppercase text-left" >Amount</th>
+                        <td class="text-center font-weight-bold text-uppercase text-right" >R<?php echo number_format($row['amount'],2); ?></td>
                     </tr>
 
                   </table>

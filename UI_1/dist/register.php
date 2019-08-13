@@ -137,18 +137,20 @@ if (isset($_POST['submit'])) {
                     <button type="submit" name="submit" class="btn btn-primary btn-block">Create new account</button>
                   </div>
                 </div>
-
-                <?php 
-		if(empty($errors) === false){
-			echo '<p>' . implode('</p><p>', $errors) . '</p>';	
-		}
-
-        ?>
         
+                <div class="text-center text-muted">
+                    Already have account? <a href="./login.php">Sign in</a>
+                </div>
+
               </form>
-              <div class="text-center text-muted">
-                Already have account? <a href="./login.php">Sign in</a>
-              </div>
+
+              <?php 
+                  if(empty($errors) === false)
+                  {
+                    echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                  }
+              ?> 
+              
             </div>
           </div>
         </div>

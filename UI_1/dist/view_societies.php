@@ -74,6 +74,8 @@ if (isset($_POST['submit1']))
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                   <li class="nav-item">
                     <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
+
+                    
                   <!-- </li>
                   <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i>Transaction</a>
@@ -100,7 +102,19 @@ if (isset($_POST['submit1']))
                   </li> -->
 
                   <li class="nav-item dropdown">
-                    <a href="./create_society.php" class="nav-link"><i class="fe fe-user"></i>Add a new Society</a>
+                    <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i>View Invoices</a>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a href="./view_expense.php" class="nav-link"><i class="fe fe-check-square"></i> View Expenses</a>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-shopping-cart"></i> View Withdrawals</a>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a href="./report.php" class="nav-link"><i class="fe fe-file-text"></i> View Transactions</a>
                   </li>
                   
                   <!-- <a href="./create_society.php" class="btn btn-md btn-outline-primary" >Add a new Society</a> -->
