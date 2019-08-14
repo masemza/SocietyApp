@@ -7,6 +7,12 @@ $invoice_id =$_GET['invoice_id'];
 $view_invoice = $invoices->invoicedata($invoice_id);	
 global $num;
 
+$dirname = "demo/brand/S  F Logo";
+$images = glob($dirname."*.jpg");
+
+foreach($images as $image) 
+
+
 ?>
 
 <!doctype html>
@@ -67,47 +73,55 @@ global $num;
 
 
 
+                <div class=" text-center">
+                    <p class="h2"> INVOICE</p>
+                </div>
 
                 <div class="row my-6">
                   <div class="col-6">
                     <!-- <p class="h3">Company</p> -->
                     <?php foreach ($view_invoice as $row) ?>
-
-                    <p class="h2">Logo </p>
+                    
+                    <?php
+                        echo "<img src='$image' style='max-width:250px; max-height:250px;' /> ";
+                    ?>
+                  <br><p class="h5">PO Box 22
+                  <br>Jane Furse 1085</p>
                   </div>
+                  
 
                     <div class="col-6 text-right">
-                      <p class="h3">Seshego Funerals</p>
-                      <p class="h5">Street</p>
-                      <p class="h5">Suburb * City</p>
-                      <p class="h5">Province</p>
+                      <p class="h2">SAMELLEN FUNERALS cc</p>
+                      <p class="h4">T/A HELPMEKAAR FUNERAL PARLOUR C.C.</p>
 
-                      <br>
-                      <p class="h5">Cell phone no 1 | Cell phone no 2</p>
-                      <p class="h5">Email: </p>
+                      <!-- <p class="h2">SESHEGO FUNERALS </p> -->
+
+                      <br><br><br>
+                      <p class="h5">
+                          Tel: (013) 265 1031 <br>
+                          Fax: (015) 223 0378 <br>
+                          Email: 
+                      </p>
                     </div>
                 </div>
-
-
-
-
+                
                 <hr>
 
-                    <div class="col-12 text-center">
+                    <!-- <div class="col-12 text-center">
                         <p class="h2"> INVOICE</p>
-                    </div>
+                    </div> -->
  
                 <div class="row my-6">
                   <div class="col-6">
                     <!-- <p class="h3">Company</p> -->
                     <?php foreach ($view_invoice as $row) ?>
 
-                    <p class="h3">To: <?php echo $row['name'] ?> </p>
+                    <p class="h3">To: <u> <?php echo $row['name'] ?></u> </p>
                     <!-- <p class="h3">Company: </p> -->
                   </div>
                   <div class="col-6 text-right">
-                     <p class="h4"><?php  echo "Date: ".date("d-m-Y")  //$date = date_create($row['invoice_date']);
-                            //echo date_format($date, 'd F Y');     ?> </p>
+                     <p class="h4"> <?php echo "Date: "?> <u><?php echo date("d-m-Y");  //$date = date_create($row['invoice_date']);
+                            //echo date_format($date, 'd F Y');     ?> </u> </p>
                   </div>
                 </div>
 
@@ -174,13 +188,13 @@ global $num;
                 </div>
 
                   <hr>
-                  <div class="row my-6">
+                <div class="row my-6">
                   <div class="col-6">
-                    <p class="h3">Bank Details</p>
+                    <!-- <p class="h3">Bank Details</p>
                     <p class="h4">Account holder <span class="tab"> : </span></p>
                     <p class="h4">Bank <span class="tab"> : </span></p>
                     <p class="h4">Account number <span class="tab"> : </span></p>
-                    <p class="h4">Reference <span class="tab"> : </span></p>
+                    <p class="h4">Reference <span class="tab"> : </span></p> -->
                   </div>
                   <div class="col-6 text-right">
                      <p class="h4">Total: R<?php echo number_format($row['amount'],2); ?></p>
