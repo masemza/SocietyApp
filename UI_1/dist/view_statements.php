@@ -79,6 +79,11 @@ if (isset($_POST['submit1']))
                   <li class="nav-item dropdown">
                     <a href="./report.php" class="nav-link"><i class="fe fe-file-text"></i> View Transactions</a>
                   </li>
+
+                  <li class="nav-item dropdown">
+                    <a href="./view_package.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="dropdown-icon fe fe-layers"></i> View Package</a>
+                  </li>
+
                   <!-- <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i>Transaction</a>
                     <div class="dropdown-menu dropdown-menu-arrow">

@@ -60,7 +60,7 @@ if (isset($_POST['submit1']))
                           <!-- <label class="form-label">Separated inputs</label> -->
                           <div class="row gutters-xs">
                             <div class="col">
-                              <input type="text" name="search" class="form-control" placeholder="Enter Society Name" required="required">
+                              <input type="text" name="search" id="search_text" class="form-control" placeholder="Enter Society Name" required="required">
                             </div>
                             <span class="col-auto">
                               <button class="btn btn-secondary" type="submit" name="submit"><i class="fe fe-search"></i></button>
@@ -229,7 +229,7 @@ if (isset($_POST['submit1']))
                                                         ?>
                                                       </h1>
 
-                                                        <table class="table table-hover table-outline table-vcenter text-nowrap card-table ">
+                                                        <table class="table table-hover table-outline table-vcenter text-nowrap card-table" id="table-data">
                                                           <thead>
 
                                                             <tr>
@@ -329,7 +329,7 @@ if (isset($_POST['submit1']))
                                   </div>
                                   </div>
                                 </div>
-      
+                                </div>
                 </div>
               </div>
 
@@ -375,5 +375,22 @@ if (isset($_POST['submit1']))
 
       <?php include 'incl/footer.php' ;?>
     </div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#search_text").keyup(function(){
+            var search = $(this).val();
+            $.ajax({
+                url:'viewSocietyAction.php',
+                method:'post',
+                data:{query:search},
+                success:function(response){
+                    $("#table-data").html(response)
+                }
+            });
+        });
+    });
+</script>
+
   </body>
 </html>

@@ -74,7 +74,7 @@ foreach($images as $image)
 
 
                 <div class=" text-center">
-                    <p class="h2"> INVOICE</p>
+                    <p class="h2"> <u>INVOICE</u> </p>
                 </div>
 
                 <div class="row my-6">

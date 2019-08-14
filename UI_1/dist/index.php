@@ -63,7 +63,7 @@ if (isset($_POST['submit1']))
                           <!-- <label class="form-label">Separated inputs</label> -->
                           <div class="row gutters-xs">
                             <div class="col">
-                              <input type="text" name="search" class="form-control" required="required" placeholder="Enter Society Name">
+                              <input type="text" name="search" id="search_text" class="form-control" required="required" placeholder="Enter Society Name">
                             </div>
                             <span class="col-auto">
                               <button class="btn btn-secondary" type="submit" name="submit"><i class="fe fe-search"></i></button><br>
@@ -126,11 +126,6 @@ if (isset($_POST['submit1']))
                   <li class="nav-item dropdown">
                     <a href="./report.php" class="nav-link"><i class="fe fe-file-text"></i> View Transactions</a>
                   </li>
-
-                 
-
-
-
 
 
                   <!-- <li class="nav-item">
@@ -658,7 +653,7 @@ if (isset($_POST['submit1']))
                   <div class="card">
                   <div class="table-responsive">
 
-                    <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                    <table class="table table-hover table-outline table-vcenter text-nowrap card-table" id="table-data">
                       <thead>
                         <tr>
                           <th class="text-center w-1"><i class="icon-people"></i></th>
@@ -681,7 +676,6 @@ if (isset($_POST['submit1']))
                             </div> -->
                           </td>
                           <td>
-                          
                             <div><?php echo $row['society_name']; ?></div>
                             <div class="small text-muted">
                               <!-- 82 Bok Street -->
@@ -1530,5 +1524,22 @@ if (isset($_POST['submit1']))
       </div> -->
       <?php include 'incl/footer.php' ;?>
     </div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#search_text").keyup(function(){
+            var search = $(this).val();
+            $.ajax({
+                url:'indexAction.php',
+                method:'post',
+                data:{query:search},
+                success:function(response){
+                    $("#table-data").html(response)
+                }
+            });
+        });
+    });
+</script>
+
   </body>
 </html>

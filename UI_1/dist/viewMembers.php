@@ -287,12 +287,12 @@ if (isset($_POST['submit1']))
       <?php include 'incl/footer.php' ;?>
     </div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function(){
         $("#search_text").keyup(function(){
             var search = $(this).val();
             $.ajax({
-                url:'action.php',
+                url:'viewMemberAction.php',
                 method:'post',
                 data:{query:search},
                 success:function(response){
