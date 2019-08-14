@@ -292,7 +292,7 @@ if (isset($_POST['submit1']))
         $("#search_text").keyup(function(){
             var search = $(this).val();
             $.ajax({
-                url:'fetch.php',
+                url:'action.php',
                 method:'post',
                 data:{query:search},
                 success:function(response){

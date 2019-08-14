@@ -106,8 +106,8 @@ global $num;
                     <!-- <p class="h3">Company: </p> -->
                   </div>
                   <div class="col-6 text-right">
-                     <p class="h4"><?php $date = date_create($row['invoice_date']);
-                            echo date_format($date, 'd F Y'); ?> </p>
+                     <p class="h4"><?php  echo "Date: ".date("d-m-Y")  //$date = date_create($row['invoice_date']);
+                            //echo date_format($date, 'd F Y');     ?> </p>
                   </div>
                 </div>
 
@@ -150,9 +150,9 @@ global $num;
                 <div class="table-responsive push">
                   <table class="table table-bordered table-hover">
                     <tr>
-                      <th class="text-center" style="width: 0.5%">Item</th>
+                      <th class="text-center" style="width: 0.5%">Item No</th>
                       <th class="text-center" style="width: 5%">Description</th>
-                      <th class="text-center" style="width: 2%">Amount</th>
+                      <th class="text-center" style="width: 2%">Total</th>
                     </tr>
 
                     <tr>
