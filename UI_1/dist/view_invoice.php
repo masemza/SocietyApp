@@ -158,7 +158,7 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
             </div>
       </div>
 
-    <input type="submit" name="submit" class="btn btn-sm btn-outline-primary" value="Click here to view selected expense" />
+    <input type="submit" name="submit" class="btn btn-sm btn-outline-primary" value="Click here to view selected invoice" />
 </form>
 <br>
                           <div class="col-lg-12">
