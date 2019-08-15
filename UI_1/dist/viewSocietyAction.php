@@ -61,7 +61,14 @@ global $num;
                                 <a href='javascript:void(0)' data-toggle='dropdown' class='icon'><i class='fe fe-more-vertical'></i></a>
                                 <div class='dropdown-menu dropdown-menu-right'>
                                     <a href='./view_statements.php?society_id=".$row['society_id']." ' class='dropdown-item'><i class='dropdown-icon fe fe-file-text'></i> View Details </a>
-                                    
+                                    <a href='./view_members.php?society_id=".$row['society_id']."' class='dropdown-item'><i class='dropdown-icon fe fe-users'></i> View Members </a>  
+                                    <a href='./view_package.php?society_id=".$row['society_id']."' class='dropdown-item'><i class='dropdown-icon fe fe-layers'></i> View Package History</a>
+                                    <a href='./deposit.php?society_id=".$row['society_id']."' class='dropdown-item'><i class='dropdown-icon fa fa-plus-square-o'></i> Deposit </a>
+                                    <a href='./withdraw.php?society_id=".$row['society_id']."' class='dropdown-item'><i class='dropdown-icon fa fa-minus-square-o'></i> Withdraw </a>
+                                    <a href='./edit_society.php?society_id=".$row['society_id']."' class='dropdown-item'><i class='dropdown-icon fe fe-edit'></i> Edit Society </a>
+                                    <a href='./addMember.php?society_id=".$row['society_id']."' class='dropdown-item'><i class='dropdown-icon fe fe-user-plus'></i> Add Member </a>
+                                    <div class='dropdown-divider'></div>
+                                    <a onclick ='return confirm('Are you sure you want to delete this society?')' href='./deleteSociety.php?society_id=".$row['society_id']."' class='dropdown-item'><i class='dropdown-icon fe fe-trash-2'></i> Remove Society</a>
 
                                 </div>
                             </div>
