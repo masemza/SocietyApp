@@ -356,5 +356,238 @@ class Expenses
 
 	}
 
+	public function total_cleaning_materials($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'cleaning materials' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_coffin($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'coffin' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_dry_clean($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'dry-clean' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_grave_mark($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'grave-mark' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_maintenance_equipments($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'maintenance equipments' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_petrol($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'petrol' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_refreshments($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'refreshments' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_repair_maintenance($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'repair_maintenance' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_stationery($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'stationery' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_sundries($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'sundries' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_transport($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'transport' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_tollgate($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'tollgate' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function total_wages($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = 'wages' AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
 
 }

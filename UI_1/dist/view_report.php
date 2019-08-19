@@ -150,7 +150,8 @@ if (isset($_POST['submit']))
                 </div>
               </div>
               <div class="card">
-                <a href="view_report_income.php?date1=<?php echo $date1 ?> &date2=<?php echo $date2 ?>" class="btn btn-primary" >Click here to view Total Income</a>
+                <a href="view_report_income.php?date1=<?php echo $date1 ?> &date2=<?php echo $date2 ?>" class="btn btn-primary" >Click here to view Total Income</a> <br>
+                <a href="view_report_expense.php?date1=<?php echo $date1 ?> &date2=<?php echo $date2 ?>" class="btn btn-danger" >Click here to view Total Expenses</a>
               </div>
             <?php }
             else if (!empty($_POST['date1']) || !empty($_POST['date2'])) 
