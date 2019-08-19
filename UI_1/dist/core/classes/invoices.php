@@ -219,6 +219,43 @@ class Invoices
 
 	}
 
+	public function search_invoices($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `invoice` WHERE `invoice_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function display_invoices($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT * FROM `invoice` WHERE `invoice_date` BETWEEN ? AND ?  ORDER BY `invoice_date` DESC");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchAll();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+	
+
 }
 
 ?>

@@ -78,6 +78,22 @@ class Expenses
 
 	}
 
+	public function sum_of_expenses() 
+    {
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` ");
+	
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
 	public function expensedata($expenses_id) 
 	{
 		$query = $this->db->prepare("SELECT * FROM expense WHERE expenses_id = ?");
@@ -309,6 +325,24 @@ class Expenses
 
 		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = ? AND `expense_date` > DATE_SUB(NOW(), INTERVAL 1 MONTH) ORDER BY `expense_date` DESC");
 		$query->bindValue(1, $category);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function search_expenses($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
 
 		try{
 			

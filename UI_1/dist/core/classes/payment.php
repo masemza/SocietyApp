@@ -799,4 +799,40 @@ class Payment
 		}
 
 	}
+
+	public function search_deposits($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`credit`) FROM `statement` WHERE `date_transaction` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function display_deposits($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT * FROM `statement` WHERE `credit` <> 0 AND`date_transaction` BETWEEN ? AND ?  ORDER BY `date_transaction` DESC");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+			return $query->fetchAll();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
 }

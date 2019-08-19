@@ -5,16 +5,15 @@ $username = htmlentities($user['username']);
 
 $payment_id =$_GET['payment_id'];
 $view_receipt = $payment->receipt_data($payment_id);	
-
-foreach($view_receipt as $row)
-{
-    $society_id = $row['society_id'];
-}
-$last_balance = $payment->get_last_balance($society_id);
-
-$bal = substr($last_balance,1);
-
 global $num;
+
+$dirname = "demo/brand/S  F Logo";
+$images = glob($dirname."*.jpg");
+
+foreach($images as $image) 
+
+
+
 
 ?>
 
@@ -42,21 +41,17 @@ global $num;
                   </li>
 
                   <li class="nav-item dropdown">
-                    <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i>View Invoices</a>
+                    <a href="./view_members.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="fe fe-users"></i>View Members</a>
                   </li>
 
                   <li class="nav-item dropdown">
-                    <a href="./view_expense.php" class="nav-link"><i class="fe fe-check-square"></i> View Expenses</a>
+                    <a href="./addMember.php?society_id=<?php echo $society_id; ?>" class="nav-link"><i class="fe fe-user-plus"></i>Add a new Member</a>
                   </li>
 
                   <li class="nav-item dropdown">
-                    <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-shopping-cart"></i> View Withdrawals</a>
+                    <a href="./view_package.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="dropdown-icon fe fe-layers"></i> View Package</a>
                   </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./report.php" class="nav-link"><i class="fe fe-file-text"></i> View Transactions</a>
-                  </li>
-
+                 
                 </ul>
               </div>
             </div>
@@ -86,12 +81,47 @@ global $num;
                         //$society_id = $row['society_id'];
                     //}
                         ?>
- 
+
+                         <div class=" text-center">
+                    <p class="h2"> <u>RECEIPT</u></p>
+                </div>
+
+
+                  <div class="row my-6">
+                  <div class="col-6">
+                    <!-- <p class="h3">Company</p> -->
+                    <?php foreach ($view_receipt as $row) ?>
+                    
+                    <?php
+                        echo "<img src='$image' style='max-width:250px; max-height:250px;' /> ";
+                    ?>
+                  <br><p class="h5">PO Box 22
+                  <br>Jane Furse 1085</p>
+                  </div>
+                  
+
+                    <div class="col-6 text-right">
+                      <p class="h2">SAMELLEN FUNERALS cc</p>
+                      <p class="h4">T/A HELPMEKAAR FUNERAL PARLOUR C.C.</p>
+
+                      <!-- <p class="h2">SESHEGO FUNERALS </p> -->
+
+                      <br><br><br>
+                      <p class="h5">
+                          Tel: (013) 265 1031 <br>
+                          Fax: (015) 223 0378 <br>
+                          Email: 
+                      </p>
+                    </div>
+                </div>
+                
+                <hr>
+                
                 <div class="row my-6">
                   <div class="col-6">
                     <!-- <p class="h3">Company</p> -->
                     <?php foreach ($view_receipt as $row) ?>
-                    <p class="h2">Seshego Funerals</p><p class="h4">Society Name: <?php echo $row['society_name'] ?></p>
+                      <h3> Society name: <u><?php echo $row['society_name']?></u> </h3>
                     <address>
                     <?php //    foreach ($view_society as $row)?>
                         <!-- Location: <?php //echo $row['location'] ?> -->
@@ -100,26 +130,28 @@ global $num;
                   <div class="col-6 text-right">
                     <!-- <p class="h3">Client</p> -->
                     <address>
-
-                        <p class="h4"> Receipt no: #<?php echo $row['payment_id'] ?></p>
-                     <p> Date: <?php echo date("d/F/Y"); ?> </p>
+                      <h4><p> Date: <u><?php echo date("d-m-Y"); ?></u> </p></h4>
+                      <br>
+                      <h4> <p class="text-right"> RECEIPT NO: <?php echo $row['payment_id'] ?></p> </h4>
+                     
                     </address>
                   </div>
                 </div>
+
                 <div class="table-responsive push">
                   <table class="table table-bordered table-hover">
                     <tr>
-                      <th class="text-center" >Transaction Date</th>
+                      <th class="text-left" >Transaction Date</th>
                         <td class="text-center">
                         <?php
                             $date = date_create($row['date_transaction']);
-                            echo date_format($date, 'd/F/Y');
+                            echo date_format($date, 'd-m-Y');
                         ?>
                         </td>
                     </tr>
 
                     <tr>
-                      <th class="text-center" >Name</th>
+                      <th class="text-left" >Name</th>
                       <td class="text-center"><?php echo $row['name']; ?></td>
                     </tr>
 
@@ -128,18 +160,18 @@ global $num;
                       if($row['credit'] == 0)
                       {?>
                         <tr>
-                          <th class="text-center" >Name of deceased</th>
+                          <th class="text-left" >Name of deceased</th>
                           <td class="text-center"><?php echo $row['deceased_name']; ?></td>
                         </tr>
 
-                        <th class="text-center" >Amount Withdrawn</th>
+                        <th class="text-left" >Amount Withdrawn</th>
                         <td class="text-center">R<?php echo number_format($row['debit'],2); ?></td>
 
                       <?php
                       } 
                       else 
                       { ?>
-                        <th class="text-center" >Amount Deposited</th>
+                        <th class="text-left" >Amount Deposited</th>
                         <td class="text-center">R<?php echo number_format($row['credit'],2); ?></td>
                       <?php 
                       } 
@@ -151,7 +183,7 @@ global $num;
                         //$balance = number_format($last_balance, 2);
                       if($row['balance'] >= 0)  //if($last_balance >= 0)
                       {?>
-                        <th class="text-center" >Current Balance</th>
+                        <th class="text-left" >Current Balance</th>
                         <td class="text-center">R<?php echo number_format($row['balance'],2); //echo $balance?></td>
 
                       <?php
@@ -159,7 +191,7 @@ global $num;
                       else 
                       { //$balance = number_format($bal, 2);
                         ?>
-                        <th class="text-center" >Due To us</th>
+                        <th class="text-left" >Due To us</th>
                         <td class="text-center"><?php //echo substr($row['balance'],0,1)?>(R<?php echo number_format(substr($row['balance'],1),2); //echo $balance?>) </td>
                       <?php 
                       } 

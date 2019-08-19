@@ -120,7 +120,7 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
                                 <?php 
                                 if(isset($_POST['invoice']) )  
                                 { 
-                                    echo $choice_selected; ?> Expenses <?php 
+                                    echo $choice_selected; ?> Invoices <?php 
                                 } 
                                 else 
                                     if(isset($_POST['submit']) && empty($_POST['invoice']) === true )
@@ -129,7 +129,7 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
                                     } 
                                     else 
                                     {
-                                        echo "Daily Invoice";
+                                        echo "Daily Invoices";
                                     }?>
                       </h1>                 
                   </div>
@@ -139,26 +139,26 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
         <div class="form-label">Select a Invoice</div>
             <div class="custom-switches-stacked">
                 <label class="custom-switch">
-                    <input type="radio" name="invoice" value="Daily" class="custom-switch-input" checked>
+                    <input type="radio" name="invoice" value="Daily" class="custom-switch-input" <?php if(isset($_POST['submit']) && $_POST['invoice'] === "Daily" ) {?> checked <?php }?> checked>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Daily</span>
                 </label>
                          
                 <label class="custom-switch">
-                    <input type="radio" name="invoice" value="Weekly" class="custom-switch-input">
+                    <input type="radio" name="invoice" value="Weekly" class="custom-switch-input" <?php if(isset($_POST['submit']) && $_POST['invoice'] === "Weekly") {?> checked <?php }?>>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Weekly</span>
                     </label>
                 
                 <label class="custom-switch">
-                    <input type="radio" name="invoice" value="Monthly" class="custom-switch-input">
+                    <input type="radio" name="invoice" value="Monthly" class="custom-switch-input" <?php if(isset($_POST['submit']) && $_POST['invoice'] === "Monthly") {?> checked <?php }?>>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Monthly</span>
                 </label>
             </div>
       </div>
 
-    <input type="submit" name="submit" class="btn btn-sm btn-outline-primary" value="Click here to view selected invoice" />
+                                  <input type="submit"  name="submit" class="btn btn-sm btn-outline-primary" value="Click here to view selected invoice" />
 </form>
 <br>
                           <div class="col-lg-12">
@@ -191,8 +191,10 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
       <tr>
         <td class="text-center"><?php echo $num += 1 ?></td>
         <td>
-          <p class="font-w600 mb-1 text-center"><?php echo $view_invoice['invoice_date']; ?></p>
-          <!-- <div class="text-muted">Logo and business cards design</div> -->
+          <p class="font-w600 mb-1 text-center"><?php
+            $date=date_create($view_invoice['invoice_date']);
+            echo date_format($date,"d-m-Y");?>
+          </p>
         </td>
         <td class="text-center">
         <?php echo $view_invoice['description']; ?>
@@ -248,8 +250,9 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
       <tr>
         <td class="text-center"><?php echo $num += 1 ?></td>
         <td>
-          <p class="font-w600 mb-1 text-center"><?php echo $view_invoice['invoice_date']; ?></p>
-          <!-- <div class="text-muted">Logo and business cards design</div> -->
+          <p class="font-w600 mb-1 text-center">
+            <?php $date=date_create($view_invoice['invoice_date']);
+            echo date_format($date,"d-m-Y");?></p>
         </td>
         <td class="text-center">
         <?php echo $view_invoice['description']; ?>

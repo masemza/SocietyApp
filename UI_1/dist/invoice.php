@@ -125,40 +125,6 @@ foreach($images as $image)
                   </div>
                 </div>
 
-
-
-                <!-- <div class="table-responsive push">
-                  <table class="table table-bordered table-hover">
-                    <tr>
-                      <th class="text-center" >Invoice Date</th>
-                        <td class="text-center">
-                        <?php
-                            //$date = date_create($row['invoice_date']);
-                            //echo date_format($date, 'd F Y');
-                        ?>
-                        </td>
-                    </tr>
-
-                    <tr>
-                      <th class="text-center" >Description</th>
-                      <td class="text-center"><?php //echo $row['description']; ?></td>
-                    </tr>
-
-                    <tr>
-                        <th class="text-center" >Name</th>
-                        <td class="text-center"><?php //echo $row['name']; ?></td>
-                    </tr>
-
-                    <tr>
-                        <th class="text-center" >Amount</th>
-                        <td class="text-center">R<?php //echo number_format($row['amount'],2); ?></td>
-                    </tr>
-
-                  </table>
-                </div> -->
-                
-
-
                 <h4> <p class="text-right"> INVOICE NO: <?php echo $row['invoice_id'] ?></p> </h4>
 
                 <div class="table-responsive push">

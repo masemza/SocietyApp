@@ -105,19 +105,19 @@ if(isset($_POST['submit']))
         <div class="form-label">Select a Withdrawal</div>
             <div class="custom-switches-stacked">
                 <label class="custom-switch">
-                    <input type="radio" name="withdrawal" value="Daily" class="custom-switch-input" checked>
+                    <input type="radio" name="withdrawal" value="Daily" class="custom-switch-input"  <?php if(isset($_POST['submit']) && $_POST['withdrawal'] === "Daily") {?> checked <?php }?> checked>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Daily</span>
                 </label>
                          
                 <label class="custom-switch">
-                    <input type="radio" name="withdrawal" value="Weekly" class="custom-switch-input">
+                    <input type="radio" name="withdrawal" value="Weekly" class="custom-switch-input"   <?php if(isset($_POST['submit']) && $_POST['withdrawal'] === "Weekly") {?> checked <?php }?>>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Weekly</span>
                     </label>
                 
                 <label class="custom-switch">
-                    <input type="radio" name="withdrawal" value="Monthly" class="custom-switch-input">
+                    <input type="radio" name="withdrawal" value="Monthly" class="custom-switch-input" <?php if(isset($_POST['submit']) && $_POST['withdrawal'] === "Monthly") {?> checked <?php }?> >
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Monthly</span>
                 </label>
@@ -160,7 +160,8 @@ if(isset($_POST['submit']))
                                             ?>
                                             <tr>
                                                 <td>
-                                                <p class="font-w600 mb-1 text-center"><?php echo $view_withdrawal['date_transaction']; ?></p>
+                                                <p class="font-w600 mb-1 text-center"><?php $date=date_create($view_withdrawal['date_transaction']);
+            echo date_format($date,"d-m-Y");?></p>
                                                 </td>
                                                 <td class="text-center"><?php echo $view_withdrawal['society_name']; ?>
                                                 </td>
@@ -201,7 +202,8 @@ if(isset($_POST['submit']))
                                             ?>
                                             <tr>
                                                 <td>
-                                                <p class="font-w600 mb-1 text-center"><?php echo $view_withdrawal['date_transaction']; ?></p>
+                                                <p class="font-w600 mb-1 text-center"><?php $date=date_create($view_withdrawal['date_transaction']);
+            echo date_format($date,"d-m-Y");?></p>
                                                 </td>
                                                 <td class="text-center">
                                                 Society name: <?php echo $view_withdrawal['society_name']; ?>

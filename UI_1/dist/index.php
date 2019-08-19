@@ -124,7 +124,7 @@ if (isset($_POST['submit1']))
                   </li>
 
                   <li class="nav-item dropdown">
-                    <a href="./report.php" class="nav-link"><i class="fe fe-file-text"></i> View Transactions</a>
+                    <a href="./view_report.php" class="nav-link"><i class="fe fe-file-text"></i> View Report</a>
                   </li>
 
 

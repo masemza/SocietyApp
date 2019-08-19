@@ -188,19 +188,19 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
         <div class="form-label">Select a Expense</div>
             <div class="custom-switches-stacked">
                 <label class="custom-switch">
-                    <input type="radio" name="expense" value="Daily" class="custom-switch-input" checked>
+                    <input type="radio" name="expense" value="Daily" class="custom-switch-input" <?php if(isset($_POST['submit']) && $_POST['expense'] === "Daily") {?> checked <?php }?> checked>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Daily</span>
                 </label>
                          
                 <label class="custom-switch">
-                    <input type="radio" name="expense" value="Weekly" class="custom-switch-input">
+                    <input type="radio" name="expense" value="Weekly" class="custom-switch-input" <?php if(isset($_POST['submit']) && $_POST['expense'] === "Weekly") {?> checked <?php }?>>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Weekly</span>
                     </label>
                 
                 <label class="custom-switch">
-                    <input type="radio" name="expense" value="Monthly" class="custom-switch-input">
+                    <input type="radio" name="expense" value="Monthly" class="custom-switch-input" <?php if(isset($_POST['submit']) && $_POST['expense'] === "Monthly") {?> checked <?php }?>>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Monthly</span>
                 </label>
@@ -259,7 +259,8 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
                                                   <tr>
                                                       <td class="text-center"><?php echo $num += 1 ?></td>
                                                       <td>
-                                                        <p class="font-w600 mb-1 text-center"><?php echo $view_expense['expense_date']; ?></p>
+                                                        <p class="font-w600 mb-1 text-center"> <?php $date=date_create($view_expense['expense_date']);
+            echo date_format($date,"d-m-Y");?></p>
                                                         <!-- <div class="text-muted">Logo and business cards design</div> -->
                                                       </td>
                                                       <td class="text-center">
@@ -318,7 +319,8 @@ if(isset($_POST['submit']) && ! empty($_POST['submit']) )
                                           <tr>
                                               <td class="text-center"><?php echo $num += 1 ?></td>
                                               <td>
-                                                <p class="font-w600 mb-1 text-center"><?php echo $view_expense['expense_date']; ?></p>
+                                                <p class="font-w600 mb-1 text-center"><?php $date=date_create($view_expense['expense_date']);
+            echo date_format($date,"d-m-Y");?></p>
                                                 <!-- <div class="text-muted">Logo and business cards design</div> -->
                                               </td>
                                               <td class="text-center">

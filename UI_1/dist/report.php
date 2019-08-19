@@ -163,19 +163,19 @@ if(isset($_POST['submit']))
         <div class="form-label">Select a Transaction</div>
             <div class="custom-switches-stacked">
                 <label class="custom-switch">
-                    <input type="radio" name="transaction" value="Daily" class="custom-switch-input" checked>
+                    <input type="radio" name="transaction" value="Daily" class="custom-switch-input" <?php if(isset($_POST['submit']) && $_POST['transaction'] === "Daily") {?> checked <?php }?> checked>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Daily</span>
                 </label>
                          
                 <label class="custom-switch">
-                    <input type="radio" name="transaction" value="Weekly" class="custom-switch-input">
+                    <input type="radio" name="transaction" value="Weekly" class="custom-switch-input"<?php if(isset($_POST['submit']) && $_POST['transaction'] === "Weekly") {?> checked <?php }?>>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Weekly</span>
                     </label>
                 
                 <label class="custom-switch">
-                    <input type="radio" name="transaction" value="Monthly" class="custom-switch-input">
+                    <input type="radio" name="transaction" value="Monthly" class="custom-switch-input"<?php if(isset($_POST['submit']) && $_POST['transaction'] === "Monthly") {?> checked <?php }?>>
                         <span class="custom-switch-indicator"></span>
                         <span class="custom-switch-description">Monthly</span>
                 </label>
@@ -230,7 +230,8 @@ if(isset($_POST['submit']))
                                             <tr>
                                                 <!-- <td class="text-center"><?php //echo $num += 1 ?></td> -->
                                                 <td>
-                                                <p class="font-w600 mb-1 text-center"><?php echo $view_deposits['date_transaction']; ?></p>
+                                                <p class="font-w600 mb-1 text-center"><?php $date=date_create($view_deposits['date_transaction']);
+            echo date_format($date,"d-m-Y");?> </p>
                                                 </td>
                                                 <td class="text-center">
                                                 Society name: <?php echo $view_deposits['society_name']; ?>
@@ -364,7 +365,9 @@ if(isset($_POST['submit']))
                                             <tr>
                                                 <!-- <td class="text-center"><?php //echo $num += 1 ?></td> -->
                                                 <td>
-                                                <p class="font-w600 mb-1 text-center"><?php echo $view_deposits['date_transaction']; ?></p>
+                                                <p class="font-w600 mb-1 text-center">
+                                                    <?php $date=date_create($view_deposits['date_transaction']);
+            echo date_format($date,"d-m-Y");?></p>
                                                 </td>
                                                 <td class="text-center">
                                                 Society name: <?php echo $view_deposits['society_name']; ?>

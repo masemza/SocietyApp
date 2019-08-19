@@ -78,21 +78,19 @@ if (isset($_POST['submit']))
                   <li class="nav-item">
                     <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
 				  </li>
+				  
 				  <li class="nav-item dropdown">
-                    <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i>View Invoices</a>
+                    <a href="./view_members.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="fe fe-users"></i>View Members</a>
                   </li>
 
                   <li class="nav-item dropdown">
-                    <a href="./view_expense.php" class="nav-link"><i class="fe fe-check-square"></i> View Expenses</a>
+                    <a href="./addMember.php?society_id=<?php echo $society_id; ?>" class="nav-link"><i class="fe fe-user-plus"></i>Add a new Member</a>
                   </li>
 
                   <li class="nav-item dropdown">
-                    <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-shopping-cart"></i> View Withdrawals</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./report.php" class="nav-link"><i class="fe fe-file-text"></i> View Transactions</a>
-                  </li>
+                    <a href="./view_package.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="dropdown-icon fe fe-layers"></i> View Package</a>
+				  </li>
+				  
                   <!-- <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link active" data-toggle="dropdown"><i class="fe fe-box"></i>Transaction</a>
                     <div class="dropdown-menu dropdown-menu-arrow">

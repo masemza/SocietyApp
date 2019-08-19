@@ -179,14 +179,15 @@ class Society
 
 		try{
 			$query->execute();
+
 			$society_id = $db->lastInsertID();
-			
 			header('Location:generateInitialStatement.php?society_id='.$society_id);
 		
 		}catch(PDOException $e){
 			die($e->getMessage());
 		}	
 	}
+	
     public function make_payment($name, $society_id, $society_name, $date_transaction, $credit, $debit, $balance)
     {
 	global $db;
