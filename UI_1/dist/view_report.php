@@ -158,7 +158,7 @@ if (isset($_POST['submit']))
             {?>
               <h1 class="page-title">
                 <div class="card text-center">
-                      Choose both dates
+                      Select another date
                   </div>
             <?php
             } ?>
