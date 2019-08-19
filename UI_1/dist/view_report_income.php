@@ -100,7 +100,7 @@ $total = $total_invoices + $total_deposits;
                       <i class="fe fe-dollar-sign"></i>
                     </span>
                     <div>
-                      <h4 class="m-0"><a href="javascript:void(0)"><small> Total Invoice</small></a></h4>
+                      <h4 class="m-0"><a href="javascript:void(0)"><small> Total Invoices</small></a></h4>
                       <small class="text-muted">R<?php echo number_format($total_invoices,2) ?></small>
                     </div>
                   </div>

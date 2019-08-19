@@ -129,7 +129,7 @@ if (isset($_POST['submit']))
                       <i class="fe fe-minus-square"></i>
                     </span>
                     <div>
-                      <h4 class="m-0"><a href="javascript:void(0)"><small>Total Expense</small></a></h4>
+                      <h4 class="m-0"><a href="view_report_expense.php?date1=<?php echo $date1 ?> &date2=<?php echo $date2 ?>"><small>Total Expenses</small></a></h4>
                       <small class="text-muted">R<?php echo number_format($total_expense,2) ?> </small>
                     </div>
                   </div>
