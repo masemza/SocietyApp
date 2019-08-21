@@ -29,7 +29,7 @@ if (isset($_POST['submit']))
       $categories = $_POST['categories'];
       $amount 		= $_POST['amount'];
 
-      $expenses->create_expense($description, $name, $categories ,  $amount);
+      $expenses->create_expense($description, $name, $categories , $amount);
       
       Print '<script>alert("Expense Successfully created");;
       window.location.assign("view_expense.php")</script>';
@@ -66,9 +66,9 @@ if (isset($_POST['submit']))
                     <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i>View Invoices</a>
                   </li> -->
 
-                  <li class="nav-item dropdown">
+                  <!-- <li class="nav-item dropdown">
                     <a href="./view_expense.php" class="nav-link"><i class="fe fe-check-square"></i> View Expenses</a>
-                  </li>
+                  </li> -->
 
                   <!-- <li class="nav-item dropdown">
                     <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-check-square"></i> View Withdrawals</a>
@@ -116,12 +116,12 @@ if (isset($_POST['submit']))
             <label class="form-label">Category</label>
             <Select name="categories" class="form-control custom-select" > 
               <Option Value="<?php if(isset($_POST['categories'])) echo htmlentities($_POST['categories']); ?>" disabled selected >Select Category</Option>
-              <Option Value="Repair Maintanance">Repair Maintanance</Option>
+              <Option Value="Repair Maintenance">Repair Maintenance</Option>
               <Option Value="Petrol">Petrol</Option>
               <Option Value="Cleaning Materials">Cleaning Materials</Option>
               <Option Value="Refreshments">Refreshements</Option>
               <Option Value="Stationary">Stationary</Option>
-              <Option Value="Maintanance Equipments">Maintanance Equipments</Option>
+              <Option Value="Maintenance Equipments">Maintenance Equipments</Option>
               <Option Value="Dry-clean">Dry-Clean</Option>
               <Option value="Dry-Clean">Wages</Option>
               <Option Value="Tollgate">Tollgate</Option>

@@ -246,12 +246,10 @@ class Invoices
 		try{
 			
 			$query->execute();
-			return $query->fetchAll();
-			
-			
 		}catch(PDOException $e){
 			die($e->getMessage());
 		}
+		return $query->fetchAll();
 
 	}
 	

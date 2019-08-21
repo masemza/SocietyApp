@@ -112,19 +112,19 @@ if (isset($_POST['submit1']))
                   </li> -->
 
                   <li class="nav-item dropdown">
-                    <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i>View Invoices</a>
+                    <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i> Invoice </a>
                   </li>
 
                   <li class="nav-item dropdown">
-                    <a href="./view_expense.php" class="nav-link"><i class="fe fe-check-square"></i> View Expenses</a>
+                    <a href="./view_expense.php" class="nav-link"><i class="fe fe-file"></i> Expense </a>
                   </li>
 
-                  <li class="nav-item dropdown">
+                  <!-- <li class="nav-item dropdown">
                     <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-shopping-cart"></i> View Withdrawals</a>
-                  </li>
+                  </li> -->
 
                   <li class="nav-item dropdown">
-                    <a href="./view_report.php" class="nav-link"><i class="fe fe-file-text"></i> View Report</a>
+                    <a href="./manager.php" class="nav-link"><i class="fe fe-file-text"></i> Report</a>
                   </li>
 
 

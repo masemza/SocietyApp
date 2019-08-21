@@ -60,7 +60,6 @@ $total = $total_invoices + $total_deposits;
               </h1>
             </div>
 
-            
             <div class="row row-cards">
               <div class="col-sm-6 col-lg-4">
                 <div class="card p-3">
@@ -157,9 +156,7 @@ $total = $total_invoices + $total_deposits;
                               <td class="text-center"><?php echo $view_invoice['name']; ?></td>
                               <td class="text-center">Invoice</td>
                               <td class="text-center"><?php echo $view_invoice['amount']; ?></td>               
-                            </tr>
-                          <?php 
-                          }?>  
+                            </tr>  
 
                           <td colspan="4" class="font-weight-bold text-uppercase text-right">Total</td>
                           <td class="font-weight-bold text-center">R<?php echo number_format($total,2); ?> </td>              
@@ -167,6 +164,7 @@ $total = $total_invoices + $total_deposits;
                       </div>
                     </div>  
                   </div>
+                  <?php }?>
                 </div>
               </div>
               

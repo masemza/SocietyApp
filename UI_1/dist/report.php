@@ -335,10 +335,7 @@ if(isset($_POST['submit']))
                                                 echo "Daily Invoice Total" ?>: R<?php echo number_format($invoices_total,2); 
                                             }?>
 
-                                        </tr> 
-
-
-                                            
+                                        </tr>  
                                         <?php 
                                     } 
                                     else 

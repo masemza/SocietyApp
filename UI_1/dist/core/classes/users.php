@@ -214,6 +214,28 @@ class Users{
 
 	}
 
+	public function user_exists_for_report($email) {
+	
+		$query = $this->db->prepare("SELECT COUNT(`id`) FROM `users` WHERE `type` = 'manager' AND `email`= ?");
+		$query->bindValue(1, $email);
+	
+		try{
+
+			$query->execute();
+			$rows = $query->fetchColumn();
+
+			if($rows == 1){
+				return true;
+			}else{
+				return false;
+			}
+
+		} catch (PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
 	public function username_exists($username) {
 	
 		$query = $this->db->prepare("SELECT COUNT(`id`) FROM `users` WHERE `username`= ?");
@@ -344,6 +366,32 @@ class Users{
 	}
 
 	public function login($email, $password) {
+
+		global $bcrypt;  // Again make get the bcrypt variable, which is defined in init.php, which is included in login.php where this function is called
+
+		$query = $this->db->prepare("SELECT `password`, `id` FROM `users` WHERE `email` = ?");
+		$query->bindValue(1, $email);
+
+		try{
+			
+			$query->execute();
+			$data 				= $query->fetch();
+			$stored_password 	= $data['password']; // stored hashed password
+			$id   				= $data['id']; // id of the user to be returned if the password is verified, below.
+			
+			if($bcrypt->verify($password, $stored_password) === true){ // using the verify method to compare the password with the stored hashed password.
+				return $id;	// returning the user's id.
+			}else{
+				return false;	
+			}
+
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+	
+	}
+
+	public function login_for_report($email, $password) {
 
 		global $bcrypt;  // Again make get the bcrypt variable, which is defined in init.php, which is included in login.php where this function is called
 

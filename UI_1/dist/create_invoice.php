@@ -54,9 +54,9 @@ if (isset($_POST['submit']))
                     <a href="./create_invoice.php" class="nav-link active" ><i class="fe fe-file-plus"></i>Create a new Invoice</a>
                   </li>
 
-                  <li class="nav-item dropdown">
+                  <!-- <li class="nav-item dropdown">
                     <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i>View Invoices</a>
-                  </li>
+                  </li> -->
 
                   <!-- <li class="nav-item dropdown">
                     <a href="./view_expense.php" class="nav-link"><i class="fe fe-check-square"></i> View Expenses</a>

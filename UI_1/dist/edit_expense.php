@@ -88,12 +88,12 @@ if (isset($_POST['submit'])) {
                             <Select name="categories" class="form-control custom-select" >
                                 <Option Value="" disabled checked>---Select Category---</Option>
                                 <Option Value="<?php if(isset($_POST['categories'])) echo htmlentities($_POST['categories']); ?>"><?php echo $row['categories']?></Option>
-                                <Option Value="Repair Maintanance">Repair Maintanance</Option>
+                                <Option Value="Repair Maintenance">Repair Maintenance</Option>
                                 <Option Value="Petrol">Petrol</Option>
                                 <Option Value="Cleaning Materials">Cleaning Materials</Option>
                                 <Option Value="Refreshments">Refreshements</Option>
                                 <Option Value="Stationary">Stationary</Option>
-                                <Option Value="Maintanance Equipments">Maintanance Equipments</Option>
+                                <Option Value="Maintenance Equipments">Maintenance Equipments</Option>
                                 <Option Value="Dry-clean">Dry-Clean</Option>
                                 <Option value="Wages">Wages</Option>
                                 <Option Value="Tollgate">Tollgate</Option>

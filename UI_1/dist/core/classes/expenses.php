@@ -24,8 +24,9 @@ class Expenses
 		try{
             $query->execute();
             
-           // $expenses_id = $db->lastInsertID();		
-			//header('Location:expense.php?expenses_id='.$expenses_id);
+           	$expenses_id = $db->lastInsertID();		
+			header('Location:expense.php?expenses_id='.$expenses_id);
+
 		
 		}catch(PDOException $e){
 			die($e->getMessage());
@@ -354,6 +355,22 @@ class Expenses
 			die($e->getMessage());
 		}
 
+	}
+
+	public function display_expenses($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT * FROM expense WHERE `expense_date` BETWEEN ? AND ?  ORDER BY `expense_date` DESC");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			
+			$query->execute();
+
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+		return $query->fetchAll();
 	}
 
 	public function total_cleaning_materials($date1, $date2)
