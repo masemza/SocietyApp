@@ -54,7 +54,7 @@ if (empty($_POST) === false)
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                   <li class="nav-item">
-                    <a href="./index.php" class="nav-"><i class="fe fe-home"></i> Home</a>
+                    <a href="./index.php" class="nav-link "><i class="fe fe-home"></i> Home</a>
                   </li>
 
                   <li class="nav-item dropdown">

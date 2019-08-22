@@ -157,14 +157,15 @@ $total = $total_invoices + $total_deposits;
                               <td class="text-center">Invoice</td>
                               <td class="text-center"><?php echo $view_invoice['amount']; ?></td>               
                             </tr>  
-
+                          <?php 
+                          }?>
                           <td colspan="4" class="font-weight-bold text-uppercase text-right">Total</td>
                           <td class="font-weight-bold text-center">R<?php echo number_format($total,2); ?> </td>              
                       </table>
                       </div>
                     </div>  
                   </div>
-                  <?php }?>
+                  
                 </div>
               </div>
               

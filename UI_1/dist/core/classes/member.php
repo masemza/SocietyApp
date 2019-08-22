@@ -134,11 +134,12 @@ class Member{
 		}
 	}
 
-	public function search_member($search) 
+	public function search_member($search, $society_id) 
 	{
-		$query = $this->db->prepare("SELECT * FROM `member` where `first_name` = ? OR `last_name` = ?");
-		$query->bindValue(1, $search);
+		$query = $this->db->prepare("SELECT * FROM `member` WHERE `society_id` = ? AND `first_name` = ? OR `last_name` = ? ");
+		$query->bindValue(1, $society_id);
 		$query->bindValue(2, $search);
+		$query->bindValue(3, $search);
 
 		try{
 

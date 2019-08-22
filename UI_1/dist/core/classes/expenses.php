@@ -346,14 +346,12 @@ class Expenses
 		$query->bindValue(2, $date2);
 
 		try{
-			
 			$query->execute();
-			return $query->fetchColumn();
-			
 			
 		}catch(PDOException $e){
 			die($e->getMessage());
 		}
+		return $query->fetchColumn();
 
 	}
 
@@ -364,7 +362,39 @@ class Expenses
 		$query->bindValue(2, $date2);
 
 		try{
+			$query->execute();
+
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+		return $query->fetchAll();
+	}
+
+	public function sum_of_category($date1, $date2, $category)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = ? AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $category);
+		$query->bindValue(2, $date1);
+		$query->bindValue(3, $date2);
+
+		try{
+			$query->execute();
 			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+		return $query->fetchColumn();
+
+	}
+
+	public function search_category($date1, $date2, $category)
+	{
+		$query = $this->db->prepare("SELECT * FROM expense WHERE `categories` = ? AND `expense_date` BETWEEN ? AND ? ORDER BY `expense_date` DESC");
+		$query->bindValue(1, $category);
+		$query->bindValue(2, $date1);
+		$query->bindValue(3, $date2);
+
+		try{
 			$query->execute();
 
 		}catch(PDOException $e){

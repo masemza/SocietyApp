@@ -128,15 +128,13 @@ if (isset($_POST['submit1']))
                                                   <div class="col-12">
                                                   <?php 
                                                       if(empty($view_package)){ ?>
-                                                          Sorry!!! This Society does'nt have a Package <br>
-
-                                                        <div class="card p-3 align-items-center">
-                                                          <div class="d-flex">
-                                                              <div>
-                                                                <a href="./newPackage.php?society_id=<?php echo $society_id ?>" class="btn btn-success" role="button"> Click Here to create a Package </a>
-                                                              </div>
+                                                        <h3>
+                                                          Sorry!!! <br>
+                                                          This Society does'nt have a Package <br>
+                                                        </h3>
+                                                          <div class="text-center">
+                                                              <a href="./newPackage.php?society_id=<?php echo $society_id ?>" class="btn btn-sm btn-outline-primary" role="button"> Click here to create a Package </a>
                                                           </div>
-                                                        </div>
                                                           
                                                       <?php } else {?>
                                                     <div class="card">

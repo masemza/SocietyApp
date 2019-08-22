@@ -193,21 +193,22 @@ if (isset($_POST['submit1']))
 
 
 
-                                              <div class="row row-cards row-deck">
-              
-                                                  <div class="col-12">
-                                                    <div class="card">
-                                                      <div class="table-responsive">
+                                              
 
                                                       <?php 
                                           if(empty($errors) === false)
                                           {	
                                           ?>
                                             <form action="" method="post" class="text-center">
-                                                Sorry!!! <br>
-                                                Society name: <?php echo $search ?> does'nt exist
-                                                <br>
+                                              <div class="form-group">
+                                                <h3>Sorry!!! <br>
+                                                  Society name: "<?php echo ucfirst($search) ?>" does'nt exist
+                                                  <br>
+                                              </div>
+                                              <div class="form-group">
                                                 <button class="btn btn-secondary" type="submit" name="submit1" >Click here to view all societies</button>
+                                              </div>
+                                                </h3>
                                             </form>
     
                                         <?php }?>
@@ -219,16 +220,19 @@ if (isset($_POST['submit1']))
                                                   <?php 
                                                       if(empty($errors) === true){   
                                                         
-                                                  ?>
-    
-                                                      <h1 class="page-title">
-                                                        <?php if(isset($_POST['submit']))
-                                                        {
-                                                            echo "Results for Society Name: ".$search; 
-                                                        } 
-                                                        ?>
-                                                      </h1>
-
+                                                  ?><div class="row row-cards row-deck">
+              
+                                                  <div class="col-12">
+                                                    <h1 class="page-title">
+                                                      <div class="form-group">
+                                                      <?php if(isset($_POST['submit']))
+                                                      {
+                                                          echo 'Results for Society Name: "'.ucfirst($search).'"'; 
+                                                      } 
+                                                      ?>
+                                                      </div>
+                                                    </h1>
+                                                    <div class="card">
                                                         <table class="table table-hover table-outline table-vcenter text-nowrap card-table" id="table-data">
                                                           <thead>
 

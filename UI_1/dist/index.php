@@ -151,14 +151,25 @@ if (isset($_POST['submit1']))
                       if(empty($errors) === false)
                       {	
                       ?>
-                        <form action="" method="post" class="text-center">
-                            Sorry!!! <br>
-                            Society name: <?php echo $search ?> does'nt exist
-                            <br>
-                            <button class="btn btn-secondary" type="submit" name="submit1" >Click here to view all societies</button>
-                        </form>
-
-                      <?php }?>     
+                        <div class="col-sm-6 col-lg-12 ">
+                          <div class="card p-3 align-items-center">
+                            <div class="d-flex align-items-center">
+                              <form class="text-center" action="" method="post">                    
+                                <div class="form-group">
+                                  <h3>
+                                  Sorry!!! <br>
+                                  Society name: "<?php echo ucfirst($search) ?>" does'nt exist
+                                </div>
+                                <div class="form-group">
+                                  <button class="btn btn-secondary" type="submit" name="submit1" >Click here to view all societies</button>
+                                </div>
+                                  </h3>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      <?php 
+                      }?>     
 
                       <?php 
                       if(empty($errors) === true){   
@@ -646,7 +657,7 @@ if (isset($_POST['submit1']))
               <h1 class="page-title">
                 <?php if(isset($_POST['submit']))
                     {
-                        echo "Results for Society Name: ".$search; 
+                        echo 'Results for Society Name: "'.ucfirst($search).'"'; 
                     } 
                 ?>
               </h1>

@@ -147,7 +147,7 @@ if (isset($_POST['submit']))
                         <i class="fe fe-plus-square"></i>
                       </span>
                       <div>
-                      <h4 class="m-0"><a href="#"> <small>Total Invoices</small></a></h4>
+                      <h4 class="m-0"><a href="javascript:void(0)"> <small>Total Invoices</small></a></h4>
                       <small class="text-muted">R<?php echo number_format($total_invoices,2) ?></small>
                       </div>
                     </div>

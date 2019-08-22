@@ -123,7 +123,7 @@ if (isset($_POST['submit']))
               <Option Value="Stationary">Stationary</Option>
               <Option Value="Maintenance Equipments">Maintenance Equipments</Option>
               <Option Value="Dry-clean">Dry-Clean</Option>
-              <Option value="Dry-Clean">Wages</Option>
+              <Option value="Wages">Wages</Option>
               <Option Value="Tollgate">Tollgate</Option>
               <Option Value="Transport">Transport</Option>
               <Option Value="Grave-Mark">Grave-Mark</Option>

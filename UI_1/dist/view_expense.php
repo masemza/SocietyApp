@@ -15,8 +15,20 @@ if (isset($_POST['submit']))
 
     if(empty($errors) === true)
     {
-      $total_expense = $expenses->search_expenses($date1, $date2);
-      $expenses = $expenses->display_expenses($date1, $date2);
+      if(!empty($_POST['category']) )
+      { 
+          if(!empty($_POST['category']))
+          {
+           $category = $_POST['category'];
+          }
+          $total_expense = $expenses->sum_of_category($date1, $date2, $category); 
+          $expenses = $expenses->search_category($date1, $date2, $category);  
+      }
+      else
+      {
+          $total_expense = $expenses->search_expenses($date1, $date2);
+          $expenses = $expenses->display_expenses($date1, $date2);
+      }
 
       global $num;
 
@@ -75,11 +87,35 @@ if (isset($_POST['submit']))
                   <div class="d-flex align-items-center">
                     <div>
                       <form action="" method="post">
-                        <h4 class="text-center">Select Expense Statement </h4>&nbsp; 
-                        From <input type="date" name="date1" >
-                        To <input type="date" name="date2" > 
+                        <div class="form-group">
+                          <h4 class="text-center">Select Expense Statement </h4>&nbsp; 
+                          From <input type="date" name="date1" >
+                          To <input type="date" name="date2" > 
+                        </div>
 
-                        <input type="submit" name="submit" class="btn btn-danger" value="Search">
+                        <div class="form-group">
+                          <label class="form-label text-center">Category</label>
+                          <Select name="category" class="form-control custom-select" > 
+                            <Option Value="<?php if(isset($_POST['categories'])) echo htmlentities($_POST['categories']); ?>" disabled selected >Select Category</Option>
+                            <Option Value="Repair Maintenance">Repair Maintenance</Option>
+                            <Option Value="Petrol">Petrol</Option>
+                            <Option Value="Cleaning Materials">Cleaning Materials</Option>
+                            <Option Value="Refreshments">Refreshements</Option>
+                            <Option Value="Stationary">Stationary</Option>
+                            <Option Value="Maintenance Equipments">Maintenance Equipments</Option>
+                            <Option Value="Dry-clean">Dry-Clean</Option>
+                            <Option value="Wages">Wages</Option>
+                            <Option Value="Tollgate">Tollgate</Option>
+                            <Option Value="Transport">Transport</Option>
+                            <Option Value="Grave-Mark">Grave-Mark</Option>
+                            <Option Value="Coffin">Coffin</Option>
+                            <Option Value="Sundries">Sundries</Option>
+                          </Select>
+                        </div>
+        
+                        <div class="text-center">
+                          <input type="submit" name="submit" class="btn btn-danger" value="Search">
+                        </div>
                       </form>
                     </div>
                   </div>
@@ -139,7 +175,7 @@ if (isset($_POST['submit']))
                         <i class="fe fe-minus-square"></i>
                       </span>
                       <div>
-                      <h4 class="m-0"><a href="#"> <small>Total Expenses</small></a></h4>
+                      <h4 class="m-0"><a href="javascript:void(0)"> <small>Total Expenses</small></a></h4>
                       <small class="text-muted">R<?php echo number_format($total_expense,2) ?></small>
                       </div>
                     </div>
@@ -166,12 +202,15 @@ if (isset($_POST['submit']))
                                                   <tr>
                                                       <td class="text-center"><?php echo $num += 1 ?></td>
                                                       <td>
-                                                        <p class="font-w600 mb-1 text-center"> <?php $date=date_create($view_expense['expense_date']);
-            echo date_format($date,"d-m-Y");?></p>
-                                                        <!-- <div class="text-muted">Logo and business cards design</div> -->
+                                                        <p class="font-w600 mb-1 text-center">
+                                                          <?php 
+                                                            $date=date_create($view_expense['expense_date']);
+                                                            echo date_format($date,"d-m-Y");
+                                                          ?>
+                                                        </p>
                                                       </td>
                                                       <td class="text-center">
-                                                      <?php echo $view_expense['description']; ?>
+                                                        <?php echo $view_expense['description']; ?>
                                                       </td>
                                                       <td class="text-center"><?php echo $view_expense['name']; ?></td>
                                                       <td class="text-center"><?php echo $view_expense['categories']; ?></td>

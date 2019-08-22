@@ -22,6 +22,39 @@ $transport = $expenses->total_transport($date1, $date2);
 $tollgate = $expenses->total_tollgate($date1, $date2);
 $wages = $expenses->total_wages($date1, $date2);
 
+$expenses = $expenses->display_expenses($date1, $date2);
+
+if(isset($_POST['submit']))
+{  
+
+  if(empty($_POST['category']) === true)
+  {
+      $errors[] = 'Please select category';
+  }
+
+
+  if(empty($errors) === true)
+  {
+    if(!empty($_POST['category']))
+    {
+      $category = $_POST['category'];
+      $total_expense_category = $payment->sum_of_category($date1, $date2, $category);
+    }
+    //$total_expense_category = $payment->search_expenses($date1, $date2);
+    //$total_expense_category = $expenses->search_expenses($date1, $date2);
+    //$expenses = $expenses->display_expenses($date1, $date2);
+  }
+
+  if(!empty($_POST['category']))
+  {
+    if($_POST['category'] == "All")
+    {
+      
+      $total_expense_category = $expenses->search_expenses($date1, $date2);
+    }
+  }
+}
+
 global $num;
 
 ?>
@@ -38,6 +71,38 @@ global $num;
             <div class="row align-items-center">
 
               <div class="col-lg- ml-auto">
+              <form class="input-icon my-3 my-lg-0" action="" method="post">
+                  <br>
+                    <div class="row gutters-xs">
+                      <div class="col">
+                       
+                      <div class="form-group">
+                          <Select name="category" class="form-control custom-select" > 
+                            <Option Value="All" disabled selected >Select Category</Option>
+                            <Option Value="Repair Maintenance">Repair Maintenance</Option>
+                            <Option Value="Petrol">Petrol</Option>
+                            <Option Value="Cleaning Materials">Cleaning Materials</Option>
+                            <Option Value="Refreshments">Refreshements</Option>
+                            <Option Value="Stationary">Stationary</Option>
+                            <Option Value="Maintenance Equipments">Maintenance Equipments</Option>
+                            <Option Value="Dry-clean">Dry-Clean</Option>
+                            <Option value="Wages">Wages</Option>
+                            <Option Value="Tollgate">Tollgate</Option>
+                            <Option Value="Transport">Transport</Option>
+                            <Option Value="Grave-Mark">Grave-Mark</Option>
+                            <Option Value="Coffin">Coffin</Option>
+                            <Option Value="Sundries">Sundries</Option>
+                          </Select>
+                        </div>
+                      
+                      </div>
+                      <span class="col-auto">
+                        <button class="btn btn-secondary" type="submit" name="submit"><i class="fe fe-search"></i></button>
+                        <br>
+                      </span>
+                      
+                    </div>
+              </form>
               </div>
 
               <div class="col-lg order-lg-first">
@@ -70,7 +135,55 @@ global $num;
 
             
             <div class="row row-cards">
-              <div class="col-sm-6 col-lg-4">
+
+            <?php 
+            if(empty($errors) === true)
+            {?>
+              <?php if(isset($_POST['submit']))
+              {?>
+                <div class="col-sm-6 col-lg-">
+                  <div class="card p-3">
+                    <div class="d-flex align-items-center">
+                      <span class="stamp stamp-md bg-blue mr-3">
+                        <i class="fe fe-plus-square"></i>
+                      </span>
+                      <div>
+                        <h4 class="m-0"><a href="javascript:void(0)"><small>Total <?php echo $_POST['category'] ?></small></a></h4>
+                        <small class="text-muted">R<?php echo number_format($total_expense_category,2) ?></small>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="table-responsive push">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <th class="text-center" style="width: 1.5%"></th>
+                                <th class="text-center" style="width: 5%">Categories</th>
+                                <th class="text-center" style="width: 5%">Amount</th>
+                                <th class="text-center" style="width: 5%">View Details</th>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center"><?php echo $_POST['category'] ?></td>
+                              <td class="text-center">R<?php echo number_format($total_expense_category,2);?></td>
+                              <td class="text-center">
+                                <a href="report_expense_details.php?date1=<?php echo $date1 ?> &date2=<?php echo $date2 ?> &category=<?php echo $_POST['category'] ?>" class="btn btn-primary btn-sm"><i class="fe fe-eye"></i></a>
+                              </td>
+                            </tr>
+                        </table>
+                      </div>
+
+              
+              <?php 
+            }
+            else if($expenses)
+            {?>
+              <div class="col-sm-6 col-lg-">
                 <div class="card p-3">
                   <div class="d-flex align-items-center">
                     <span class="stamp stamp-md bg-blue mr-3">
@@ -84,13 +197,16 @@ global $num;
                   </div>
                 </div>
               </div>
-              
+            <?php 
+            ?>
+
             </div>
             <div class="row row-cards row-deck">
 
               <div class="col-12">
                   <div class="card">
                     <div class="card-body">
+                      
                       <div class="table-responsive push">
                         <table class="table table-bordered table-hover">
                             <tr>
@@ -180,6 +296,130 @@ global $num;
                           <td colspan="2" class="font-weight-bold text-uppercase text-right">Total</td>
                           <td class="font-weight-bold text-center">R<?php echo number_format($total_expense,2); ?> </td>              
                       </table>
+                      <?php 
+            }}?>
+
+
+
+              <?php 
+              if(empty($errors) === false)
+              {?>
+                <div class="col-sm-6 col-lg-">
+                <div class="card p-3">
+                  <div class="d-flex align-items-center">
+                    <span class="stamp stamp-md bg-blue mr-3">
+                      <i class="fe fe-plus-square"></i>
+                    </span>
+                    <div>
+                      <h4 class="m-0"><a href="javascript:void(0)"><small>Total Expenses</small></a></h4>
+                      <small class="text-muted">R<?php echo number_format($total_expense,2) ?></small>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row row-cards row-deck">
+
+              <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      
+                      <div class="table-responsive push">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <th class="text-center" style="width: 1.5%"></th>
+                                <th class="text-center" style="width: 5%">Categories</th>
+                                <th class="text-center" style="width: 5%">Amount</th>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">CLEANING MATERIALS</td>
+                              <td class="text-center">R<?php echo number_format($cleaning_materials,2);?></td>
+                            </tr>
+                            
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">COFFIN</td>
+                              <td class="text-center">R<?php echo number_format($coffin,2);?></td>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">DRY-CLEAN</td>
+                              <td class="text-center">R<?php echo number_format($dry_clean,2);?></td>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">GRAVE-MARK</td>
+                              <td class="text-center">R<?php echo number_format($grave_mark,2);?></td>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">MAINTENANCE EQUIPMENTS</td>
+                              <td class="text-center">R<?php echo number_format($maintenance_equipments,2);?></td>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">PETROL</td>
+                              <td class="text-center">R<?php echo number_format($petrol,2);?></td>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">REFRESHMENTS</td>
+                              <td class="text-center">R<?php echo number_format($refreshments,2);?></td>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">REPAIR MAINTENANCE</td>
+                              <td class="text-center">R<?php echo number_format($repair_maintenance,2);?></td>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">STATIONERY</td>
+                              <td class="text-center">R<?php echo number_format($stationery,2);?></td>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">SUNDRIES</td>
+                              <td class="text-center">R<?php echo number_format($sundries,2);?></td>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">TRANSPORT</td>
+                              <td class="text-center">R<?php echo number_format($transport,2);?></td>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">TOLLGATE</td>
+                              <td class="text-center">R<?php echo number_format($tollgate,2);?></td>
+                            </tr>
+
+                            <tr>
+                              <td class="text-center"><?php echo $num += 1 ?></td>
+                              <td class="text-center">WAGES</td>
+                              <td class="text-center">R<?php echo number_format($wages,2);?></td>
+                            </tr>
+
+                          <td colspan="2" class="font-weight-bold text-uppercase text-right">Total</td>
+                          <td class="font-weight-bold text-center">R<?php echo number_format($total_expense,2); ?> </td>              
+                      </table>
+              <?php }
+              ?>
+
+
+
                       </div>
                     </div>  
                   </div>

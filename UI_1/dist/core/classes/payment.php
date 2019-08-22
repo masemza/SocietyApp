@@ -834,4 +834,62 @@ class Payment
 		return $query->fetchAll();
 
 	}
+
+
+
+
+
+
+
+	public function sum_of_category($date1, $date2, $category)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `categories` = ? AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $category);
+		$query->bindValue(2, $date1);
+		$query->bindValue(3, $date2);
+
+		try{
+			$query->execute();
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+		return $query->fetchColumn();
+
+	}
+
+	public function search_expenses($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT SUM(`amount`) FROM `expense` WHERE `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			$query->execute();
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+		return $query->fetchColumn();
+
+	}
+
+	public function displaying_category_details($date1, $date2, $category)
+	{
+		$query = $this->db->prepare("SELECT * FROM `expense` WHERE `categories` = ? AND `expense_date` BETWEEN ? AND ?");
+		$query->bindValue(1, $category);
+		$query->bindValue(2, $date1);
+		$query->bindValue(3, $date2);
+
+		try{
+			$query->execute();
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+		return $query->fetchAll();
+
+	}
+
+
 }

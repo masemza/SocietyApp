@@ -158,10 +158,16 @@ if (isset($_POST['submit1']))
                                       {	
                                       ?>
                                         <form action="" method="post" class="text-center">
+
+                                          <h3>
+                                            <div class="form-group">
                                             Sorry!!! <br>
-                                            Member name: <?php echo $search ?> does'nt exist
-                                            <br>
+                                            Member name: "<?php echo ucfirst($search) ?>" does'nt exist
+                                            </div>
+                                            <div class="form-group">
                                             <button class="btn btn-secondary" type="submit" name="submit1" >Click here to view all members</button>
+                                            </div>
+                                          </h3>
                                         </form>
 
                                     <?php }?>
@@ -176,13 +182,15 @@ if (isset($_POST['submit1']))
                                               ?>
 
                                                   <h1 class="page-title">
+                                                    <div class="form-group">
                                                     <?php if(isset($_POST['submit']))
                                                     {
-                                                        echo "Results for Member Name: ".$search; 
+                                                        echo 'Results for Member Name: "'.ucfirst($search).'"'; 
                                                     } 
                                                     ?>
+                                                    </div>
                                                   </h1>
-
+                                                  
                                                   <table class="table table-bordered table-hover" id="table-data">
                                                     <tr>
                                                       <th class="text-center" style="width: 0.5%"></th>

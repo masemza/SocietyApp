@@ -22,7 +22,7 @@ if (isset($_POST['submit']))
 			$errors[] = 'Sorry that member does\'nt exists.';
 		}
 
-	$view_members = $member->search_member($search);
+	$view_members = $member->search_member($search, $society_id);
 	
 }
 
@@ -166,93 +166,114 @@ if (isset($_POST['submit1']))
                   
 
                                         <?php 
-                                          if(empty($errors) === false)
+                                          if(empty($errors) === false )
                                           {	
                                           ?>
                                             <form action="" method="post" class="text-center">
+                                                <h3>
                                                 Sorry!!! <br>
-                                                Member name: <?php echo $search ?> does'nt exist
+                                                Member name: "<?php echo ucfirst($search) ?>" does'nt exist
+                                                </h3>
                                                 <br>
                                                 <button class="btn btn-secondary" type="submit" name="submit1" >Click here to view all members</button>
                                             </form>
     
-                                        <?php }?>
-    
-    
-    
+                                          <?php 
+                                          }?>
                                                   <div class="table-responsive push">
-    
                                                   <?php 
-                                                      if(empty($errors) === true){   
+                                                  if(empty($errors) === true)
+                                                  {   
                                                         
                                                   ?>
     
                                                       <h1 class="page-title">
+                                                      <div class="form-group">
                                                         <?php if(isset($_POST['submit']))
                                                         {
-                                                            echo "Results for Member Name: ".$search; 
+                                                            echo 'Results for Member Name: "'.ucfirst($search).'"'; 
                                                         } 
                                                         ?>
+                                                        </div>
                                                       </h1>
 
-                                                  <table class="table table-bordered table-hover" id="table-data">
-                                                    <tr>
-                                                      <th class="text-center" style="width: 0.5%"></th>
-                                                      <th class="text-center" style="width: 3%">Society Name</th>
-                                                      <th class="text-center" style="width: 5%">First Name</th>
-                                                      <th class="text-center" style="width: 4%">Last Name</th>
-                                                      <th class="text-center" style="width: 1%">Gender</th>
-                                                      <th class="text-center" style="width: 3%">Contact Number</th>
-                                                      <th class="text-center" style="width: 1%">ID Number</th>
-                                                       <th class="text-center" style="width: 3%">Action</th>
-                                                     
-                                                    </tr>
-                                
-                                                    <?php foreach ($view_members as $row) { ?>
-                                                    <tr>
-                                                      <td class="text-center"><?php echo $num += 1 ?></td>
-                                                      <td>
-                                                        <p class="font-w600 mb-1 text-center"><?php echo $row['society_name']; ?></p>
-                                                        <!-- <div class="text-muted">Logo and business cards design</div> -->
-                                                      </td>
-                                                      <td class="text-center">
-                                                      <?php echo $row['first_name']; ?>
-                                                      </td>
-                                                      <td class="text-center"><?php echo $row['last_name']; ?></td>
-                                                      <td class="text-center"><?php echo $row['gender']; ?></td>
-                                                      <td class="text-center">
-                                                      <?php echo $row['contact_num']; ?>
-                                                        </td>
-                                                         <td class="text-center">
-                                                      <?php echo $row['id_number']; ?>
-                                                        </td>
-                                                        <td class="button-center">
-                                                            <!-- <a href="./edit_member.html">Edit</a> | | <a href="#">Delete</a>   -->
 
-                                                            <!-- <div class="dropdown">
-                                                                <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
+                                                      <?php 
+                                                      if(empty($view_members))
+                                                      { ?>
+                                                      <h3>
+                                                          Sorry!!! <br>This Society does'nt have a Member <br>
+                                                        </h3>
+                                                          <div class="text-center">
+                                                              <a href="./addMember.php?society_id=<?php echo $society_id ?>" class="btn btn-sm btn-outline-primary" role="button"> Click here to add a new member </a>
+                                                         </div>
+                                                          
+                                                      <?php 
+                                                      } 
+                                                      else 
+                                                      {?>
+                                                        <table class="table table-bordered table-hover" id="table-data">
+                                                          <tr>
+                                                            <th class="text-center" style="width: 0.5%"></th>
+                                                            <th class="text-center" style="width: 3%">Society Name</th>
+                                                            <th class="text-center" style="width: 5%">First Name</th>
+                                                            <th class="text-center" style="width: 4%">Last Name</th>
+                                                            <th class="text-center" style="width: 1%">Gender</th>
+                                                            <th class="text-center" style="width: 3%">Contact Number</th>
+                                                            <th class="text-center" style="width: 1%">ID Number</th>
+                                                            <th class="text-center" style="width: 3%">Action</th>
+                                                          
+                                                          </tr>
+                                      
+                                                          <?php foreach ($view_members as $row) 
+                                                          { ?>
+                                                          <tr>
+                                                            <td class="text-center"><?php echo $num += 1 ?></td>
+                                                            <td>
+                                                              <p class="font-w600 mb-1 text-center"><?php echo $row['society_name']; ?></p>
+                                                              <!-- <div class="text-muted">Logo and business cards design</div> -->
+                                                            </td>
+                                                            <td class="text-center">
+                                                            <?php echo $row['first_name']; ?>
+                                                            </td>
+                                                            <td class="text-center"><?php echo $row['last_name']; ?></td>
+                                                            <td class="text-center"><?php echo $row['gender']; ?></td>
+                                                            <td class="text-center">
+                                                            <?php echo $row['contact_num']; ?>
+                                                              </td>
+                                                              <td class="text-center">
+                                                            <?php echo $row['id_number']; ?>
+                                                              </td>
+                                                              <td class="button-center">
+                                                                  <!-- <a href="./edit_member.html">Edit</a> | | <a href="#">Delete</a>   -->
 
-                                                              </div> -->
+                                                                  <!-- <div class="dropdown">
+                                                                      <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
 
-                                                              <div class="btn-list text-center" class="input-group button-center">
-                                                                  <div class="btn-list text-center" class="input-group-prepend">
-                                                                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                      Action
-                                                                    </button>
-                                                                    <div class="dropdown-menu">
-                                                                      <a href="./edit_member.php?member_id=<?php echo $row['member_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-edit"></i> Edit Member </a>
-                                                                      <a onclick ="return confirm('Are you sure you want to delete this society?')" href="./delete_member.php?member_id=<?php echo $row['member_id']?>" class="dropdown-item" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Delete Member</a>
-                                                                    </div>
-                                                                  </div>
-                                                                  </div>
-                                                                  
-                                                        </td>
-                                                    </tr>
-                                                    <?php } ?>
-                                
-                                                   
-                                <?php } ?>
-                                                  </table>
+                                                                    </div> -->
+
+                                                                    <div class="btn-list text-center" class="input-group button-center">
+                                                                        <div class="btn-list text-center" class="input-group-prepend">
+                                                                          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                            Action
+                                                                          </button>
+                                                                          <div class="dropdown-menu">
+                                                                            <a href="./edit_member.php?member_id=<?php echo $row['member_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-edit"></i> Edit Member </a>
+                                                                            <a onclick ="return confirm('Are you sure you want to delete this society?')" href="./delete_member.php?member_id=<?php echo $row['member_id']?>" class="dropdown-item" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Delete Member</a>
+                                                                          </div>
+                                                                        </div>
+                                                                        </div>
+                                                                        
+                                                              </td>
+                                                          </tr>
+                                                          <?php 
+                                                          } ?>
+                                      
+                                                        
+                                                  <?php 
+                                                      }
+                                                  } ?>
+                                                        </table>
                                                 </div> 
                                                                                            
                                           </form>
