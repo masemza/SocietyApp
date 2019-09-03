@@ -1,20 +1,20 @@
 <?php
 require 'core/init.php';
 $general->logged_out_protect();
+
+$id = htmlentities($user['id']);
 $username = htmlentities($user['username']);
 
 $package_id =$_GET['package_id'];
-$view_package = $package->package_data($package_id);	
+$view_package = $package->package_data($package_id);
 
-// foreach($view_receipt as $row)
-// {
-//     $society_id = $row['society_id'];
-// }
-// $last_balance = $payment->get_last_balance($society_id);
+global $num;
 
-// $bal = substr($last_balance,1);
+$dirname = "demo/brand/S  F Logo";
+$images = glob($dirname."*.jpg");
 
-//global $num;
+foreach($images as $image) 
+
 
 ?>
 
@@ -22,6 +22,13 @@ $view_package = $package->package_data($package_id);
 <html lang="en" dir="ltr">
 <?php include 'incl/head.php' ;?>
 <?php include 'incl/header.php' ;?>
+
+<style>
+  .tab 
+  { 
+    position:absolute;left:150px; 
+  }
+</style>
 
   <body class="">
     <div class="page">
@@ -41,22 +48,6 @@ $view_package = $package->package_data($package_id);
                     <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
                   </li>
 
-                  <li class="nav-item dropdown">
-                    <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i>View Invoices</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./view_expense.php" class="nav-link"><i class="fe fe-check-square"></i> View Expenses</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-shopping-cart"></i> View Withdrawals</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./report.php" class="nav-link"><i class="fe fe-file-text"></i> View Transactions</a>
-                  </li>
-
                 </ul>
               </div>
             </div>
@@ -67,47 +58,82 @@ $view_package = $package->package_data($package_id);
             <div class="page-header">
               <h1 class="page-title">
 
-              <?php foreach ($view_package as $row) ?>
-                <a href="./view_package.php?society_id=<?php echo $row['society_id'] ?>" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>View Package History</a> | Package
-              <?php ?>
+                <?php foreach ($view_package as $row) ?>
+                <a href="./view_package.php?society_id=<?php echo $row['society_id'] ?> " style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>View Package History</a> | Package
 
               </h1>
             </div>
+
+
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title"> View Package </h3>
+                <h3 class="card-title"> Package </h3>
                 <div class="card-options">
                   <button type="button" class="btn btn-primary btn-sm" onclick="javascript:window.print();"><i class="fe fe-download"></i> Download Package</button>
-                </div>
               </div>
+            </div>
+
               <div class="card-body">
-              <?php //foreach ($view_statement as $row) { 
-                        //$society_name = $row['society_name'];
-                        //$society_id = $row['society_id'];
-                    //}
-                        ?>
+
+
+
+                <div class=" text-center">
+                    <p class="h2"> <u>PACKAGE</u> </p>
+                </div>
+
+                <div class="row my-6">
+                  <div class="col-6">
+                    <!-- <p class="h3">Company</p> -->
+                    <?php //foreach ($view_invoice as $row) ?>
+                    
+                    <?php
+                        echo "<img src='$image' style='max-width:250px; max-height:250px;' /> ";
+                    ?>
+                  <br><p class="h5">PO Box 22
+                  <br>Jane Furse 1085</p>
+                  </div>
+                  
+
+                    <div class="col-6 text-right">
+                      <p class="h2">SAMELLEN FUNERALS cc</p>
+                      <p class="h4">T/A HELPMEKAAR FUNERAL PARLOUR C.C.</p>
+
+                      <!-- <p class="h2">SESHEGO FUNERALS </p> -->
+
+                      <br><br><br>
+                      <p class="h5">
+                          Tel: (013) 265 1031 <br>
+                          Fax: (015) 223 0378 <br>
+                          Email: 
+                      </p>
+                    </div>
+                </div>
+                
+                <hr>
+
+                    <!-- <div class="col-12 text-center">
+                        <p class="h2"> INVOICE</p>
+                    </div> -->
  
                 <div class="row my-6">
                   <div class="col-6">
                     <!-- <p class="h3">Company</p> -->
-                    <?php foreach ($view_package as $row) ?>
-                    <p class="h2">Seshego Funerals</p><?php //echo $row['society_name'] ?></p>
-                    <address>
-                    <?php //    foreach ($view_society as $row)?>
-                        <!-- Location: <?php //echo $row['location'] ?> -->
-                    </address>
+                    <?php //foreach ($view_invoice as $row) ?>
+
+                    <p class="h3"> <u> <?php //echo $row['name'] ?></u> </p>
+                    <!-- <p class="h3">Company: </p> -->
                   </div>
                   <div class="col-6 text-right">
-                    <!-- <p class="h3">Client</p> -->
-                    <address>
-
-                        <!-- <p class="h4"> Package no: #<?php //echo $row['package_id'] ?></p> -->
-                     <p> Date: <?php echo date("d-m-Y"); ?> </p>
-                    </address>
+                     <p class="h4"> <?php echo "Date: "?> <u><?php echo date("d-m-Y") ?> </u> </p>
                   </div>
                 </div>
+
+                <h4> <p class="text-right"> PACKAGE NO: <?php echo $package_id ?></p> </h4>
+
                 <div class="table-responsive push">
                   <table class="table table-bordered table-hover">
+                  <?php foreach ($view_package as $row)
+                  {?>
                     <tr>
                       <th class="text-left" >Package was Created On</th>
                         <td class="text-center">
@@ -143,15 +169,34 @@ $view_package = $package->package_data($package_id);
                         <td class="text-center">R<?php echo number_format($row['funeral_service'],2); ?></td>
                     </tr>
 
-                    <tr>
+                    <!-- <tr>
                         <th class="text-left font-weight-bold text-uppercase text-left" >Total</th>
-                        <td class="text-center font-weight-bold text-uppercase text-right" >R<?php echo number_format($row['total'],2); ?></td>
-                    </tr>
+                        <td class="text-center font-weight-bold text-uppercase text-right" >R<?php //echo number_format($row['total'],2); ?></td>
+                    </tr> -->
 
-                  </table>
+                  <?php } ?>
+
+                  </table>  
                 </div>
+
+                  <hr>
+                <div class="row my-6">
+                  <div class="col-6">
+                    <!-- <p class="h3">Bank Details</p>
+                    <p class="h4">Account holder <span class="tab"> : </span></p>
+                    <p class="h4">Bank <span class="tab"> : </span></p>
+                    <p class="h4">Account number <span class="tab"> : </span></p>
+                    <p class="h4">Reference <span class="tab"> : </span></p> -->
+                  </div>
+                  <div class="col-6 text-right">
+                     <p class="h4">Total: R<?php echo number_format($row['total'],2); ?></p>
+                  </div>
+                </div>
+
+                <hr>
                 <p class="text-muted text-center">Thank you very much for doing business with us. We look forward to working with you again!</p>
-              </div>
+
+
             </div>
           </div>
         </div>

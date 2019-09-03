@@ -1317,10 +1317,23 @@ if (isset($_POST['submit1']))
               <div class="col-lg-6 col-sm-6">
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title">Statement</h3>
+                    <h3 class="card-title">Statements</h3>
                   </div>
                   <div class="table-responsive">
                     <table class="table card-table table-vcenter text-nowrap">
+                      <thead>
+                        <tr>
+                          <!--<th class="w-1">Statement No.</th>
+                          <th>Statement Date</th>
+                          <!-- <th>Client</th> -->
+                          <!-- <th>VAT No.</th> -->
+                          <!-- <th>Created</th> -->
+                          <!-- <th>Status</th> -->
+                          <!-- <th>Price</th> -->
+                          <!-- <th></th> -->
+                         <!-- <th class="text-right">Action</th>-->
+                        </tr>
+                      </thead>
                       <tbody>
                         <tr>
                           <!--<td><span class="text-muted"><?php echo $row['society_id'] ?></span></td>

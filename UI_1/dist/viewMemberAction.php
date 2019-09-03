@@ -5,7 +5,7 @@ global $num;
 
     if(isset($_POST['query'])){
         $search = $_POST['query'];
-        $stmt = $conn->prepare("SELECT * FROM member WHERE first_name LIKE CONCAT('%',?,'%') OR last_name LIKE CONCAT('%',?,'%')");
+        $stmt = $conn->prepare("SELECT * FROM member WHERE first_name LIKE CONCAT('%',?,'%') OR last_name LIKE CONCAT('%',?,'%') ");
         $stmt->bind_param("ss",$search,$search);
     }
     else{

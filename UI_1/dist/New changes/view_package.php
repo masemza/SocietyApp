@@ -9,10 +9,20 @@ $username = htmlentities($user['username']);
 
 $society_id = $_GET['society_id'];
 $view_package = $package->packageData($society_id);
+global $num;
 
-$view_admin = $users->userdata($id);
+$dirname = "demo/brand/S  F Logo";
+$images = glob($dirname."*.jpg");
 
-/*if (isset($_POST['submit']))
+foreach($images as $image) 
+
+
+?>
+
+
+
+
+<!-- /*if (isset($_POST['submit']))
 {
 	$search = $_POST['search'];
 	
@@ -36,7 +46,7 @@ if (isset($_POST['submit1']))
 	$view_societies = $society->societyInformation();
 }*/
 
-?>
+?> -->
 
 <!doctype html>
 <html lang="en" dir="ltr">
@@ -77,13 +87,14 @@ if (isset($_POST['submit1']))
 
               </div>
 
-              <div class="col-lg order-lg-first">
+               <div class="col-lg order-lg-first"> 
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                   <li class="nav-item">
                     <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
                   </li>
-
-                  <!-- <li class="nav-item dropdown">
+                </ul>
+              </div>
+                  <!-- <li class="nav-item dropdown"> 
                     <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i>View Invoices</a>
                   </li>
 
@@ -97,13 +108,13 @@ if (isset($_POST['submit1']))
 
                   <li class="nav-item dropdown">
                     <a href="./report.php" class="nav-link"><i class="fe fe-file-text"></i> View Transactions</a>
-                  </li> -->
+                  </li>
 
                 </ul>
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         
         
@@ -112,10 +123,52 @@ if (isset($_POST['submit1']))
                 <div class="container">
                   <div class="page-header">
                       <h1 class="page-title">
-                          <a href="view_statements.php?society_id=<?php echo $society_id ?>" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Society Details</a> | Package History Details
+                          <a href="./view_statements.php" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Society Details</a> | Package History Details
                         </h1>
                   </div>
-      
+        <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"> Package</h3>
+                <div class="card-options">
+                  <button type="button" class="btn btn-primary btn-sm" onclick="javascript:window.print();"><i class="fe fe-download"></i> Download package</button>
+              </div>
+            </div>
+
+              <div class="card-body">
+
+
+
+                <div class=" text-center">
+                    <p class="h2"> <u>PACKAGE</u> </p>
+                </div>
+
+                <div class="row my-6">
+                  <div class="col-6">
+                    <!-- <p class="h3">Company</p> -->
+                    <?php foreach ($view_package as $row) ?>
+                    
+                    <?php
+                        echo "<img src='$image' style='max-width:250px; max-height:250px;' /> ";
+                    ?>
+                  <br><p class="h5">PO Box 22
+                  <br>Jane Furse 1085</p>
+                  </div>
+                  
+
+                    <div class="col-6 text-right">
+                      <p class="h2">SAMELLEN FUNERALS cc</p>
+                      <p class="h4">T/A HELPMEKAAR FUNERAL PARLOUR C.C.</p>
+
+                      <!-- <p class="h2">SESHEGO FUNERALS </p> -->
+
+                      <br><br><br>
+                      <p class="h5">
+                          Tel: (013) 265 1031 <br>
+                          Fax: (015) 223 0378 <br>
+                          Email: 
+                      </p>
+                    </div>
+                </div>
                           <div class="col-lg-12">
                                   <div class="card">
 

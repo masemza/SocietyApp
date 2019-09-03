@@ -138,7 +138,7 @@ if (isset($_POST['submit']))
             <div class="container">
                 <div class="page-header">
 						<h1 class="page-title">
-								<a href="index.php" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Home</a> | Withdraw Money
+								<a href="view_statements.php?society_id=<?php echo $society_id ?>" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Society Details</a> | Withdraw Money
 							  </h1>
                 </div>
 

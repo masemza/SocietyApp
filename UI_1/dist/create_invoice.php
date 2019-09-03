@@ -93,6 +93,7 @@ if (isset($_POST['submit']))
                       <div class="form-group">
                         <label class="form-label">Description</label>
                         <input type="text" name="description" class="form-control" placeholder="Description" required="required" value="<?php if(isset($_POST['description'])) echo htmlentities($_POST['description']); ?>">
+                      
                       </div>
                     </div>
 

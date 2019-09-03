@@ -96,7 +96,7 @@ if (isset($_POST['submit']))
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                   <li class="nav-item">
-                    <a href="./index.php" class="nav-link"><i class="fe fe-home"></i> Home</a>
+                    <a href="./view_statements.php" class="nav-link"><i class="fe fe-home"></i> Home</a>
                   </li>
                   <!-- <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i>Transaction</a>
@@ -145,7 +145,7 @@ if (isset($_POST['submit']))
                 <div class="container">
                   <div class="page-header">
                       <h1 class="page-title">
-                          <a href="view_statements.php?society_id=<?php echo $society_id ?>" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Society Details</a> | Add a new Member
+                                              <a href="./view_statements.php?society_id=<?php echo $row['society_id'] ?>" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Society Details</a> | Add a new Member
                         </h1>
                   </div>
       

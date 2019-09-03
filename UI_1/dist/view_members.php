@@ -132,7 +132,7 @@ if (isset($_POST['submit1']))
                 <div class="container">
                   <div class="page-header">
                       <h1 class="page-title">
-                          <a href="index.php" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Home</a> | Member Details
+                          <a href="view_statements.php?society_id=<?php echo $society_id ?>" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Society Details</a> | Member Details
                         </h1>
                   </div>
       
@@ -334,7 +334,7 @@ if (isset($_POST['submit1']))
         $("#search_text").keyup(function(){
             var search = $(this).val();
             $.ajax({
-                url:'view_memberAction.php',
+                url:"view_memberAction.php?society_id=<?php echo $society_id; ?>",
                 method:'post',
                 data:{query:search},
                 success:function(response){
