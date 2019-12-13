@@ -134,7 +134,11 @@ if (isset($_POST['submit']))
             <div class="col-lg-12">
               <form class="card" action="" method="post">
                 <div class="card-body">
-                  
+                  <?php 
+                  if(empty($errors) === false)
+                  {
+                    echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';  
+                  }?>
                   <div class="row">
                     
                     <div class="col-sm-6 col-md-12">
@@ -245,14 +249,6 @@ But that's the difference in our opinions.</textarea>
                 </div>
 
               </form>
-
-              <br>
-              <?php 
-			          if(empty($errors) === false)
-                {
-                  echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
-                }
-              ?>
               
             </div>
             <!-- <div class="col-lg-4">

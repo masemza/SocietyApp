@@ -95,6 +95,46 @@ class Member{
 
 	}
 
+	public function member_id_number_exists_for_each_society($id_number_of_deceased, $society_name) {
+	
+		$query = $this->db->prepare("SELECT COUNT(`id_number`) FROM `member` WHERE `id_number`= ? AND society_name = ?");
+		$query->bindValue(1, $id_number_of_deceased);
+		$query->bindValue(2, $society_name);
+	
+		try{
+
+			$query->execute();
+			$rows = $query->fetchColumn();
+
+			if($rows == 1){
+				return true;
+			}else{
+				return false;
+			}
+
+		} catch (PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function get_member_id_using_ID_Number($id_number_of_deceased) 
+	{
+		$query = $this->db->prepare("SELECT * FROM `member` WHERE id_number = ?");
+		$query->bindValue(1, $id_number_of_deceased);
+
+		try{
+
+			$query->execute();
+
+			return $query->fetchAll();
+
+		} catch(PDOException $e){
+
+			die($e->getMessage());
+		}
+	}
+
 	public function member_exists($search) 
 	{
 		$query = $this->db->prepare("SELECT COUNT(`member_id`) FROM `member` WHERE `first_name` = ? OR `last_name` = ?");
@@ -134,12 +174,70 @@ class Member{
 		}
 	}
 
-	public function search_member($search, $society_id) 
+	public function memberInformationForEachSociety($society_name) 
 	{
-		$query = $this->db->prepare("SELECT * FROM `member` WHERE `society_id` = ? AND `first_name` = ? OR `last_name` = ? ");
-		$query->bindValue(1, $society_id);
+		$deceased = "No";
+		$query = $this->db->prepare("SELECT * FROM `member` WHERE society_name = ? AND deceased = ? ");
+		$query->bindValue(1, $society_name);
+		$query->bindValue(2, $deceased);
+
+		try{
+
+			$query->execute();
+
+			return $query->fetchAll();
+
+		} catch(PDOException $e){
+
+			die($e->getMessage());
+		}
+	}
+
+	public function search_if_member_exists($first_name, $last_name) 
+	{
+		$query = $this->db->prepare("SELECT COUNT(`society_name`) FROM `member` WHERE `first_name` = ? AND `last_name` = ? ");
+		$query->bindValue(1, $first_name);
+		$query->bindValue(2, $last_name);
+
+		try{
+
+			$query->execute();
+			$rows = $query->fetchColumn();
+
+			if($rows == 1){
+				return true;
+			}else{
+				return false;
+			}
+
+		} catch (PDOException $e){
+			die($e->getMessage());
+		}
+	}
+
+	public function get_member_id($first_name, $last_name)
+	{
+		$query = $this->db->prepare("SELECT member_id FROM `member` WHERE `first_name` = ? AND `last_name` = ? ");
+		$query->bindValue(1, $first_name);
+		$query->bindValue(2, $last_name);
+
+		try{
+
+			$query->execute();
+
+			return $query->fetchColumn();
+
+		} catch(PDOException $e){
+
+			die($e->getMessage());
+		}
+	}
+
+	public function search_member($search) 
+	{
+		$query = $this->db->prepare("SELECT * FROM `member` WHERE `first_name` = ? OR `last_name` = ? ");
+		$query->bindValue(1, $search);
 		$query->bindValue(2, $search);
-		$query->bindValue(3, $search);
 
 		try{
 
@@ -182,13 +280,13 @@ class Member{
 		}
 		return $query->fetchAll();
 	}
-	
-	public function deleteMember($member_id) {
 
-		$query = $this->db->prepare("DELETE  FROM `member` WHERE `member_id` = ?");
-		
-		$query->bindValue(1, $member_id);
-		
+	public function get_All_Active_Members($society_id) {
+		$deceased = "No";
+		$query = $this->db->prepare("SELECT * FROM member WHERE `society_id` = ? AND deceased = ?");
+		$query->bindValue(1, $society_id);
+		$query->bindValue(2, $deceased);
+
 		try{
 
 			$query->execute();
@@ -197,10 +295,25 @@ class Member{
 
 			die($e->getMessage());
 		}
-		
+		return $query->fetchAll();
 	}
 
+	public function get_All_Nonactive_Members($society_id) {
+		$deceased = "Yes";
+		$query = $this->db->prepare("SELECT * FROM member WHERE `society_id` = ? AND deceased = ?");
+		$query->bindValue(1, $society_id);
+		$query->bindValue(2, $deceased);
 
+		try{
+
+			$query->execute();
+
+		} catch(PDOException $e){
+
+			die($e->getMessage());
+		}
+		return $query->fetchAll();
+	}
 
 	public function searching_member($search) {
 
@@ -216,6 +329,42 @@ class Member{
 			die($e->getMessage());
 		}
 		return $query->fetchAll();
+	}
+
+	public function total_num_society($society_id) 
+    {
+    	$deceased = "No";
+		$query = $this->db->prepare("SELECT COUNT(`member_id`) FROM `member` WHERE society_id = ? AND deceased = ?");
+		$query->bindValue(1, $society_id);
+		$query->bindValue(2, $deceased);
+	
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function deleteMember($member_id) 
+	{
+		$query = $this->db->prepare("DELETE  FROM `member` WHERE `member_id` = ?");
+		
+		$query->bindValue(1, $member_id);
+		
+		try{
+
+			$query->execute();
+
+		} catch(PDOException $e){
+
+			die($e->getMessage());
+		}
+		
 	}
 
 }

@@ -1,7 +1,7 @@
 <?php
   require 'core/init.php';
  
-	$member_id =$_REQUEST['member_id'];
+	$member_id = $_GET['member_id'];
 	
 	$member->deleteMember($member_id);
 	

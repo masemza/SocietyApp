@@ -80,24 +80,34 @@ if (isset($_POST['submit1']))
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                   <li class="nav-item">
-                    <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
+                    <a href="./index.php" class="nav-link"><i class="fe fe-home"></i> Home</a>
                   </li>
 
-                  <!-- <li class="nav-item dropdown">
-                    <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i>View Invoices</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./view_expense.php" class="nav-link"><i class="fe fe-check-square"></i> View Expenses</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-shopping-cart"></i> View Withdrawals</a>
+                  <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-users"></i>Manage Members</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="./view_members.php?society_id=<?php echo $society_id ?>" class="dropdown-item "><i class="fe fe-users"></i>View Members</a>
+                      <a href="./addMember.php?society_id=<?php echo $society_id; ?>" class="dropdown-item "><i class="fe fe-user-plus"></i>Add A New Member</a>
+                    </div>
                   </li>
 
                   <li class="nav-item dropdown">
-                    <a href="./report.php" class="nav-link"><i class="fe fe-file-text"></i> View Transactions</a>
-                  </li> -->
+                    <a href="./view_package.php?society_id=<?php echo $society_id ?>" class="nav-link active"><i class="dropdown-icon fe fe-layers"></i> View Package</a>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a href="./view_society_funeral_arrangement.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="dropdown-icon fe fe-activity"></i> View Funeral Arrangements</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-menu"></i>More</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="./create_invoice.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Capture Invoice</a>
+                      <a href="./create_expense.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Capture Expense</a>
+                      <a href="./view_report.php" class="dropdown-item "><i class="fe fe-file-text"></i>View Report</a>
+                      <a href="./manage_members.php" class="dropdown-item "><i class="fe fe-users"></i>Main Member's Dashboard</a>
+                    </div>
+                  </li>
 
                 </ul>
               </div>

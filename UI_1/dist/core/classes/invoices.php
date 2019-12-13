@@ -24,7 +24,7 @@ class Invoices
             $query->execute();
             
             $invoice_id = $db->lastInsertID();		
-			header('Location:invoice.php?invoice_id='.$invoice_id);
+			header('Location: confirm_invoice.php?invoice_id='.$invoice_id);
 		
 		}catch(PDOException $e){
 			die($e->getMessage());
@@ -49,6 +49,7 @@ class Invoices
 		try
 		{
 			$query->execute();
+			header('Location: confirm_invoice.php?invoice_id='.$invoice_id);
 		}
 			
 		catch(PDOException $e)

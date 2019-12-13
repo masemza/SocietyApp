@@ -34,8 +34,15 @@ $username = htmlentities($user['username']);
         </div>
 
         <div class="my-3 my-md-5">
+          <div class="container">
+            <div class="page-header">
+              <h1 class="page-title">
+                <a href="./view_statements.php?society_id=<?php echo $society_id ?>.php" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Empty Page</a> | Empty Page
+              </h1>
+            </div>
         </div>
       </div>
+    </div>
       
 
       <?php include 'incl/footer.php' ;?>

@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
 			
 		$username 	= htmlentities($_POST['username']);
 		$password 	= $_POST['password'];
-		$email 		= htmlentities($_POST['email']);
+		$email 		  = htmlentities($_POST['email']);
 		
 		$users->register($password, $email, $username);
 		$login = $users->login($email, $password);
@@ -127,23 +127,23 @@ if (isset($_POST['submit'])) {
                     <input type="password" name="password" class="form-control" placeholder="Password">
                   </div>
 
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label class="custom-control custom-checkbox">
                       <input type="checkbox" class="custom-control-input" />
                       <span class="custom-control-label">Agree the <a href="terms.html">terms and policy</a></span>
                     </label>
-                  </div>
+                  </div> -->
                   <div class="form-footer">
                     <button type="submit" name="submit" class="btn btn-primary btn-block">Create new account</button>
                   </div>
                 </div>
 
                 <?php 
-		if(empty($errors) === false){
-			echo '<p>' . implode('</p><p>', $errors) . '</p>';	
-		}
-
-        ?>
+			        if(empty($errors) === false)
+                    {
+                        echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                    }
+                ?>
         
               </form>
               <div class="text-center text-muted">

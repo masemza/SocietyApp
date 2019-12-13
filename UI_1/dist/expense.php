@@ -5,16 +5,14 @@ $username = htmlentities($user['username']);
 
 $expenses_id =$_GET['expenses_id'];
 $view_expense = $expenses->expensedata($expenses_id);	
+foreach ($view_expense as $row) {}
 
-// foreach($view_receipt as $row)
-// {
-//     $society_id = $row['society_id'];
-// }
-// $last_balance = $payment->get_last_balance($society_id);
+$num = 0;
 
-// $bal = substr($last_balance,1);
+$dirname = "demo/brand/S  F Logo";
+$images = glob($dirname."*.jpg");
 
-//global $num;
+foreach($images as $image) {}
 
 ?>
 
@@ -26,14 +24,9 @@ $view_expense = $expenses->expensedata($expenses_id);
   <body class="">
     <div class="page">
       <div class="page-main">
-
-
-
-
         <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
           <div class="container">
             <div class="row align-items-center">
-
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
 
@@ -46,60 +39,74 @@ $view_expense = $expenses->expensedata($expenses_id);
             </div>
           </div>
         </div>
+
         <div class="my-3 my-md-5">
           <div class="container">
             <div class="page-header">
               <h1 class="page-title">
-
-              <?php foreach ($view_expense as $row) ?>
-                <a href="./view_expense.php" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>View Expenses</a> | Expense
-              <?php ?>
-
+                <?php foreach ($view_expense as $row) ?>
+                  <a href="./view_expense.php" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>View Expenses</a> | Expense
+                <?php ?>
               </h1>
             </div>
+
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title"> View Expense </h3>
+                <h3 class="card-title">Expense</h3>
                 <div class="card-options">
                   <button type="button" class="btn btn-primary btn-sm" onclick="javascript:window.print();"><i class="fe fe-download"></i> Download Expense</button>
                 </div>
               </div>
-              <div class="card-body">
-              <?php //foreach ($view_statement as $row) { 
-                        //$society_name = $row['society_name'];
-                        //$society_id = $row['society_id'];
-                    //}
-                        ?>
- 
-                <div class="row my-6">
-                  <div class="col-6">
-                    <!-- <p class="h3">Company</p> -->
-                    <?php foreach ($view_expense as $row) ?>
-                    <p class="h2">Seshego Funerals</p><?php //echo $row['society_name'] ?></p>
-                    <address>
-                    <?php //    foreach ($view_society as $row)?>
-                        <!-- Location: <?php //echo $row['location'] ?> -->
-                    </address>
-                  </div>
-                  <div class="col-6 text-right">
-                    <!-- <p class="h3">Client</p> -->
-                    <address>
 
-                        <!-- <p class="h4"> Package no: #<?php //echo $row['package_id'] ?></p> -->
-                     <p> Date: <?php echo date("d-m-Y"); ?> </p>
-                    </address>
+              <div class="card-body">
+                <div class=" text-center">
+                    <p class="h2"> <u>Expense</u> </p>
+                </div>
+
+                <div class="row my-6">
+                  <div class="col-6">        
+                    <?php
+                      echo "<img src='$image' style='max-width:250px; max-height:250px;' /> ";
+                    ?>
+                    <br><p class="h5">PO Box 22
+                    <br>Jane Furse 1085</p>
+                  </div>  
+
+                  <div class="col-6 text-right">
+                    <p class="h2">SAMELLEN FUNERALS cc</p>
+                    <p class="h4">T/A HELPMEKAAR FUNERAL PARLOUR C.C.</p>
+                    <br><br><br>
+                    <p class="h5">
+                      Tel: (013) 265 1031 <br>
+                      Fax: (015) 223 0378 <br>
+                      Email: 
+                    </p>
                   </div>
                 </div>
+                  
+                <hr>
+                <div class="row my-6">
+                  <div class="col-6">
+                    <p class="h3">To: <u> <?php echo $row['name'] ?></u> </p>
+                  </div>
+                  
+                  <div class="col-6 text-right">
+                    <p class="h4"> <?php echo "Date: "?> <u><?php echo date("d-m-Y");?> </u> </p>
+                  </div>
+                </div>
+
+                <h4> <p class="text-right"> INVOICE NO: <?php echo $row['expenses_id'] ?></p> </h4>
+
                 <div class="table-responsive push">
                   <table class="table table-bordered table-hover">
                     <tr>
                       <th class="text-left" >Expense made On</th>
-                        <td class="text-center">
-                        <?php
-                            $date = date_create($row['expense_date']);
-                            echo date_format($date, 'd-m-Y');
-                        ?>
-                        </td>
+                      <td class="text-center">
+                      <?php
+                          $date = date_create($row['expense_date']);
+                          echo date_format($date, 'd-m-Y');
+                      ?>
+                      </td>
                     </tr>
 
                     <tr>
@@ -108,23 +115,33 @@ $view_expense = $expenses->expensedata($expenses_id);
                     </tr>
 
                     <tr>
-                        <th class="text-left" >Name</th>
-                        <td class="text-center"><?php echo $row['name']; ?></td>
+                      <th class="text-left" >Name</th>
+                      <td class="text-center"><?php echo $row['name']; ?></td>
                     </tr>
 
                     <tr>
-                        <th class="text-left" >Category</th>
-                        <td class="text-center"><?php echo $row['categories']; ?></td>
+                      <th class="text-left" >Category</th>
+                      <td class="text-center"><?php echo $row['categories']; ?></td>
                     </tr>
 
                     <tr>
-                        <th class="text-left font-weight-bold text-uppercase text-left" >Amount</th>
-                        <td class="text-center font-weight-bold text-uppercase text-right" >R<?php echo number_format($row['amount'],2); ?></td>
+                      <th class="text-left font-weight-bold text-uppercase text-left" >Amount</th>
+                      <td class="text-center font-weight-bold text-uppercase text-right" >R<?php echo number_format($row['amount'],2); ?></td>
                     </tr>
 
                   </table>
                 </div>
+
+                <hr>
+                <div class="row my-12">
+                  <div class="col-12 text-right">
+                     <p class="h4">Total: R<?php echo number_format($row['amount'],2); ?></p>
+                  </div>
+                </div>
+
+                <hr>
                 <p class="text-muted text-center">Thank you very much for doing business with us. We look forward to working with you again!</p>
+
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 <?php
   require 'core/init.php';
  
-	$package_id =$_GET['package_id'];
+	$package_id = $_GET['package_id'];
 	
 	$package->delete_package($package_id);
 	

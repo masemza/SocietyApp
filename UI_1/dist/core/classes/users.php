@@ -37,7 +37,7 @@ class Users{
 	{
 		$query = $this->db->prepare("UPDATE `users` SET
 								`email`			= ?,
-								`username`				= ?
+								`username`		= ?
 								
 								WHERE `id` 	= ? 
 								");
@@ -49,11 +49,28 @@ class Users{
 		try{
 			$query->execute();
 
-			/*if($query->execute())
-			{
-				$no=$query->rowCount();
-				$str=" $no record updated ";
-			}*/
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}	
+	}
+
+	public function updateUser2($email, $username, $type, $id)
+	{
+		$query = $this->db->prepare("UPDATE `users` SET
+								`email`			= ?,
+								`username`		= ?,
+								`type`			= ?
+								
+								WHERE `id` 	= ? 
+								");
+
+		$query->bindValue(1, $email);
+		$query->bindValue(2, $username);
+		$query->bindValue(3, $type);
+		$query->bindValue(4, $id);
+
+		try{
+			$query->execute();
 
 		}catch(PDOException $e){
 			die($e->getMessage());
@@ -289,15 +306,16 @@ class Users{
 		$email_code = $email_code = uniqid('code_',true); // Creating a unique string.
 		
 		$password   = $bcrypt->genHash($password);
-
-		$query 	= $this->db->prepare("INSERT INTO `users` (`password`, `email`, `username`, `ip`, `time`, `email_code`) VALUES (?, ?, ?, ?, ?, ?) ");
-
+		$type = "admin";
+		
+		$query 	= $this->db->prepare("INSERT INTO `users` (`password`, `email`, `username`, `ip`, `time`, `email_code`, `type`) VALUES (?, ?, ?, ?, ?, ?, ?) ");
 		$query->bindValue(1, $password);
 		$query->bindValue(2, $email);
 		$query->bindValue(3, $username);
 		$query->bindValue(4, $ip);
 		$query->bindValue(5, $time);
 		$query->bindValue(6, $email_code);
+		$query->bindValue(7, $type);
 
 		try{
 			$query->execute();
@@ -480,6 +498,153 @@ class Users{
 		}
 		
 	}
+
+	public function get_user_id($email) 
+    {
+        global $db;
+        $query = $this->db->prepare("SELECT `id` FROM `users` WHERE email = ?");
+        $query->bindValue(1, $email);
+        
+        try{
+            $query->execute();
+        }catch(PDOException $e){
+            die($e->getMessage());
+        }
+
+        return $query->fetchColumn();
+
+    }
+
+    public function check_if_logo_has_values($user_id) 
+    {
+        global $db;
+        $query = $this->db->prepare("SELECT * FROM `logo` WHERE user_id = ?");
+        $query->bindValue(1, $user_id);
+        
+        try{
+            $query->execute();
+        }catch(PDOException $e){
+            die($e->getMessage());
+        }
+
+        return $query->fetchAll();
+
+    } 
+
+    public function create_logo($user_id, $file_name)
+	{
+		if(isset($_FILES['files']))
+		{
+            $errors= array();
+			foreach($_FILES['files']['tmp_name'] as $key => $tmp_name )
+			{
+                $file_name = $key.$_FILES['files']['name'][$key];
+                $file_size =$_FILES['files']['size'][$key];
+                $file_tmp =$_FILES['files']['tmp_name'][$key];
+                $file_type=$_FILES['files']['type'][$key];  
+				if($file_size > 2097152)
+				{
+                    $errors[]='File size must be less than 2 MB';
+                }       
+                $query  = $this->db->prepare("INSERT INTO `logo` (`user_id`,`logo_img`) VALUES (?,?)");
+                $query->bindValue(1, $user_id);        
+                $query->bindValue(2, $file_name);
+                
+                try {
+                    $query->execute();
+                } catch (PDOException $e) {
+
+                    die($e->getMessage());
+                }
+				$desired_dir="logo";
+				
+				if(empty($errors)==true)
+				{
+					if(is_dir($desired_dir)==false)
+					{
+                        mkdir("$desired_dir", 0700);        // Create directory if it does not exist
+                    }
+					if(is_dir("demo/brand/$desired_dir/".$file_name)==false)
+					{
+                        move_uploaded_file($file_tmp,"demo/brand/$desired_dir/".$file_name);
+					}
+						else
+						{                                  // rename the file if another one exist
+							$new_dir="demo/brand/$desired_dir/".$file_name.time();
+							rename($file_tmp,$new_dir) ;               
+						}
+                            
+				}
+					else
+					{
+						print_r($errors);
+					}
+            }
+            
+        }
+            
+	}
+
+	public function edit_logo($user_id, $file_name)
+	{
+		if(isset($_FILES['files']))
+		{
+            $errors= array();
+			foreach($_FILES['files']['tmp_name'] as $key => $tmp_name )
+			{
+                $file_name = $key.$_FILES['files']['name'][$key];
+                $file_size =$_FILES['files']['size'][$key];
+                $file_tmp =$_FILES['files']['tmp_name'][$key];
+                $file_type=$_FILES['files']['type'][$key];  
+				if($file_size > 2097152)
+				{
+                    $errors[]='File size must be less than 2 MB';
+                }
+
+                $query = $this->db->prepare("UPDATE `logo` SET `logo_img` = ?  WHERE `user_id` = ?");
+                $query->bindValue(1, $file_name);        
+                $query->bindValue(2, $user_id);
+
+                // $query  = $this->db->prepare("INSERT INTO `logo` (`user_id`,`logo_img`) VALUES (?,?)");
+                // $query->bindValue(1, $user_id);        
+                // $query->bindValue(2, $file_name);
+
+                try {
+                    $query->execute();
+                } catch (PDOException $e) {
+
+                    die($e->getMessage());
+                }
+				$desired_dir="logo";
+				
+				if(empty($errors)==true)
+				{
+					if(is_dir($desired_dir)==false)
+					{
+                        mkdir("$desired_dir", 0700);        // Create directory if it does not exist
+                    }
+					if(is_dir("demo/brand/$desired_dir/".$file_name)==false)
+					{
+                        move_uploaded_file($file_tmp,"demo/brand/$desired_dir/".$file_name);
+					}
+						else
+						{                                  // rename the file if another one exist
+							$new_dir="demo/brand/$desired_dir/".$file_name.time();
+							rename($file_tmp,$new_dir) ;               
+						}
+                            
+				}
+					else
+					{
+						print_r($errors);
+					}
+            }
+            
+        }
+            
+	}
+
+
 
 }
 

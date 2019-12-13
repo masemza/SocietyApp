@@ -164,8 +164,8 @@ global $num;
                                 <th class="text-center" style="width: 1.5%"></th>
                                 <th class="text-center" style="width: 5%">Date</th>
                                 <th class="text-center" style="width: 5%">Description</th>
-                                <th class="text-center" style="width: 5%">Name</th>
-                                <th class="text-center" style="width: 5%">Category</th>
+                                <th class="text-center" style="width: 5%">Paid by</th>
+                                <th class="text-center" style="width: 5%">Expenses for</th>
                                 <th class="text-center" style="width: 5%">Amount</th>
                             </tr>
 

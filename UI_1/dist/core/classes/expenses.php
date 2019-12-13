@@ -25,7 +25,7 @@ class Expenses
             $query->execute();
             
            	$expenses_id = $db->lastInsertID();		
-			header('Location:expense.php?expenses_id='.$expenses_id);
+			header('Location: confirm_expense.php?expenses_id='.$expenses_id);
 
 		
 		}catch(PDOException $e){
@@ -53,6 +53,7 @@ class Expenses
 		try
 		{
 			$query->execute();
+			header('Location: confirm_expense.php?expenses_id='.$expenses_id);
 		}
 			
 		catch(PDOException $e)

@@ -2,6 +2,7 @@
 require 'core/init.php';
 $general->logged_out_protect();
 $username = htmlentities($user['username']);
+// $type = htmlentities($user['type']);
 
 if (isset($_POST['submit']))
 {
@@ -15,12 +16,8 @@ if (isset($_POST['submit']))
 
     if(empty($errors) === true)
     {
-      $total_expense = $expenses->search_expenses($date1, $date2);
       $total_invoices = $invoices->search_invoices($date1, $date2);
       $total_deposits = $payment->search_deposits($date1, $date2);
-
-      $total_income = $total_invoices + $total_deposits;
-      $total_balance = $total_income - $total_expense;
 
       $invoice = $invoices->display_invoices($date1, $date2);
       $view_expenses = $expenses->display_expenses($date1, $date2);
@@ -30,50 +27,70 @@ if (isset($_POST['submit']))
 
     }
 }
+
 ?>
 
 <!doctype html>
 <html lang="en" dir="ltr">
 <?php include 'incl/head.php' ;?>
 <?php include 'incl/header.php' ;?>
+
   <body class="">
     <div class="page">
       <div class="page-main">
-        <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">        
-          <div class="container">           
+
+        <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+          <div class="container">
             <div class="row align-items-center">
-
-              <div class="col-lg- ml-auto">
+              <div class="col-lg-3 ml-auto">
               </div>
-
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                   <li class="nav-item">
                     <a href="./index.php" class="nav-link"><i class="fe fe-home"></i> Home</a>
                   </li>
 
-                  <li class="nav-item dropdown">
-                    <a href="./create_invoice.php" class="nav-link"><i class="fe fe-file-plus"></i> Create a new Invoice</a>
-                  </li>
+                  <?php if($type == 'admin' || $type == 'manager')
+                  {?>
+                    <li class="nav-item">
+                      <a href="javascript:void(0)" class="nav-link active" data-toggle="dropdown"><i class="fe fe-file"></i>Capture Invoices</a>
+                      <div class="dropdown-menu dropdown-menu-arrow">
+                        <a href="./view_invoice.php" class="dropdown-item active"><i class="fe fe-file-text"></i>View Invoice</a>
+                        <a href="./create_invoice.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Create a new Invoice</a>
+                      </div>
+                    </li>
 
-                  <li class="nav-item dropdown">
-                    <a href="./view_invoice.php" class="nav-link active"><i class="fe fe-file"></i> Invoice</a>
-                  </li>
+                    <li class="nav-item">
+                      <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i>Capture Expenses</a>
+                      <div class="dropdown-menu dropdown-menu-arrow">
+                        <a href="./view_expense.php" class="dropdown-item "><i class="fe fe-file-text"></i>View Expenses</a>
+                        <a href="./create_expense.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Create a new Expenses</a>
+                      </div>
+                    </li>
 
-                  <!-- <li class="nav-item">
-                    <a href="./docs/index.html" class="nav-link"><i class="fe fe-file-text"></i> Documentation</a>
-                  </li> -->
-
+                    <?php if($type === "manager") 
+                    {?>
+                      <li class="nav-item dropdown">
+                        <a href="./view_report.php" class="nav-link"><i class="fe fe-file-text"></i> View Reports </a>
+                      </li>
+                    <?php 
+                    }?>
+                       
+                    <li class="nav-item">
+                      <a href="./manage_members.php" class="nav-link"><i class="fe fe-users"></i>Main Member's Dashboard</a>
+                    </li>
+                  <?php
+                  }?>
+                  
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        <div class="my-3 my-md-5 ">
-          <div class="container ">
-            <div class="page-header">
-
-              <h1 class="page-title">
+        <div class="my-3 my-md-5">
+          <div class="container">
+            <div class="page-header">        
+            <h1 class="page-title">
               <a href="index.php" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Home</a> | Invoice
               </h1>
             </div>
@@ -162,7 +179,7 @@ if (isset($_POST['submit']))
                                         <th class="text-center" style="width: 0.5%"></th>
                                         <th class="text-center" style="width: 1%">Invoice Date</th>
                                         <th class="text-center" style="width: 5%">Description</th>
-                                        <th class="text-center" style="width: 5%">Name</th>
+                                        <th class="text-center" style="width: 5%">Invoice to</th>
                                         <th class="text-center" style="width: 2%">Amount</th>
                                         <th class="text-center" style="width: 3%">Action</th>
                                     
@@ -191,9 +208,9 @@ if (isset($_POST['submit']))
                                                 Action
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                <a href="./edit_invoice.php?invoice_id=<?php echo $view_invoice['invoice_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-edit"></i> Edit Invoice </a>
+                                                <!-- <a href="./edit_invoice.php?invoice_id=<?php //echo $view_invoice['invoice_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-edit"></i> Edit Invoice </a> -->
                                                 <a href="./invoice.php?invoice_id=<?php echo $view_invoice['invoice_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-file"></i> View Invoice </a>
-                                                <a onclick ="return confirm('Are you sure you want to delete this invoice?')" href="./delete_invoice.php?invoice_id=<?php echo $view_invoice['invoice_id']?>" class="dropdown-item" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Delete Invoice</a>
+                                                <!-- <a onclick ="return confirm('Are you sure you want to delete this invoice?')" href="./delete_invoice.php?invoice_id=<?php //echo $view_invoice['invoice_id']?>" class="dropdown-item" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Delete Invoice</a> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -225,25 +242,53 @@ if (isset($_POST['submit']))
                 echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
               }
             ?>
-
-            </div>
-            <div class="row row-cards row-deck">
-            </div>
-            <div class="row row-cards row-deck">
-
-              <div class="col-12">
-              <h1 class="page-title">
-
-                  <!-- <div class="card">
-                      J
-                  </div> -->
+                  
+                                  </div>
+                                  </div>
+                                </div></div>
+      
                 </div>
               </div>
-              
+
+
+      <!-- <div class="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col-6 col-md-3">
+                  <ul class="list-unstyled mb-0">
+                    <li><a href="#">First link</a></li>
+                    <li><a href="#">Second link</a></li>
+                  </ul>
+                </div>
+                <div class="col-6 col-md-3">
+                  <ul class="list-unstyled mb-0">
+                    <li><a href="#">Third link</a></li>
+                    <li><a href="#">Fourth link</a></li>
+                  </ul>
+                </div>
+                <div class="col-6 col-md-3">
+                  <ul class="list-unstyled mb-0">
+                    <li><a href="#">Fifth link</a></li>
+                    <li><a href="#">Sixth link</a></li>
+                  </ul>
+                </div>
+                <div class="col-6 col-md-3">
+                  <ul class="list-unstyled mb-0">
+                    <li><a href="#">Other link</a></li>
+                    <li><a href="#">Last link</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 mt-4 mt-lg-0">
+              Premium and Open Source dashboard template with responsive and high quality UI. For Free!
             </div>
           </div>
         </div>
-      </div>     
+      </div> -->
+
 
       <?php include 'incl/footer.php' ;?>
     </div>
@@ -253,7 +298,7 @@ if (isset($_POST['submit']))
         $("#search_text").keyup(function(){
             var search = $(this).val();
             $.ajax({
-                url:'indexAction.php',
+                url:'viewMemberAction.php',
                 method:'post',
                 data:{query:search},
                 success:function(response){
@@ -263,6 +308,7 @@ if (isset($_POST['submit']))
         });
     });
 </script>
+
 
   </body>
 </html>

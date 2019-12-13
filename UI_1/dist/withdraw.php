@@ -89,7 +89,17 @@ if (isset($_POST['submit']))
 
                   <li class="nav-item dropdown">
                     <a href="./view_package.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="dropdown-icon fe fe-layers"></i> View Package</a>
-				  </li>
+				          </li>
+
+                  <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-menu"></i>More</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="./create_invoice.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Capture Invoice</a>
+                      <a href="./create_expense.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Capture Expense</a>
+                      <a href="./view_report.php" class="dropdown-item "><i class="fe fe-file-text"></i>View Report</a>
+                      <a href="./manage_members.php" class="dropdown-item "><i class="fe fe-users"></i>Main Member's Dashboard</a>
+                    </div>
+                  </li>
 				  
                   <!-- <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link active" data-toggle="dropdown"><i class="fe fe-box"></i>Transaction</a>
@@ -199,7 +209,7 @@ if (isset($_POST['submit']))
 
                                 
                             <div class="btn-list text-center">
-                                <input onclick ="return confirm('Are you sure you want to withdraw that money?')" type="submit" name="submit" class="btn btn-primary" value="Withdraw" />
+                                <input onclick ="return confirm('Are you sure you want to withdraw this money?')" type="submit" name="submit" class="btn btn-primary" value="Withdraw" />
                             
                                 <input type="reset" class="btn btn-primary" value="Reset" />
 		

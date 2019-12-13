@@ -140,6 +140,23 @@ class Package{
 		return $query->fetchAll();
 	}
 
+	public function last_package_inserted($society_id)
+    {
+		$query = $this->db->prepare("SELECT * FROM package WHERE society_id = ? AND package_id = (SELECT max(package_id) FROM package WHERE society_id = ?)");
+		$query->bindValue(1, $society_id);
+		$query->bindValue(2, $society_id);
+		
+		try{
+
+			$query->execute();
+
+		} catch(PDOException $e){
+
+			die($e->getMessage());
+		}
+		return $query->fetchAll();
+	}
+
 	public function updatedPackageData($package_id)
     {
 		$query = $this->db->prepare("SELECT * FROM updated_package WHERE package_id = ?");

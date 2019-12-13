@@ -50,67 +50,58 @@ if (isset($_POST['submit1']))
         <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
           <div class="container">
             <div class="row align-items-center">
-              <!-- <div class="col-lg-3 ml-auto">
-                <form class="input-icon my-3 my-lg-0">
-                  <input type="search" class="form-control header-search" placeholder="Search&hellip;" tabindex="1">
-                  <div class="input-icon-addon">
-                    <i class="fe fe-search"></i>
-                  </div>
-                </form>
-              </div> -->
+              <?php if($type == 'admin' || $type == 'manager')
+              {?>
+                <div class="col-lg-3 ml-auto">
+                  <form class="input-icon my-3 my-lg-0" action="" method="post">
+                    <br>
+                    <div class="form-group">
+                      <div class="row gutters-xs">
+                        <div class="col">
+                          <!-- <input type="text" name="search" id="myInput" onkeyup="myFunction()" class="form-control" required="required" placeholder="Enter Society Name"> -->
+                        </div>
+                        <span class="col-auto">
+                          <!-- <button class="btn btn-secondary" type="submit" name="submit"><i class="fe fe-search"></i></button><br>               -->
+                        </span>
+                      </div>
+                    </div>
+
+                  </form>
+                </div>
+              <?php
+              }?>
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                  
                   <li class="nav-item">
                     <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
                   </li>
 
-                  <li class="nav-item dropdown">
-                    <a href="./view_members.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="fe fe-users"></i>View Members</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a href="./addMember.php?society_id=<?php echo $society_id; ?>" class="nav-link"><i class="fe fe-user-plus"></i>Add a new Member</a>
+                  <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-users"></i>Manage Members</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="./view_members.php?society_id=<?php echo $society_id ?>" class="dropdown-item "><i class="fe fe-users"></i>View Members</a>
+                      <a href="./addMember.php?society_id=<?php echo $society_id; ?>" class="dropdown-item "><i class="fe fe-user-plus"></i>Add A New Member</a>
+                    </div>
                   </li>
 
                   <li class="nav-item dropdown">
                     <a href="./view_package.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="dropdown-icon fe fe-layers"></i> View Package</a>
                   </li>
 
-                  <!-- <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i>Transaction</a>
+                  <li class="nav-item dropdown">
+                    <a href="./view_society_funeral_arrangement.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="dropdown-icon fe fe-activity"></i> View Funeral Arrangements</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-menu"></i>More</a>
                     <div class="dropdown-menu dropdown-menu-arrow">
-                      <a href="./deposit.html" class="dropdown-item ">Deposit</a>
-                      <a href="./withdraw.html" class="dropdown-item ">Withdraw</a>
-                      <a href="./balance.html" class="dropdown-item ">View Balance</a>
+                      <a href="./create_invoice.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Capture Invoice</a>
+                      <a href="./create_expense.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Capture Expense</a>
+                      <a href="./view_report.php" class="dropdown-item "><i class="fe fe-file-text"></i>View Report</a>
+                      <a href="./manage_members.php" class="dropdown-item "><i class="fe fe-users"></i>Main Member's Dashboard</a>
                     </div>
-                  </li> -->
-
-                  <!-- <li class="nav-item dropdown">
-                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-calendar"></i> Components</a>
-                    <div class="dropdown-menu dropdown-menu-arrow">
-                      <a href="./maps.html" class="dropdown-item ">Maps</a>
-                      <a href="./icons.html" class="dropdown-item ">Icons</a>
-                      <a href="./store.html" class="dropdown-item ">Store</a>
-                      <a href="./blog.html" class="dropdown-item ">Blog</a>
-                      <a href="./carousel.html" class="dropdown-item ">Carousel</a>
-                    </div>
-                  </li> -->
-
-                  <!-- <li class="nav-item dropdown">
-                    <a href="./transactions.html" class="nav-link"><i class="fe fe-file"></i>View Statement</a>
-                  </li> -->
-
-                  <!-- <li class="nav-item dropdown">
-                    <a href="./form-elements.html" class="nav-link"><i class="fe fe-check-square"></i> Forms</a>
-                  </li> -->
-
-                  <!-- <li class="nav-item">
-                    <a href="./gallery.html" class="nav-link"><i class="fe fe-image"></i> Gallery</a>
-                  </li> -->
-
-                  <!-- <li class="nav-item">
-                    <a href="./docs/index.html" class="nav-link"><i class="fe fe-file-text"></i> Documentation</a>
-                  </li> -->
+                  </li>
 
                 </ul>
               </div>
@@ -127,14 +118,14 @@ if (isset($_POST['submit1']))
           <div class="row row-cards">
 
               <div class="col-sm-6 col-lg-3">
-                <div class="card p-3 align-items-center">
-                  <div class="d-flex align-items-center">
+                <div class="card p-3 align-items-left">
+                  <div class="d-flex align-items-left">
                     <span class="stamp stamp-md bg-blue mr-3">
                       <i class="fe fe-plus-square"></i>
                     </span>
                     <div>
                     <?php foreach ($view_societies as $row) { ?>
-                      <h4 class="m-0"><a href="javascript:void(0)"><!-- 132 --> <small>Opening Balance</small></a></h4>
+                      <h4 class="m-0"><a href="javascript:void(0)"><!-- 132 --> <small>Initial Capital</small></a></h4>
                       <small class="text-muted">R<?php $opening_bal = number_format($row['init_capital'], 2, ".", ","); echo $opening_bal ?></small>
                     </div>
                   </div>
@@ -142,13 +133,13 @@ if (isset($_POST['submit1']))
               </div>
 
               <div class="col-sm-6 col-lg-3">
-                <div class="card p-3 align-items-center">
-                  <div class="d-flex align-items-center">
-                    <span class="stamp stamp-md bg-red mr-3">
+                <div class="card p-3 align-items-left">
+                  <div class="d-flex align-items-left">
+                    <span class="stamp stamp-md bg-success mr-3">
                       <i class="fe fe-database"></i>
                     </span>
                     <div>
-                      <h4 class="m-0"><a href="javascript:void(0)"><!-- 1,352  --><small>Total Deposits</small></a></h4>
+                      <h4 class="m-0"><a href="./view_society_deposits.php?society_id=<?php echo $society_id ?>"><!-- 1,352  --><small>Total Deposits</small></a></h4>
                       <small class="text-muted"><?php echo $society_deposit ?></small>
                     </div>
                   </div>
@@ -156,13 +147,13 @@ if (isset($_POST['submit1']))
               </div>
 
               <div class="col-sm-6 col-lg-3">
-                <div class="card p-3 align-items-center">
-                  <div class="d-flex align-items-center">
-                    <span class="stamp stamp-md bg-yellow mr-3">
+                <div class="card p-3 align-items-left">
+                  <div class="d-flex align-items-left">
+                    <span class="stamp stamp-md bg-red mr-3">
                       <i class="fe fe-shopping-cart"></i>
                     </span>
                     <div>
-                      <h4 class="m-0"><a href="javascript:void(0)"><!-- 1,352  --><small>Total Withdrawals</small></a></h4>
+                      <h4 class="m-0"><a href="./view_society_withdrawals.php?society_id=<?php echo $society_id ?>"><!-- 1,352  --><small>Total Withdrawals</small></a></h4>
                       <small class="text-muted"><?php echo $society_withdrawal ?></small>
                     </div>
                   </div>
@@ -170,8 +161,8 @@ if (isset($_POST['submit1']))
               </div>
 
               <div class="col-sm-6 col-lg-3">
-                <div class="card p-3 align-items-center">
-                  <div class="d-flex align-items-center">
+                <div class="card p-3 align-items-left">
+                  <div class="d-flex align-items-left">
                     <span class="stamp stamp-md bg-cyan mr-3">
                       <i class="fe fe-dollar-sign"></i>
                     </span>
@@ -203,7 +194,7 @@ if (isset($_POST['submit1']))
                 </div>
               </div> 
 
-              <div class="col-sm-6 col-lg-6">
+              <div class="col-sm-4 col-lg-6">
                   <div class="card p-3 align-items-center">
                     <div class="d-flex">
                       <!-- <span class="stamp stamp-md bg-green mr-3">
@@ -216,14 +207,26 @@ if (isset($_POST['submit1']))
                   </div>
                 </div> 
 
-                <div class="col-sm-6 col-lg-6">
+                <!-- <div class="col-sm-4 col-lg-4">
+                    <div class="card p-3 align-items-center">
+                      <div class="d-flex">
+                        
+                        </span>
+                        <div>
+                          <a href="./withdraw.php?society_id=<?php// echo $row['society_id'] ?>" class="btn btn-red" role="button">Withdraw Money</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>  -->
+
+                  <div class="col-sm-4 col-lg-6">
                     <div class="card p-3 align-items-center">
                       <div class="d-flex">
                         <!-- <span class="stamp stamp-md bg-green mr-3">
                           <i class="fe fe-minus-circle"></i> -->
                         </span>
                         <div>
-                          <a href="./withdraw.php?society_id=<?php echo $row['society_id'] ?>" class="btn btn-success" role="button">Withdraw Money</a>
+                          <a href="statement.php?society_id=<?php echo $row ['society_id'] ?>" class="btn btn-primary" role="button" >View Statement</a>
                         </div>
                       </div>
                     </div>
@@ -1263,7 +1266,7 @@ if (isset($_POST['submit1']))
               </div>
             </div> -->
 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <script>
                 require(['input-mask']);
               </script>
@@ -1307,14 +1310,15 @@ if (isset($_POST['submit1']))
 
                       <?php } ?>
                       <br>
-                    <div class="card-footer">
-                      <a href="./edit_society.php?society_id=<?php echo $row['society_id'] ?>" class="btn btn-primary btn-block">Edit Society Details</a>
+                    <div class="card-footer text-left">
+                      <a href="./edit_society.php?society_id=<?php echo $row['society_id'] ?>" class="btn btn-primary">Edit Society Details</a>
                     </div>
                   <!-- </form> -->
                 </div>
               </div>
-            </div>              
-              <div class="col-lg-6 col-sm-6">
+            </div>    
+
+              <!-- <div class="col-lg-6 col-sm-6">
                 <div class="card">
                   <div class="card-header">
                     <h3 class="card-title">Statement</h3>
@@ -1323,178 +1327,17 @@ if (isset($_POST['submit1']))
                     <table class="table card-table table-vcenter text-nowrap">
                       <tbody>
                         <tr>
-                          <!--<td><span class="text-muted"><?php echo $row['society_id'] ?></span></td>
-                          <td><a href="statement.php?society_id=<?php echo $row ['society_id'] ?>" class="text-inherit"><?php $date=date_create($transaction_date); echo date_format($date,"d-m-Y") ?></a></td>-->
-                          <!-- <td>
-                            15 Dec 2017
-                          </td>
-                          <td>
-                            87956621
-                          </td>
-                          <td>
-                            15 Dec 2017
-                          </td> -->
-                          <!-- <td>
-                            <span class="status-icon bg-success"></span> Paid
-                          </td>
-                          <td>$887</td> -->
                           <td class="text-center">
-                            <a href="statement.php?society_id=<?php echo $row ['society_id'] ?>" class="btn btn-primary btn-sm"><i class="w-1">View Statement</i></a>
-                            <!-- <div class="dropdown">
-                              <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
-                            </div> -->
-                          </td>
-                          <!-- <td>
-                            <a class="icon" href="javascript:void(0)">
-                              <i class="fe fe-edit"></i>
-                            </a>
-                          </td> -->
-                        </tr>
-                        <!-- <tr>
-                          <td><span class="text-muted">001402</span></td>
-                          <td><a href="invoice.html" class="text-inherit">UX Wireframes</a></td>
-                          <td>
-                            Adobe
-                          </td>
-                          <td>
-                            87956421
-                          </td>
-                          <td>
-                            12 Apr 2017
-                          </td>
-                          <td>
-                            <span class="status-icon bg-warning"></span> Pending
-                          </td>
-                          <td>$1200</td>
-                          <td class="text-right">
-                            <a href="javascript:void(0)" class="btn btn-secondary btn-sm">Manage</a>
-                            <div class="dropdown">
-                              <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
-                            </div>
-                          </td>
-                          <td>
-                            <a class="icon" href="javascript:void(0)">
-                              <i class="fe fe-edit"></i>
-                            </a>
+                            <a href="statement.php?society_id=<?php //echo $row ['society_id'] ?>" class="btn btn-primary btn-sm"><i class="w-1">View Statement</i></a>
+                            
                           </td>
                         </tr>
-                        <tr>
-                          <td><span class="text-muted">001403</span></td>
-                          <td><a href="invoice.html" class="text-inherit">New Dashboard</a></td>
-                          <td>
-                            Bluewolf
-                          </td>
-                          <td>
-                            87952621
-                          </td>
-                          <td>
-                            23 Oct 2017
-                          </td>
-                          <td>
-                            <span class="status-icon bg-warning"></span> Pending
-                          </td>
-                          <td>$534</td>
-                          <td class="text-right">
-                            <a href="javascript:void(0)" class="btn btn-secondary btn-sm">Manage</a>
-                            <div class="dropdown">
-                              <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
-                            </div>
-                          </td>
-                          <td>
-                            <a class="icon" href="javascript:void(0)">
-                              <i class="fe fe-edit"></i>
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><span class="text-muted">001404</span></td>
-                          <td><a href="invoice.html" class="text-inherit">Landing Page</a></td>
-                          <td>
-                            Salesforce
-                          </td>
-                          <td>
-                            87953421
-                          </td>
-                          <td>
-                            2 Sep 2017
-                          </td>
-                          <td>
-                            <span class="status-icon bg-secondary"></span> Due in 2 Weeks
-                          </td>
-                          <td>$1500</td>
-                          <td class="text-right">
-                            <a href="javascript:void(0)" class="btn btn-secondary btn-sm">Manage</a>
-                            <div class="dropdown">
-                              <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
-                            </div>
-                          </td>
-                          <td>
-                            <a class="icon" href="javascript:void(0)">
-                              <i class="fe fe-edit"></i>
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><span class="text-muted">001405</span></td>
-                          <td><a href="invoice.html" class="text-inherit">Marketing Templates</a></td>
-                          <td>
-                            Printic
-                          </td>
-                          <td>
-                            87956621
-                          </td>
-                          <td>
-                            29 Jan 2018
-                          </td>
-                          <td>
-                            <span class="status-icon bg-danger"></span> Paid Today
-                          </td>
-                          <td>$648</td>
-                          <td class="text-right">
-                            <a href="javascript:void(0)" class="btn btn-secondary btn-sm">Manage</a>
-                            <div class="dropdown">
-                              <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
-                            </div>
-                          </td>
-                          <td>
-                            <a class="icon" href="javascript:void(0)">
-                              <i class="fe fe-edit"></i>
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><span class="text-muted">001406</span></td>
-                          <td><a href="invoice.html" class="text-inherit">Sales Presentation</a></td>
-                          <td>
-                            Tabdaq
-                          </td>
-                          <td>
-                            87956621
-                          </td>
-                          <td>
-                            4 Feb 2018
-                          </td>
-                          <td>
-                            <span class="status-icon bg-secondary"></span> Due in 3 Weeks
-                          </td>
-                          <td>$300</td>
-                          <td class="text-right">
-                            <a href="javascript:void(0)" class="btn btn-secondary btn-sm">Manage</a>
-                            <div class="dropdown">
-                              <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
-                            </div>
-                          </td>
-                          <td>
-                            <a class="icon" href="javascript:void(0)">
-                              <i class="fe fe-edit"></i>
-                            </a>
-                          </td>
-                        </tr> -->
+                       
                       </tbody>
                     </table>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

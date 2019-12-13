@@ -10,7 +10,7 @@ global $num;
 $dirname = "demo/brand/S  F Logo";
 $images = glob($dirname."*.jpg");
 
-foreach($images as $image) 
+foreach($images as $image) {}
 
 
 ?>
@@ -66,8 +66,8 @@ foreach($images as $image)
                 <h3 class="card-title"> Invoice</h3>
                 <div class="card-options">
                   <button type="button" class="btn btn-primary btn-sm" onclick="javascript:window.print();"><i class="fe fe-download"></i> Download Invoice</button>
+                </div>
               </div>
-            </div>
 
               <div class="card-body">
 

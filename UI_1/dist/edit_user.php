@@ -2,12 +2,20 @@
 require 'core/init.php';
 $general->logged_out_protect();
 $username = htmlentities($user['username']);
+$usertype = htmlentities($user['type']);
 $email = htmlentities($user['email']);
-
 $id =$_GET['id'];
 //$view_users = $users->userdata($id);
 
 $view_users = $users->user_information($id);
+
+foreach($view_users as $row){}
+
+if(isset($_POST['submit1']))
+{
+  header('Location: index.php');
+}
+
 
     if (isset($_POST['submit'])) 
     {
@@ -15,28 +23,38 @@ $view_users = $users->user_information($id);
         {
           $errors[] = 'You must fill in all of the fields.';
         }
-
-        else 
-          if($users->username_exists($username) === true)
-          { 
-            $errors[] = 'Sorry, That username already exists';
-          }
 	
         if(empty($errors) === true)
         {		
-              $email      = $_POST['email'];
-              $username   = $_POST['username'];
+            if($usertype === "manager")
+            {
+                $email      = $_POST['email'];
+                $username   = $_POST['username'];
+                $type       = $_POST['type'];
 
-          $users->updateUser($email, $username, $id);
-              {
-                  Print '<script>alert("User Successfully edited");;
-                  window.location.assign("view_user.php")</script>';
+                $users->updateUser2($email, $username, $type, $id);
+                
+                Print '<script>alert("User Successfully edited");;
+                window.location.assign("view_user.php")</script>';
 
-            exit();    
-              }
-          exit();
-	}
-}
+                exit();
+            }
+            else
+            {
+                $email      = $_POST['email'];
+                $username   = $_POST['username'];
+
+                $users->updateUser($email, $username, $id);
+                
+                Print '<script>alert("User Successfully edited");;
+                window.location.assign("view_user.php")</script>';
+
+                exit();
+            }
+
+          
+	      }
+    }
 
 ?>
 
@@ -97,9 +115,9 @@ $view_users = $users->user_information($id);
                     <a href="./gallery.html" class="nav-link"><i class="fe fe-image"></i> Gallery</a>
                   </li> -->
 
-                  <li class="nav-item">
+                  <!-- <li class="nav-item">
                     <a href="./view_user.php" class="nav-link"><i class="fe fe-user"></i>View User</a>
-                  </li>
+                  </li> -->
 
                 </ul>
               </div>
@@ -112,6 +130,11 @@ $view_users = $users->user_information($id);
               <h1 class="page-title">
                 <a href="./view_user.php" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>View Users</a> | Edit User Details
               </h1>
+              <?php if($usertype == 'manager'){?>
+              <div class="card-options col-sm-3 col-lg-3 pull-right">
+                <a href="pwr.php?id=<?=$id?>" class="btn btn-primary btn-block ml-2">Reset Password</a>
+              </div>
+            <?php } ?>
             </div>
 
 
@@ -1152,22 +1175,33 @@ $view_users = $users->user_information($id);
               <div class="card">
                 <div class="card-body">
                   <h3 class="card-title">Edit User Details</h3>
-                  <form action="" method="post">
-
-                  <div class="form-group">
-                      <?php foreach ($view_users as $row) { ?>
-                        <label class="form-label">Username</label>
-                        <input type="text" name="username" class="form-control" placeholder="Username" value="<?php echo $row['username']?>" />
-                        </div>
-                        
-                        <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="Email"value="<?php echo $row['email']?>" />
-                        </div>
-                      <?php } ?>
+                    <form action="" method="post">
+                          <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" placeholder="Username" value="<?php echo $row['username']?>" />
+                          </div>
+                          
+                          <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" placeholder="Email"value="<?php echo $row['email']?>" />
+                          </div>
+                          
+                          <?php 
+                          if($usertype === "manager")
+                          {?>
+                              <div class="form-group">
+                                  <label class="form-label">User Type</label>
+                                  <select name="type" class="form-control" required="true">
+                                    <option><?php echo ucfirst($row['type']) ?></option>
+                                    <option value="admin">Admin</option>
+                                    <option value="manager">Manager</option>
+                                  </select>
+                              </div>
+                        <?php
+                        }?>
 
                     <div class="card-footer">
-                      <button onclick ="return confirm('Are you sure you want to edit that society?')" type="submit" name="submit" class="btn btn-primary btn-block" > Update User</button>
+                      <button onclick ="return confirm('Are you sure you want to edit <?php echo $row['username'] ?>?')" type="submit" name="submit" class="btn btn-primary btn-block" > Update User</button>
                     </div>
 
                   </form>

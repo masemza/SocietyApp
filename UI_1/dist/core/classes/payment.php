@@ -157,6 +157,39 @@ class Payment
 
 	}
 
+	public function get_all_transactions() 
+	{
+
+		$query = $this->db->prepare("SELECT * FROM `statement` ");
+	
+		try{
+			
+			$query->execute();
+			return $query->fetchAll();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function search_transactions($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT * FROM `statement` WHERE `date_transaction` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			$query->execute();
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+		return $query->fetchAll();
+
+	}
+
 	public function total_deposit() 
 	{
 
@@ -174,15 +207,112 @@ class Payment
 
 	}
 
+	public function get_all_deposits() 
+	{
+		$query = $this->db->prepare("SELECT * FROM `statement` WHERE `credit` <> 0 ORDER BY date_transaction DESC ");
+	
+		try{
+			
+			$query->execute();
+			return $query->fetchAll();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function search_deposits($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT * FROM `statement` WHERE credit <> 0 AND `date_transaction` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			$query->execute();
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+		return $query->fetchAll();
+
+	}
+
+	public function get_all_deposits_for_society($society_id) 
+	{
+		$query = $this->db->prepare("SELECT * FROM `statement` WHERE `credit` <> 0 AND society_id = ? ORDER BY date_transaction DESC ");
+		$query->bindValue(1, $society_id);
+	
+		try{
+			
+			$query->execute();
+			return $query->fetchAll();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
 	public function total_withdrawals() 
 	{
-
 		$query = $this->db->prepare("SELECT COUNT(`debit`) FROM `statement` WHERE `debit` <> 0 ");
 	
 		try{
 			
 			$query->execute();
 			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function get_all_withdrawals() 
+	{
+		$query = $this->db->prepare("SELECT * FROM `statement` WHERE `debit` <> 0 ORDER BY date_transaction DESC ");
+	
+		try{
+			
+			$query->execute();
+			return $query->fetchAll();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function search_withdrawals($date1, $date2)
+	{
+		$query = $this->db->prepare("SELECT * FROM `statement` WHERE debit <> 0 AND `date_transaction` BETWEEN ? AND ?");
+		$query->bindValue(1, $date1);
+		$query->bindValue(2, $date2);
+
+		try{
+			$query->execute();
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+		return $query->fetchAll();
+
+	}
+
+	public function get_all_withdrawals_for_society($society_id) 
+	{
+		$query = $this->db->prepare("SELECT * FROM `statement` WHERE `debit` <> 0 AND society_id = ? ORDER BY date_transaction DESC ");
+		$query->bindValue(1, $society_id);
+	
+		try{
+			
+			$query->execute();
+			return $query->fetchAll();
 			
 			
 		}catch(PDOException $e){
@@ -368,8 +498,8 @@ class Payment
 	}	
 
 	
-	public function get_last_balance($society_id) {
-
+	public function get_last_balance($society_id)
+	{
 		$query = $this->db->prepare("SELECT `balance` FROM `statement` WHERE `society_id` = ? AND `payment_id` = 
 		(SELECT max(`payment_id`) FROM `statement` WHERE `society_id` = ?)");
 		$query->bindValue(1, $society_id);
@@ -387,6 +517,46 @@ class Payment
 		}
 
 	}	
+
+	public function get_last_inserted_payment_id($society_id)
+	{
+		$query = $this->db->prepare("SELECT `payment_id` FROM `statement` WHERE `society_id` = ? AND `payment_id` = 
+		(SELECT max(`payment_id`) FROM `statement` WHERE `society_id` = ?)");
+		$query->bindValue(1, $society_id);
+		$query->bindValue(2, $society_id);
+	
+		
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
+
+	public function get_last_inserted_payment_id_for_policy_holder($main_member_id)
+	{
+		$query = $this->db->prepare("SELECT `member_payment_id` FROM `member_statement` WHERE `member_id` = ? AND `member_payment_id` = 
+		(SELECT max(`member_payment_id`) FROM `statement` WHERE `member_id` = ?)");
+		$query->bindValue(1, $main_member_id);
+		$query->bindValue(2, $main_member_id);
+	
+		
+		try{
+			
+			$query->execute();
+			return $query->fetchColumn();
+			
+			
+		}catch(PDOException $e){
+			die($e->getMessage());
+		}
+
+	}
 
 	public function get_last_transaction($society_id) {
 
@@ -800,24 +970,6 @@ class Payment
 
 	}
 
-	public function search_deposits($date1, $date2)
-	{
-		$query = $this->db->prepare("SELECT SUM(`credit`) FROM `statement` WHERE `date_transaction` BETWEEN ? AND ?");
-		$query->bindValue(1, $date1);
-		$query->bindValue(2, $date2);
-
-		try{
-			
-			$query->execute();
-			return $query->fetchColumn();
-			
-			
-		}catch(PDOException $e){
-			die($e->getMessage());
-		}
-
-	}
-
 	public function display_deposits($date1, $date2)
 	{
 		$query = $this->db->prepare("SELECT * FROM `statement` WHERE `credit` <> 0 AND`date_transaction` BETWEEN ? AND ?  ORDER BY `date_transaction` DESC");
@@ -834,12 +986,6 @@ class Payment
 		return $query->fetchAll();
 
 	}
-
-
-
-
-
-
 
 	public function sum_of_category($date1, $date2, $category)
 	{

@@ -17,7 +17,7 @@ foreach($society_data as $row)
 		$balance 	= $row['init_capital'];
 	}
 
-	$name = "Opening Balance";
+	$name = "Initial Capital";
 	$date_transaction = date("Y-m-d");
 	$debit = 0;
 	

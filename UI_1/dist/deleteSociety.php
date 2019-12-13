@@ -1,7 +1,7 @@
 <?php
   require 'core/init.php';
  
-	$society_id =$_REQUEST['society_id'];
+	$society_id =$_GET['society_id'];
 	
 	$society->deleteSociety($society_id);
 	

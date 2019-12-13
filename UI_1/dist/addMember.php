@@ -3,19 +3,19 @@ require 'core/init.php';
 $general->logged_out_protect();
 $username = htmlentities($user['username']);
 
-$society_id = $_REQUEST['society_id'];
+$society_id = $_GET['society_id'];
 $view_society = $society->societydata($society_id);
 
 if (isset($_POST['submit'])) 
 {
-	global $society_name; 
+  global $society_name; 
   
   if($errors == false)
   {
     $first_name = trim($_POST['first_name']);
     $last_name = trim($_POST['last_name']);
     $contact_num = trim($_POST['contact_num']);
-  	$id_number = trim($_POST['id_number']);
+    $id_number = trim($_POST['id_number']);
 
     if(empty($_POST['gender']) === true)
     {
@@ -23,10 +23,10 @@ if (isset($_POST['submit']))
     }
     
     else if (strlen($_POST['id_number']) !=13)
-		{
-		$errors[] = 'Your ID number number must be 13 characters, without spacing';
+    {
+    $errors[] = 'Your ID number number must be 13 characters, without spacing';
     } 
-		
+    
     else
         if(!preg_match("/^[a-zA-Z ]*$/",$_POST['first_name']))
         {
@@ -52,12 +52,12 @@ if (isset($_POST['submit']))
                         }
                   
                         if(empty($errors) === true)
-                        {			
-                          $first_name 		= $_POST['first_name'];
-                          $last_name 			= $_POST['last_name'];
-                          $gender 		  	= $_POST['gender'];
-                          $contact_num 		= $_POST['contact_num'];
-                          $id_number 			= $_POST['id_number'];
+                        {     
+                          $first_name     = $_POST['first_name'];
+                          $last_name      = $_POST['last_name'];
+                          $gender         = $_POST['gender'];
+                          $contact_num    = $_POST['contact_num'];
+                          $id_number      = $_POST['id_number'];
                           $society_name = $member->get_society_name($society_id);
                           
                           $member->register_member($society_id, $society_name, $first_name, $last_name, $gender, $contact_num, $id_number);
@@ -79,64 +79,46 @@ if (isset($_POST['submit']))
   <body class="">
     <div class="page">
       <div class="page-main">
-
         <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
           <div class="container">
             <div class="row align-items-center">
-            <div class="nav-item d-md-flex">
-
-
-                    <!-- <?php //foreach ($view_members as $row) ?>
-                      <a href="./addMember.php?society_id=<?php //echo $row['society_id'] ?>" class="btn btn-md btn-outline-primary" >Add a new Member</a>
-                    
-                    <?php ?> -->
-                    </div>
-                    
+              <div class="nav-item d-md-flex">
+              </div>       
              
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                  
                   <li class="nav-item">
                     <a href="./index.php" class="nav-link"><i class="fe fe-home"></i> Home</a>
                   </li>
-                  <!-- <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i>Transaction</a>
+                  
+                  <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link active" data-toggle="dropdown"><i class="fe fe-users"></i>Manage Members</a>
                     <div class="dropdown-menu dropdown-menu-arrow">
-                      <a href="./deposit.html" class="dropdown-item ">Deposit</a>
-                      <a href="./withdraw.html" class="dropdown-item ">Withdraw</a>
-                      <a href="./balance.html" class="dropdown-item ">View Balance</a>
+                      <a href="./view_members.php?society_id=<?php echo $society_id ?>" class="dropdown-item "><i class="fe fe-users"></i>View Members</a>
+                      <a href="./addMember.php?society_id=<?php echo $society_id; ?>" class="dropdown-item active"><i class="fe fe-user-plus"></i>Add A New Member</a>
                     </div>
-                  </li> -->
-
-                  <!-- <li class="nav-item dropdown">
-                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-calendar"></i> Components</a>
-                    <div class="dropdown-menu dropdown-menu-arrow">
-                      <a href="./maps.html" class="dropdown-item ">Maps</a>
-                      <a href="./icons.html" class="dropdown-item ">Icons</a>
-                      <a href="./store.html" class="dropdown-item ">Store</a>
-                      <a href="./blog.html" class="dropdown-item ">Blog</a>
-                      <a href="./carousel.html" class="dropdown-item ">Carousel</a>
-                    </div>
-                  </li> -->
+                  </li>
 
                   <li class="nav-item dropdown">
-                  <?php foreach ($view_society as $row) ?>
-                    <a href="./view_members.php?society_id=<?php echo $row['society_id'] ?>" class="nav-link active"><i class="fe fe-users"></i>View Members</a>
+                    <a href="./view_package.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="dropdown-icon fe fe-layers"></i> View Package</a>
                   </li>
-                  <?php ?>
 
-                  <!-- <li class="nav-item dropdown">
-                    <a href="javascript:void(0)" class="nav-link"><i class="fe fe-check-square"></i> Forms</a>
-                  </li> -->
+                  <li class="nav-item dropdown">
+                    <a href="./view_society_funeral_arrangement.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="dropdown-icon fe fe-activity"></i> View Funeral Arrangements</a>
+                  </li>
 
-                  <!-- <li class="nav-item">
-                    <a href="./gallery.html" class="nav-link"><i class="fe fe-image"></i> Gallery</a>
-                  </li> -->
+                  <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-menu"></i>More</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="./create_invoice.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Capture Invoice</a>
+                      <a href="./create_expense.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Capture Expense</a>
+                      <a href="./view_report.php" class="dropdown-item "><i class="fe fe-file-text"></i>View Report</a>
+                      <a href="./manage_members.php" class="dropdown-item "><i class="fe fe-users"></i>Main Member's Dashboard</a>
+                    </div>
+                  </li>
 
-                  <!-- <li class="nav-item">
-                    <a href="./docs/index.html" class="nav-link"><i class="fe fe-file-text"></i> Documentation</a>
-                  </li> -->
-
-                </ul>
+                </ul>  
               </div>
             </div>
           </div>
@@ -148,32 +130,16 @@ if (isset($_POST['submit']))
                           <a href="view_statements.php?society_id=<?php echo $society_id ?>" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Society Details</a> | Add a new Member
                         </h1>
                   </div>
-      
-                  <!-- <div class="row"> -->
-      
                           <div class="col-lg-12">
                                   <div class="card">
-                                    <!-- <div class="card-header">
-                                      <h3 class="card-title">Deposit Money</h3>
-                                       <div class="card-options">
-                                       
-                                          <form action="">
-                  
-                                          <div class="input-group">
-                                            <input type="text" class="form-control form-control-sm" placeholder="Search something..." name="s">
-                                            <span class="input-group-btn ml-2">
-                                              <button class="btn btn-sm btn-default" type="submit">
-                                                <span class="fe fe-search"></span>
-                                              </button>
-                                            </span>
-                                          </div>
-                  
-                                          </form>
-                  
-                                      </div>
-                                    </div> -->
+
                                     <div class="card-body">
-      
+                                              <?php 
+                if(empty($errors) === false)
+                {
+                  echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';  
+                }
+              ?>
                                     <form class="card" action="" method="POST">
                 <div class="card-body">
                   <div class="row">
@@ -205,7 +171,7 @@ if (isset($_POST['submit']))
                     <div class="col-sm-6 col-md-6">
                       <div class="form-group">
                         <label class="form-label">Gender</label>
-                        <select name="gender" class="form-control custom-select" >
+                        <select name="gender" class="form-control custom-select" required="true">
                                 <option value="<?php if(isset($_POST['gender'])) echo htmlentities($_POST['gender']); ?>" disabled selected>Select Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -240,13 +206,6 @@ if (isset($_POST['submit']))
 
               </form>
 
-              <?php 
-			          if(empty($errors) === false)
-                {
-                  echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
-                }
-              ?>
-
             </div>
             <div class="col-lg-4">
 
@@ -256,47 +215,6 @@ if (isset($_POST['submit']))
       
                 </div>
               </div>
-
-
-      <!-- <div class="footer">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8">
-              <div class="row">
-                <div class="col-6 col-md-3">
-                  <ul class="list-unstyled mb-0">
-                    <li><a href="#">First link</a></li>
-                    <li><a href="#">Second link</a></li>
-                  </ul>
-                </div>
-                <div class="col-6 col-md-3">
-                  <ul class="list-unstyled mb-0">
-                    <li><a href="#">Third link</a></li>
-                    <li><a href="#">Fourth link</a></li>
-                  </ul>
-                </div>
-                <div class="col-6 col-md-3">
-                  <ul class="list-unstyled mb-0">
-                    <li><a href="#">Fifth link</a></li>
-                    <li><a href="#">Sixth link</a></li>
-                  </ul>
-                </div>
-                <div class="col-6 col-md-3">
-                  <ul class="list-unstyled mb-0">
-                    <li><a href="#">Other link</a></li>
-                    <li><a href="#">Last link</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 mt-4 mt-lg-0">
-              Premium and Open Source dashboard template with responsive and high quality UI. For Free!
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-
       
     </div>
     <?php include 'incl/footer.php' ;?>

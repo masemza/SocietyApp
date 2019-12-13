@@ -58,7 +58,7 @@ if (isset($_POST['submit1']))
                           <!-- <label class="form-label">Separated inputs</label> -->
                           <div class="row gutters-xs">
                             <div class="col">
-                              <input type="text" name="search" id="search_text" class="form-control" placeholder="Enter Member's Name" required="required">
+                              <input type="text" name="search" id="myInput" onkeyup="myFunction()" class="form-control" placeholder="Enter Member's First Name" required="required">
                             </div>
                             <span class="col-auto">
                               <button class="btn btn-secondary" type="submit" name="submit" ><i class="fe fe-search"></i></button>
@@ -71,9 +71,43 @@ if (isset($_POST['submit1']))
               </div>
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                  <li class="nav-item">
-                    <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
-                  </li>
+                  
+                  <?php if($type == 'admin' || $type == 'manager')
+                  {?>
+                    <li class="nav-item">
+                      <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i>Capture Invoices</a>
+                      <div class="dropdown-menu dropdown-menu-arrow">
+                        <a href="./view_invoice.php" class="dropdown-item "><i class="fe fe-file-text"></i>View Invoice</a>
+                        <a href="./create_invoice.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Create a new Invoice</a>
+                      </div>
+                    </li>
+
+                    <li class="nav-item">
+                      <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i>Capture Expenses</a>
+                      <div class="dropdown-menu dropdown-menu-arrow">
+                        <a href="./view_expense.php" class="dropdown-item "><i class="fe fe-file-text"></i>View Expenses</a>
+                        <a href="./create_expense.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Create a new Expenses</a>
+                      </div>
+                    </li>
+
+                    <?php if($type === "manager") 
+                    {?>
+                      <li class="nav-item dropdown">
+                        <a href="./view_report.php" class="nav-link"><i class="fe fe-file-text"></i> View Reports </a>
+                      </li>
+                    <?php 
+                    }?>
+                       
+                    <li class="nav-item">
+                      <a href="./manage_members.php" class="nav-link"><i class="fe fe-users"></i>Main Member's Dashboard</a>
+                    </li>
+                  <?php
+                  }?>
+
                   <!-- <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i>Transaction</a>
                     <div class="dropdown-menu dropdown-menu-arrow">
@@ -191,7 +225,7 @@ if (isset($_POST['submit1']))
                                                     </div>
                                                   </h1>
                                                   
-                                                  <table class="table table-bordered table-hover" id="table-data">
+                                                  <table id="myTable" class="table table-bordered table-hover">
                                                     <tr>
                                                       <th class="text-center" style="width: 0.5%"></th>
                                                       <th class="text-center" style="width: 3%">Society Name</th>
@@ -228,7 +262,8 @@ if (isset($_POST['submit1']))
                                                                     </button>
                                                                     <div class="dropdown-menu">
                                                                       <a href="./edit_member.php?member_id=<?php echo $row['member_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-edit"></i> Edit Member </a>
-                                                                      <a onclick ="return confirm('Are you sure you want to delete this society?')" href="./delete_member.php?member_id=<?php echo $row['member_id']?>" class="dropdown-item" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Delete Member</a>
+                                                                      <a href="plan_funeral.php?member_id=<?php echo $row['member_id'] ?>" class="dropdown-item"><i class="dropdown-icon fe fe-clipboard"></i>Plan a funeral</a>
+                                                                      <a onclick ="return confirm('Are you sure you want to delete <?php echo $row['first_name'] ?> <?php echo $row['last_name'] ?>?')" href="./delete_member.php?member_id=<?php echo $row['member_id']?>" class="dropdown-item" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Delete Member</a>
                                                                     </div>
                                                                   </div>
                                                                   </div>
@@ -309,6 +344,28 @@ if (isset($_POST['submit1']))
             });
         });
     });
+</script>
+
+<!-- Table filter -->
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 1; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
 </script>
 
 

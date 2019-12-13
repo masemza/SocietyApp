@@ -1,7 +1,7 @@
 <?php
   require 'core/init.php';
  
-	$id =$_GET['id'];
+	$id = $_GET['id'];
 	
 	$users->deleteUser($id);
 	

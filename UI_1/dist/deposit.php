@@ -85,6 +85,20 @@ if (isset($_POST['submit']))
                   <li class="nav-item dropdown">
                     <a href="./view_package.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="dropdown-icon fe fe-layers"></i> View Package</a>
                   </li>
+
+                  <li class="nav-item dropdown">
+                    <a href="./view_society_funeral_arrangement.php?society_id=<?php echo $society_id ?>" class="nav-link"><i class="dropdown-icon fe fe-activity"></i> View Funeral Arrangements</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-menu"></i>More</a>
+                    <div class="dropdown-menu dropdown-menu-arrow">
+                      <a href="./create_invoice.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Capture Invoice</a>
+                      <a href="./create_expense.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Capture Expense</a>
+                      <a href="./view_report.php" class="dropdown-item "><i class="fe fe-file-text"></i>View Report</a>
+                      <a href="./manage_members.php" class="dropdown-item "><i class="fe fe-users"></i>Main Member's Dashboard</a>
+                    </div>
+                  </li>
                   <!-- <li class="nav-item">
                     <a href="javascript:void(0)" class="nav-link active" data-toggle="dropdown"><i class="fe fe-box"></i>Transaction</a>
                     <div class="dropdown-menu dropdown-menu-arrow">
@@ -357,25 +371,25 @@ if (isset($_POST['submit']))
 
                         <form action="" method="POST">
 
-                                <span class="form-required">*</span> Required fields <br>
+                                <!-- <?php //if(isset($_POST['submit']) ) {?> <span class="form-required">*</span> Required Fields<?php //} ?> -->
                                 <fieldset class="form-fieldset">
                                         <!-- <div class="form-group">
                                           <label class="form-label">Society Name<span class="form-required">*</span></label>
                                           <input type="text" class="form-control" placeholder="Enter society name"/>
                                         </div> -->
                                         <div class="form-group">
-                                          <label class="form-label">Full Name<span class="form-required">*</span></label>
+                                          <label class="form-label">Full Name <?php //if(empty($_POST['name']) === true) {?> <span class="form-required"> </span> <?php //} ?> </label>
                                           <input type="text" name="name" required="required" class="form-control" placeholder="Enter your names" />
                                         </div>
                                         <div class="form-group">
-                                          <label class="form-label">Amount<span class="form-required">*</span></label>
+                                          <label class="form-label">Amount <?php //if(empty($_POST['amount']) === true) {?> <span class="form-required"> </span> <?php //} ?> </label>
                                           <input type="number" name="amount" required="required" class="form-control" placeholder="Enter amount"/>
                                         </div>
 
                                 </fieldset>
                              
                             <div class="btn-list text-center">
-                                <input onclick ="return confirm('Are you sure you want to deposit that money?')" type="submit" name="submit" class="btn btn-primary" value="Deposit" />
+                                <input onclick ="return confirm('Are you sure you want to deposit this money?')" type="submit" name="submit" class="btn btn-primary" value="Deposit" />
                             
                                 <input type="reset" class="btn btn-primary" value="Reset" />
 		

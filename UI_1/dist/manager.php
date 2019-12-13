@@ -58,7 +58,7 @@ if (empty($_POST) === false)
                   </li>
 
                   <li class="nav-item dropdown">
-                    <a href="./manager.php" class="nav-link active"><i class="fe fe-file-text"></i> Report</a>
+                    <a href="./manager.php" class="nav-link active"><i class="fe fe-file-text"></i>View Reports</a>
                   </li>
 
                   <!-- <li class="nav-item">

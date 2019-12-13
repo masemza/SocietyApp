@@ -2,10 +2,29 @@
 require 'core/init.php';
 $general->logged_out_protect();
 $username = htmlentities($user['username']);
+$user_id = htmlentities($user['id']);
+$type = htmlentities($user['type']);
 
+//user dashboard
+$main_member_id = $main_member->get_main_member_id($user_id);
+$view_main_member = $main_member->memberdata($main_member_id);
+foreach($view_main_member as $main_member_row)
+{
+
+}
+
+$balance = $main_member->get_last_balance($main_member_id);
+$view_deposits = $main_member->member_deposits($main_member_id);
+$view_withdrawals = $main_member->member_withdrawals($main_member_id);
+
+$provinceData = $main_member->allProvinceInformation();
+$cityData = $main_member->allCityInformation();
+
+//admin and manager dashboard
 $view_societies = $society->societyInformation();
 
 $total_societies = $society->total_societies();
+
 $total_members = $society->total_members();
 
 $total_transaction = $payment->total_transaction();
@@ -40,6 +59,13 @@ if (isset($_POST['submit1']))
 
 <!doctype html>
 <html lang="en" dir="ltr">
+<head>
+  <style type="text/css">
+      table tr {
+        cursor: pointer;
+    }
+  </style>
+</head>
 <?php include 'incl/head.php' ;?>
 <?php include 'incl/header.php' ;?>
   <body class="">
@@ -48,718 +74,582 @@ if (isset($_POST['submit1']))
         <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">        
           <div class="container">           
             <div class="row align-items-center">
-
-              <div class="col-lg-3 ml-auto">
-
-                <form class="input-icon my-3 my-lg-0" action="" method="post">
-
-                  <!-- <input type="search" class="form-control header-search" placeholder="Search&hellip;" tabindex="1">
-                  <div class="input-icon-addon">
-                    <i class="fe fe-search"></i>
-                  </div> -->
-
-                  <br>
-                  <div class="form-group">
-                          <!-- <label class="form-label">Separated inputs</label> -->
-                          <div class="row gutters-xs">
-                            <div class="col">
-                              <input type="text" name="search" id="search_text" class="form-control" required="required" placeholder="Enter Society Name">
-                            </div>
-                            <span class="col-auto">
-                              <button class="btn btn-secondary" type="submit" name="submit"><i class="fe fe-search"></i></button><br>
-                            
-                              
-                            </span>
-                          </div>
+              <?php if($type == 'admin' || $type == 'manager')
+              {?>
+                <div class="col-lg-3 ml-auto">
+                  <form class="input-icon my-3 my-lg-0" action="" method="post">
+                    <br>
+                    <div class="form-group">
+                      <div class="row gutters-xs">
+                        <div class="col">
+                          <input type="text" name="search" id="myInput" onkeyup="myFunction()" class="form-control" required="required" placeholder="Enter Society Name">
                         </div>
+                        <span class="col-auto">
+                          <button class="btn btn-secondary" type="submit" name="submit"><i class="fe fe-search"></i></button><br>              
+                        </span>
+                      </div>
+                    </div>
 
-                </form>
-
-              </div>
+                  </form>
+                </div>
+              <?php
+              }?>
 
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                  <li class="nav-item">
-                    <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
-                  </li>
                   
-                  <!-- <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i>Transaction</a>
-                    <div class="dropdown-menu dropdown-menu-arrow">
-                      <a href="./deposit.html" class="dropdown-item ">Deposit</a>
-                      <a href="./withdraw.html" class="dropdown-item ">Withdraw</a>
-                      <a href="./balance.html" class="dropdown-item ">View Balance</a>
-                    </div>
-                  </li> -->
+                  <?php
+                  if($type == 'user')
+                  {?>
+                    <li class="nav-item">
+                      <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
+                    </li>
 
-                  <!-- <li class="nav-item dropdown">
-                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-calendar"></i> Blog</a>
-                    <div class="dropdown-menu dropdown-menu-arrow">
-                      <a href="./maps.html" class="dropdown-item ">Maps</a>
-                      <a href="./icons.html" class="dropdown-item ">Icons</a>
-                      <a href="./store.html" class="dropdown-item ">Store</a>
-                      <a href="./blog.html" class="dropdown-item ">Blog</a>
-                      <a href="./carousel.html" class="dropdown-item ">Carousel</a>
-                    </div>
-                  </li> -->
+                    <li class="nav-item">
+                      <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-users"></i>Manage Spouse</a>
+                      <div class="dropdown-menu dropdown-menu-arrow">
+                        <a href="./view_spouse.php?main_member_id=<?php echo $main_member_id ?>" class="dropdown-item "><i class="fe fe-users"></i>View Spouse</a>
+                        <a href="./spouse.php?main_member_id=<?php echo $main_member_id ?>" class="dropdown-item "><i class="fe fe-user-plus"></i>Add Spouse</a>
+                      </div>
+                    </li>
 
-                  <!-- <li class="nav-item dropdown">
-                    <a href="./create_society.php" class="nav-link" ><i class="fe fe-user"></i>Add a new Society</a>
-                  </li> -->
+                    <li class="nav-item">
+                      <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-users"></i>Manage Immediate Family</a>
+                      <div class="dropdown-menu dropdown-menu-arrow">
+                        <a href="./view_immediate_family.php?main_member_id=<?php echo $main_member_id ?>" class="dropdown-item "><i class="fe fe-users"></i>View Immediate Family</a>
+                        <a href="./immediate_family.php?main_member_id=<?php echo $main_member_id ?>" class="dropdown-item "><i class="fe fe-user-plus"></i>Add Immediate Family</a>
+                      </div>
+                    </li>
 
-                  <!-- <li class="nav-item dropdown">
-                    <a href="./create_invoice.php" class="nav-link" ><i class="fe fe-file-plus"></i>Create a new Invoice</a>
-                  </li> -->
+                    <li class="nav-item">
+                      <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-users"></i>Manage Extended Family</a>
+                      <div class="dropdown-menu dropdown-menu-arrow">
+                        <a href="./view_extended_family.php?main_member_id=<?php echo $main_member_id ?>" class="dropdown-item "><i class="fe fe-users"></i>View Extended Family</a>
+                        <a href="./extended_family.php?main_member_id=<?php echo $main_member_id ?>" class="dropdown-item "><i class="fe fe-user-plus"></i>Add Extended Family</a>
+                      </div>
+                    </li>
+                  <?php
+                  }?>
 
-                  <li class="nav-item dropdown">
-                    <a href="./view_invoice.php" class="nav-link" ><i class="fe fe-file"></i> Invoice </a>
-                  </li>
+                  <?php if($type == 'admin' || $type == 'manager')
+                  {?>
+                    <li class="nav-item">
+                      <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
+                    </li>
 
-                  <li class="nav-item dropdown">
-                    <a href="./view_expense.php" class="nav-link"><i class="fe fe-file"></i> Expense </a>
-                  </li>
+                    <li class="nav-item">
+                      <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i>Capture Invoices</a>
+                      <div class="dropdown-menu dropdown-menu-arrow">
+                        <a href="./view_invoice.php" class="dropdown-item "><i class="fe fe-file-text"></i>View Invoice</a>
+                        <a href="./create_invoice.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Create a new Invoice</a>
+                      </div>
+                    </li>
 
-                  <!-- <li class="nav-item dropdown">
-                    <a href="./view_withdrawals.php" class="nav-link"><i class="fe fe-shopping-cart"></i> View Withdrawals</a>
-                  </li> -->
+                    <li class="nav-item">
+                      <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i>Capture Expenses</a>
+                      <div class="dropdown-menu dropdown-menu-arrow">
+                        <a href="./view_expense.php" class="dropdown-item "><i class="fe fe-file-text"></i>View Expenses</a>
+                        <a href="./create_expense.php" class="dropdown-item "><i class="fe fe-file-plus"></i>Create a new Expenses</a>
+                      </div>
+                    </li>
 
-                  <li class="nav-item dropdown">
-                    <a href="./manager.php" class="nav-link"><i class="fe fe-file-text"></i> Report</a>
-                  </li>
-
-
-                  <!-- <li class="nav-item">
-                    <a href="./gallery.html" class="nav-link"><i class="fe fe-image"></i> Logout</a>
-                  </li> -->
-
-                  <!-- <li class="nav-item">
-                    <a href="./docs/index.html" class="nav-link"><i class="fe fe-file-text"></i> Documentation</a>
-                  </li> -->
+                    <?php if($type === "manager") 
+                    {?>
+                      <li class="nav-item dropdown">
+                        <a href="./view_report.php" class="nav-link"><i class="fe fe-file-text"></i> View Reports </a>
+                      </li>
+                    <?php 
+                    }?>
+                       
+                    <li class="nav-item">
+                      <a href="./manage_members.php" class="nav-link"><i class="fe fe-users"></i>Main Member's Dashboard</a>
+                    </li>
+                  <?php
+                  }?>
 
                 </ul>
               </div>
             </div>
           </div>
         </div>
+
         <div class="my-3 my-md-5 ">
           <div class="container ">
             <div class="page-header">
-
-
-
-                      <?php 
-                      if(empty($errors) === false)
-                      {	
-                      ?>
-                        <div class="col-sm-6 col-lg-12 ">
-                          <div class="card p-3 align-items-center">
-                            <div class="d-flex align-items-center">
-                              <form class="text-center" action="" method="post">                    
-                                <div class="form-group">
-                                  <h3>
-                                  Sorry!!! <br>
-                                  Society name: "<?php echo ucfirst($search) ?>" does'nt exist
-                                </div>
-                                <div class="form-group">
-                                  <button class="btn btn-secondary" type="submit" name="submit1" >Click here to view all societies</button>
-                                </div>
-                                  </h3>
-                              </form>
-                            </div>
-                          </div>
+              <?php 
+              if(empty($errors) === false)
+              {	
+              ?>
+                <div class="col-sm-6 col-lg-12 ">
+                  <div class="card p-3 align-items-center">
+                    <div class="d-flex align-items-center">
+                      <form class="text-center" action="" method="post">                    
+                        <div class="form-group">
+                          <h3>
+                          Sorry!!! <br>
+                          Society name: "<?php echo ucfirst($search) ?>" does'nt exist
                         </div>
-                      <?php 
-                      }?>     
+                        <div class="form-group">
+                          <button class="btn btn-secondary" type="submit" name="submit1" >Click here to view all societies</button>
+                        </div>
+                          </h3>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              <?php 
+              }?>     
 
-                      <?php 
-                      if(empty($errors) === true){   
-                        
-                      ?>
+              <?php 
+              if(empty($errors) === true)
+              {?>
                   
               <h1 class="page-title">
                 Dashboard
               </h1>
             </div>
             <div class="row row-cards">
-              <!-- <div class="col-6 col-sm-4 col-lg-2">
-                <div class="card">
-                  <div class="card-body p-3 text-center">
-                    <div class="text-right text-green">
-                      6%
-                      <i class="fe fe-chevron-up"></i>
-                    </div>
-                    <div class="h1 m-0">43</div>
-                    <div class="text-muted mb-4">New Tickets</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6 col-sm-4 col-lg-2">
-                <div class="card">
-                  <div class="card-body p-3 text-center">
-                    <div class="text-right text-red">
-                      -3%
-                      <i class="fe fe-chevron-down"></i>
-                    </div>
-                    <div class="h1 m-0">17</div>
-                    <div class="text-muted mb-4">Closed Today</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6 col-sm-4 col-lg-2">
-                <div class="card">
-                  <div class="card-body p-3 text-center">
-                    <div class="text-right text-green">
-                      9%
-                      <i class="fe fe-chevron-up"></i>
-                    </div>
-                    <div class="h1 m-0">7</div>
-                    <div class="text-muted mb-4">New Replies</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6 col-sm-4 col-lg-2">
-                <div class="card">
-                  <div class="card-body p-3 text-center">
-                    <div class="text-right text-green">
-                      3%
-                      <i class="fe fe-chevron-up"></i>
-                    </div>
-                    <div class="h1 m-0">27.3K</div>
-                    <div class="text-muted mb-4">Followers</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6 col-sm-4 col-lg-2">
-                <div class="card">
-                  <div class="card-body p-3 text-center">
-                    <div class="text-right text-red">
-                      -2%
-                      <i class="fe fe-chevron-down"></i>
-                    </div>
-                    <div class="h1 m-0">$95</div>
-                    <div class="text-muted mb-4">Daily Earnings</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6 col-sm-4 col-lg-2">
-                <div class="card">
-                  <div class="card-body p-3 text-center">
-                    <div class="text-right text-red">
-                      -1%
-                      <i class="fe fe-chevron-down"></i>
-                    </div>
-                    <div class="h1 m-0">621</div>
-                    <div class="text-muted mb-4">Products</div>
-                  </div>
-                </div>
-              </div> -->
-<!--               <div class="col-lg-6">
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Development Activity</h3>
-                  </div>
-                  <div id="chart-development-activity" style="height: 10rem"></div>
-                  <div class="table-responsive">
-                    <table class="table card-table table-striped table-vcenter">
-                      <thead>
-                        <tr>
-                          <th colspan="2">User</th>
-                          <th>Commit</th>
-                          <th>Date</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td class="w-1"><span class="avatar" style="background-image: url(./demo/faces/male/9.jpg)"></span></td>
-                          <td>Ronald Bradley</td>
-                          <td>Initial commit</td>
-                          <td class="text-nowrap">May 6, 2018</td>
-                          <td class="w-1"><a href="#" class="icon"><i class="fe fe-trash"></i></a></td>
-                        </tr>
-                        <tr>
-                          <td><span class="avatar">BM</span></td>
-                          <td>Russell Gibson</td>
-                          <td>Main structure</td>
-                          <td class="text-nowrap">April 22, 2018</td>
-                          <td><a href="#" class="icon"><i class="fe fe-trash"></i></a></td>
-                        </tr>
-                        <tr>
-                          <td><span class="avatar" style="background-image: url(./demo/faces/female/1.jpg)"></span></td>
-                          <td>Beverly Armstrong</td>
-                          <td>Left sidebar adjustments</td>
-                          <td class="text-nowrap">April 15, 2018</td>
-                          <td><a href="#" class="icon"><i class="fe fe-trash"></i></a></td>
-                        </tr>
-                        <tr>
-                          <td><span class="avatar" style="background-image: url(./demo/faces/male/4.jpg)"></span></td>
-                          <td>Bobby Knight</td>
-                          <td>Topbar dropdown style</td>
-                          <td class="text-nowrap">April 8, 2018</td>
-                          <td><a href="#" class="icon"><i class="fe fe-trash"></i></a></td>
-                        </tr>
-                        <tr>
-                          <td><span class="avatar" style="background-image: url(./demo/faces/female/11.jpg)"></span></td>
-                          <td>Sharon Wells</td>
-                          <td>Fixes #625</td>
-                          <td class="text-nowrap">April 9, 2018</td>
-                          <td><a href="#" class="icon"><i class="fe fe-trash"></i></a></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <script>
-                  require(['c3', 'jquery'], function(c3, $) {
-                  	$(document).ready(function(){
-                  		var chart = c3.generate({
-                  			bindto: '#chart-development-activity', // id of chart wrapper
-                  			data: {
-                  				columns: [
-                  				    // each columns data
-                  					['data1', 0, 5, 1, 2, 7, 5, 6, 8, 24, 7, 12, 5, 6, 3, 2, 2, 6, 30, 10, 10, 15, 14, 47, 65, 55]
-                  				],
-                  				type: 'area', // default type of chart
-                  				groups: [
-                  					[ 'data1', 'data2', 'data3']
-                  				],
-                  				colors: {
-                  					'data1': tabler.colors["blue"]
-                  				},
-                  				names: {
-                  				    // name of each serie
-                  					'data1': 'Purchases'
-                  				}
-                  			},
-                  			axis: {
-                  				y: {
-                  					padding: {
-                  						bottom: 0,
-                  					},
-                  					show: false,
-                  						tick: {
-                  						outer: false
-                  					}
-                  				},
-                  				x: {
-                  					padding: {
-                  						left: 0,
-                  						right: 0
-                  					},
-                  					show: false
-                  				}
-                  			},
-                  			legend: {
-                  				position: 'inset',
-                  				padding: 0,
-                  				inset: {
-                                      anchor: 'top-left',
-                  					x: 20,
-                  					y: 8,
-                  					step: 10
-                  				}
-                  			},
-                  			tooltip: {
-                  				format: {
-                  					title: function (x) {
-                  						return '';
-                  					}
-                  				}
-                  			},
-                  			padding: {
-                  				bottom: 0,
-                  				left: -1,
-                  				right: -1
-                  			},
-                  			point: {
-                  				show: false
-                  			}
-                  		});
-                  	});
-                  });
-                </script>
-              </div> -->
-<!--               <div class="col-md-6">
-                <div class="alert alert-primary">Are you in trouble? <a href="./docs/index.html" class="alert-link">Read our documentation</a> with code samples.</div>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="card">
-                      <div class="card-header">
-                        <h3 class="card-title">Chart title</h3>
-                      </div>
-                      <div class="card-body">
-                        <div id="chart-donut" style="height: 12rem;"></div>
-                      </div>
-                    </div>
-                    <script>
-                      require(['c3', 'jquery'], function(c3, $) {
-                      	$(document).ready(function(){
-                      		var chart = c3.generate({
-                      			bindto: '#chart-donut', // id of chart wrapper
-                      			data: {
-                      				columns: [
-                      				    // each columns data
-                      					['data1', 63],
-                      					['data2', 37]
-                      				],
-                      				type: 'donut', // default type of chart
-                      				colors: {
-                      					'data1': tabler.colors["green"],
-                      					'data2': tabler.colors["green-light"]
-                      				},
-                      				names: {
-                      				    // name of each serie
-                      					'data1': 'Maximum',
-                      					'data2': 'Minimum'
-                      				}
-                      			},
-                      			axis: {
-                      			},
-                      			legend: {
-                                      show: false, //hide legend
-                      			},
-                      			padding: {
-                      				bottom: 0,
-                      				top: 0
-                      			},
-                      		});
-                      	});
-                      });
-                    </script>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="card">
-                      <div class="card-header">
-                        <h3 class="card-title">Chart title</h3>
-                      </div>
-                      <div class="card-body">
-                        <div id="chart-pie" style="height: 12rem;"></div>
-                      </div>
-                    </div>
-                    <script>
-                      require(['c3', 'jquery'], function(c3, $) {
-                      	$(document).ready(function(){
-                      		var chart = c3.generate({
-                      			bindto: '#chart-pie', // id of chart wrapper
-                      			data: {
-                      				columns: [
-                      				    // each columns data
-                      					['data1', 63],
-                      					['data2', 44],
-                      					['data3', 12],
-                      					['data4', 14]
-                      				],
-                      				type: 'pie', // default type of chart
-                      				colors: {
-                      					'data1': tabler.colors["blue-darker"],
-                      					'data2': tabler.colors["blue"],
-                      					'data3': tabler.colors["blue-light"],
-                      					'data4': tabler.colors["blue-lighter"]
-                      				},
-                      				names: {
-                      				    // name of each serie
-                      					'data1': 'A',
-                      					'data2': 'B',
-                      					'data3': 'C',
-                      					'data4': 'D'
-                      				}
-                      			},
-                      			axis: {
-                      			},
-                      			legend: {
-                                      show: false, //hide legend
-                      			},
-                      			padding: {
-                      				bottom: 0,
-                      				top: 0
-                      			},
-                      		});
-                      	});
-                      });
-                    </script>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="card">
-                      <div class="card-body text-center">
-                        <div class="h5">New feedback</div>
-                        <div class="display-4 font-weight-bold mb-4">62</div>
-                        <div class="progress progress-sm">
-                          <div class="progress-bar bg-red" style="width: 28%"></div>
+              <?php
+              if($type == 'manager' || $type == 'admin')
+              {?>
+                  <div class="col-sm-6 col-lg-4">
+                    <div class="card p-3">
+                      <div class="d-flex align-items-center">
+                        <span class="stamp stamp-md bg-blue mr-3">
+                          <i class="fe fe-plus-square"></i>
+                        </span>
+                        <div>
+                          <h4 class="m-0"><a href="./view_total_transactions.php"><small>Total Transactions</small></a></h4>
+                          <small class="text-muted"><?php echo $total_transaction ?></small>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-6">
-                    <div class="card">
-                      <div class="card-body text-center">
-                        <div class="h5">Today profit</div>
-                        <div class="display-4 font-weight-bold mb-4">$652</div>
-                        <div class="progress progress-sm">
-                          <div class="progress-bar bg-green" style="width: 84%"></div>
+
+                  <div class="col-sm-6 col-lg-4">
+                    <div class="card p-3">
+                      <div class="d-flex align-items-center">
+                        <span class="stamp stamp-md bg-red mr-3">
+                          <i class="fe fe-database"></i>
+                        </span>
+                        <div>
+                          <h4 class="m-0"><a href="./view_total_deposits.php"><small>Total Deposits</small></a></h4>
+                          <small class="text-muted"><?php echo $total_deposit?> </small>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div> -->
-              <div class="col-sm-6 col-lg-4">
-                <div class="card p-3">
-                  <div class="d-flex align-items-center">
-                    <span class="stamp stamp-md bg-blue mr-3">
-                      <i class="fe fe-plus-square"></i>
-                    </span>
-                    <div>
-                      <h4 class="m-0"><a href="javascript:void(0)"><!-- 132 --> <small>Total Transactions</small></a></h4>
-                      <small class="text-muted"><?php echo $total_transaction ?></small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- <div class="col-sm-6 col-lg-3">
-                <div class="card p-3">
-                  <div class="d-flex align-items-center">
-                    <span class="stamp stamp-md bg-green mr-3">
-                      <i class="fe fe-bar-chart"></i>
-                    </span>
-                    <div>
-                      <h4 class="m-0"><a href="javascript:void(0)">10% <small>Fixed Interest</small></a></h4>
-                      <small class="text-muted">32 Investors</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-3">
-                <div class="card p-3">
-                  <div class="d-flex align-items-center">
-                    <span class="stamp stamp-md bg-yellow mr-3">
-                      <i class="fe fe-bar-chart-2"></i>
-                    </span>
-                    <div>
-                      <h4 class="m-0"><a href="javascript:void(0)">17% <small>Variable Interest</small></a></h4>
-                      <small class="text-muted">38 Investors</small>
-                    </div>
-                  </div>
-                </div>
-              </div>               -->
-              
-
-              <div class="col-sm-6 col-lg-4">
-                <div class="card p-3">
-                  <div class="d-flex align-items-center">
-                    <span class="stamp stamp-md bg-red mr-3">
-                      <i class="fe fe-database"></i>
-                    </span>
-                    <div>
-                      <h4 class="m-0"><a href="javascript:void(0)"><!-- 1,352  --><small>Total Deposits</small></a></h4>
-                      <small class="text-muted"><?php echo $total_deposit?> </small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-lg-4">
-                <div class="card p-3">
-                  <div class="d-flex align-items-center">
-                    <span class="stamp stamp-md bg-teal mr-3">
-                      <i class="fe fe-shopping-cart"></i>
-                    </span>
-                    <div>
-                      <h4 class="m-0"><a href="javascript:void(0)"><!-- 1,352  --><small> Total Withdrawals</small></a></h4>
-                      <small class="text-muted"><?php echo $total_withdrawals?></small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-lg-6">
-                  <div class="card p-3">
-                    <div class="d-flex align-items-center">
-                      <span class="stamp stamp-md bg-lime mr-3">
-                        <i class="fe fe-user"></i>
-                      </span>
-                      <div>
-                        <h4 class="m-0"><a href="./view_societies.php"><!-- 1,352  --><small>Societies</small></a></h4>
-                        <small class="text-muted"><?php echo $total_societies?> registered societies</small>
+                  
+                  <div class="col-sm-6 col-lg-4">
+                    <div class="card p-3">
+                      <div class="d-flex align-items-center">
+                        <span class="stamp stamp-md bg-teal mr-3">
+                          <i class="fe fe-shopping-cart"></i>
+                        </span>
+                        <div>
+                          <h4 class="m-0"><a href="./view_total_withdrawals.php"><small> Total Withdrawals</small></a></h4>
+                          <small class="text-muted"><?php echo $total_withdrawals?></small>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+
+                  <div class="col-sm-6 col-lg-6">
+                    <div class="card p-3">
+                      <div class="d-flex align-items-center">
+                        <span class="stamp stamp-md bg-lime mr-3">
+                          <i class="fe fe-user"></i>
+                        </span>
+                        <div>
+                          <h4 class="m-0"><a href="./view_societies.php"><small>Societies</small></a></h4>
+                          <small class="text-muted"><?php echo $total_societies?> registered societies</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
   
-                <div class="col-sm-6 col-lg-6">
+                  <div class="col-sm-6 col-lg-6">
                     <div class="card p-3">
                       <div class="d-flex align-items-center">
                         <span class="stamp stamp-md bg-lime mr-3">
                           <i class="fe fe-users"></i>
                         </span>
                         <div>
-                          <h4 class="m-0"><a href="./viewMembers.php"><!-- 1,352  --><small>Members</small></a></h4>
+                          <h4 class="m-0"><a href="./viewMembers.php"><small>Members</small></a></h4>
                           <small class="text-muted"><?php echo $total_members?> registered members</small>
                         </div>
                       </div>
                     </div>
                   </div>
-              <!-- <div class="col-sm-12 col-lg-4">
-                <div class="card p-3">
-                  <div class="d-flex align-items-center">
-                    <span class="stamp stamp-md bg-green mr-3">
-                      <i class="fe fe-refresh-cw"></i>
+              <?php 
+              }
+              else if($type == 'user') 
+              {?>
+                  <div class="col-sm-6 col-lg-4">
+                <div class="card p-3 align-items-left">
+                  <div class="d-flex align-items-left">
+                    <span class="stamp stamp-md bg-blue mr-3">
+                      <i class="fe fe-plus-square"></i>
                     </span>
                     <div>
-                      <h4 class="m-0"><a href="javascript:void(0)"><small>Retention</small></a></h4>
-                      <small class="text-muted">R163,000.00</small>
+                      <h4 class="m-0"><a href="javascript:void(0)"><!-- 132 --> <small>Cover</small></a></h4>
+                      <small class="text-muted">R<?php echo number_format($main_member_row['cover'], 2) ?></small>
                     </div>
                   </div>
                 </div>
-              </div>                             -->
-            </div>
-            <div class="row row-cards row-deck">
-              <!-- <div class="col-lg-6">
-                <div class="card card-aside">
-                  <a href="#" class="card-aside-column" style="background-image: url(./demo/photos/david-klaasen-54203-500.jpg)"></a>
-                  <div class="card-body d-flex flex-column">
-                    <h4><a href="#">And this isn't my nose. This is a false one.</a></h4>
-                    <div class="text-muted">Look, my liege! The Knights Who Say Ni demand a sacrifice! …Are you suggesting that coconuts migr...</div>
-                    <div class="d-flex align-items-center pt-5 mt-auto">
-                      <div class="avatar avatar-md mr-3" style="background-image: url(./demo/faces/female/18.jpg)"></div>
-                      <div>
-                        <a href="./profile.html" class="text-default">Rose Bradley</a>
-                        <small class="d-block text-muted">3 days ago</small>
-                      </div>
-                      <div class="ml-auto text-muted">
-                        <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"><i class="fe fe-heart mr-1"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-              <!-- <div class="col-lg-6">
-                <div class="card card-aside">
-                  <a href="#" class="card-aside-column" style="background-image: url(./demo/photos/david-marcu-114194-500.jpg)"></a>
-                  <div class="card-body d-flex flex-column">
-                    <h4><a href="#">Well, I didn't vote for you.</a></h4>
-                    <div class="text-muted">Well, we did do the nose. Why? Shut up! Will you shut up?! You don't frighten us, English pig-dog...</div>
-                    <div class="d-flex align-items-center pt-5 mt-auto">
-                      <div class="avatar avatar-md mr-3" style="background-image: url(./demo/faces/male/16.jpg)"></div>
-                      <div>
-                        <a href="./profile.html" class="text-default">Peter Richards</a>
-                        <small class="d-block text-muted">3 days ago</small>
-                      </div>
-                      <div class="ml-auto text-muted">
-                        <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"><i class="fe fe-heart mr-1"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-            </div>
-            <div class="row row-cards row-deck">
+              </div>
 
+              <div class="col-sm-6 col-lg-4">
+                <div class="card p-3 align-items-left">
+                  <div class="d-flex align-items-left">
+                    <span class="stamp stamp-md bg-red mr-3">
+                      <i class="fe fe-database"></i>
+                    </span>
+                    <div>
+                      <h4 class="m-0"><a href="javascript:void(0)"><small>Total Premiums</small></a></h4>
+                      <small class="text-muted"><?php echo $view_deposits ?></small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="col-sm-3 col-lg-3">
+                <div class="card p-3 align-items-center">
+                  <a href="./pay_premium.php?main_member_id=<?php echo $main_member_id ?>" class="btn btn-success" role="button">Pay Premium</a>
+                </div>
+              </div> -->
+
+              <div class="col-sm-6 col-lg-4">
+                <div class="card p-3 align-items-left">
+                  <div class="d-flex align-items-left">
+                    <span class="stamp stamp-md bg-cyan mr-3">
+                      <i class="fe fe-dollar-sign"></i>
+                    </span>
+                    <div>
+
+                      <?php 
+                      $bal = number_format($balance, 2);
+                      if($balance >= 0) 
+                      { 
+                      ?>
+
+                          <h4 class="m-0"><a href="javascript:void(0)"><small>Current Balance</small></a></h4>
+                          <small class="text-muted">R<?php echo $bal ?></small>
+                      
+                      <?php 
+                      }
+                      else 
+                      { ?>
+
+                          <h4 class="m-0"><a href="javascript:void(0)"><small>Due to us</small></a></h4>
+                          <small class="text-muted">(R<?php echo substr($bal,1) ?>) </small>
+
+                      <?php 
+                      }
+                      ?>
+                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php
+              }?>
+
+            </div>
+
+            <div class="row row-cards row-deck">
               <div class="col-12">
-              <h1 class="page-title">
-                <?php if(isset($_POST['submit']))
-                    {
-                        echo 'Results for Society Name: "'.ucfirst($search).'"'; 
-                    } 
-                ?>
-              </h1>
+                
+                <?php if($type == 'manager' || $type == 'admin')
+                {?>
                   <div class="card">
-                  <div class="table-responsive">
+                    <div class="table-responsive">
 
-                    <table class="table table-hover table-outline table-vcenter text-nowrap card-table" id="table-data">
-                      <thead>
-                        <tr>
-                          <th class="text-center w-1"><i class="icon-people"></i></th>
-                          <th>Society Name</th>
-                          <th>Opening Balance</th>
-                          <!-- <th class="text-center">Payment</th> -->
-                          <th>Date Inception</th>
-                          <th class="text-center">Location</th>
-                          <th class="text-center"><i class="icon-settings"></i></th>
+                      <table id="myTable" class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                        <thead>
+                          <tr>
+                            <th class="text-center w-1"><i class="icon-people"></i></th>
+                            <th>Society Name</th>
+                            <th>Opening Balance</th>
+                            <th>Date Inception</th>
+                            <th class="text-center">Location</th>
+                            <th class="text-center"><i class="icon-settings"></i></th>
+                          </tr>
+                        </thead>
+                      
+                        <tbody>
+                          <?php foreach ($view_societies as $row) 
+                          {?>
+                            <!-- onclick="window.location='/societyapp/UI_1/dist/view_statements.php?society_id=<?php //echo $row['society_id']?>'" -->
+                            <tr>
+                              <td class="text-center" onclick="window.location='/societyapp/UI_1/dist/view_statements.php?society_id=<?php echo $row['society_id']?>'"></td>
+
+                              <td ++ onclick="window.location='/societyapp/UI_1/dist/view_statements.php?society_id=<?php echo $row['society_id']?>'">
+                                <div>
+                                  <?php 
+                                    echo $row['society_name']; 
+                                  ?> 
+                                  (<?php
+                                    $society_id = $row['society_id']; 
+                                    echo $total_number_of_society = $member->total_num_society($society_id) 
+                                  ?>) 
+                                </div>
+                              </td>
+
+                              <td onclick="window.location='/societyapp/UI_1/dist/view_statements.php?society_id=<?php echo $row['society_id']?>'">
+                                <div class="clearfix">
+                                  <div class="float-left">
+                                    <strong><?php echo $row['init_capital']; ?></strong>
+                                  </div>
+                                </div>
+                                <div class="progress progress-xs">
+                                  <div class="progress-bar bg-yellow" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+
+                              <td onclick="window.location='/societyapp/UI_1/dist/view_statements.php?society_id=<?php echo $row['society_id']?>'">
+                                <div>
+                                    <?php $date=date_create($row['date_inception']);
+                                        echo date_format($date,"d-m-Y"); 
+                                    ?>
+                                </div>
+                              </td>
+                              
+                              <td class="text-center" onclick="window.location='/societyapp/UI_1/dist/view_statements.php?society_id=<?php echo $row['society_id']?>'">
+                                <div>
+                                  <div>
+                                      <?php echo $row['addr1']; ?> <br> 
+                                      <?php echo $row['addr2']; ?> <br> 
+                                      <?php echo $row['addr3']; ?> <br>
+                                      <?php echo $row['addr4']; ?>
+                                  </div>
+                                </div> 
+                              </td> 
+
+                              <td class="text-center">
+                                <div class="item-action dropdown p-1" >
+                                  <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fe fe-more-vertical"></i></a>
+                                  <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="./view_statements.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-file-text"></i> View Details </a>
+                                    <a href="./view_members.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-users"></i> View Members </a>
+                                    <a href="./view_package.php?society_id=<?php echo $row['society_id'] ?>" class="dropdown-item"><i class="dropdown-icon fe fe-layers"></i> View Package History</a>
+                                    <a href="./deposit.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fa fa-plus-square-o"></i> Deposit </a>
+                                    <a href="./withdraw.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fa fa-minus-square-o"></i> Withdraw </a>
+                                    <a href="./edit_society.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-edit"></i> Edit Society </a>
+                                    <a href="./addMember.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-user-plus"></i> Add Member </a>
+                                    <a href="./view_society_funeral_arrangement.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-activity"></i> View Funeral Arrangement </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a onclick ="return confirm('Are you sure you want to delete this society?')" href="./deleteSociety.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Remove Society</a>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr> 
+                          <?php 
+                          }?>   
+                        
+                        <?php 
+                        }?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <?php 
+                  }?>
+
+                  <?php if($type == 'user')
+                  {?>
+                      
+
+
+
+                      <div class="row row-cards row-deck">
+
+            <div class="col-lg-8">
+              <script>
+                require(['input-mask']);
+              </script>
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Member Details</h3>
+                  <form action="" method="post">
+
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                          <div class="form-group">
+                            <label class="form-label">First name(s)</label>
+                            <input type="text" name="first_name" class="form-control" value="<?php echo $main_member_row['first_name']?>">
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                          <div class="form-group">
+                              <label class="form-label">Surname</label>
+                              <input type="text" name="last_name" class="form-control" value="<?php echo $main_member_row['last_name']?>">
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                          <div class="form-group">
+                              <label class="form-label">ID number</label>
+                              <input disabled="true" type="number" name="id_number" class="form-control" value="<?php echo $main_member_row['id_number']?>">
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                          <div class="form-group">
+                              <label class="form-label">Contact number</label>
+                              <input type="number" name="contact_num" class="form-control" value="<?php echo $main_member_row['contact_number']?>">
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                          <div class="form-group">
+                                <label class="gender">Gender</label>
+                                <select name= gender class="form-control">
+                                    <option ><?php echo $main_member_row['gender'] ?></option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                          <div class="form-group">
+                              <label class="form-label">Date Inception</label>
+                              <input type="text" name="inception_date" class="form-control" data-mask-clearifnotmatch="true" autocomplete="off" maxlength="10" value="<?php echo date(("d-m-Y"), $main_member_row['inception_date']) ?>">
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                          <div class="form-group">
+                                <label class="plan_type">Plan type</label>
+                                <select name= plan_type class="form-control custom-select" required="true">
+                                  <option ><?php echo $main_member_row['plan_type']; ?></option>
+                                  <option value="Bronze">Bronze</option>
+                                  <option value="Silver">Silver</option>
+                                  <option value="Gold">Gold</option>
+                                  <option value="Platinum">Platinum</option>
+                                  <option value="Pensioner">Pensioner</option>
+                                  <option value="Seshebo">Seshebo</option>
+                                  <option value="Tomnstone">Tomnstone</option>
+                                  <option value="Pensioner +">Pensioner +</option>
+                                </select>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                          <div class="form-group">
+                              <label class="form-label">Premium</label>
+                              <input type="number" name="premium" class="form-control" value="<?php echo $main_member_row['premium']?>">
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                          <div class="form-group">
+                              <label class="form-label">Cover</label>
+                              <input type="number" name="cover" class="form-control" value="<?php echo $main_member_row['cover']?>">
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6">
+                          <div class="form-group">
+                              <label class="form-label">Policy number</label>
+                              <input type="text" name="policy_number" class="form-control" value="<?php echo $main_member_row['policy_number']?>">
+                          </div>
+                        </div>
                           
+                      </div>
+                    </div>
+                  
+                        <h3 class="card-title">Location</h3>
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-sm-4 col-md-4">
+                              <div class="form-group">
+                                <label class="form-label">Suburb</label>
+                                <input type="text" name="suburb" class="form-control" value="<?php echo $main_member_row['suburb']?> ">
+                              </div>
+                            </div>
+                                
+                            <div class="col-sm-4 col-md-4">
+                              <div class="form-group">
+                                <label class="form-label">City</label>
+                                <input list="city" name="city" class="form-control" placeholder="Enter City" required="true" size="" value="<?php echo $main_member_row['city']; ?>" >
+                                  <datalist id="city">
+                                    <?php  
+                                      foreach($cityData as $cityrow)
+                                      {?>
+                                          <option value="<?php echo $cityrow['city_name'] ?> "></option>
+                                      <?php 
+                                      }?>   
+                                  </datalist>
+                              </div>
+                            </div>
+
+                            <div class="col-sm-4 col-md-4">
+                              <div class="form-group">
+                                <label class="province">Province</label>
+                                <select name = province class="form-control custom-select" required="true">
+                                  <option ><?php echo $main_member_row['province']; ?></option>
+                                  <?php foreach($provinceData as $provincerow)
+                                  {?>
+                                    <option value="<?php echo $provincerow['province_name'] ?>"><?php echo $provincerow['province_name'] ?></option>
+                                  <?php
+                                  }?>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                    <div class="card-footer">
+                      <button type="submit" name="update" class="btn btn-primary">Update Details</button>
+                      <a href="./edit_user_log_in_details.php?user_id=<?php echo $main_member_row['user_id'] ?>" class="btn btn-primary" role="button">Edit log in details</a>
+                    </div>
+
+                    <br>
+                    <?php 
+                    if(empty($errors) === false)
+                    {
+                      echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';  
+                    }
+                    ?>
+
+                  </form>
+                </div>
+              </div>
+            </div>              
+              <div class="col-lg-4 col-sm-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Statement</h3>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table card-table table-vcenter text-nowrap">
+                      <tbody>
+                        <tr>
+                          <td class="text-center">
+                            <a href="member_statement.php?main_member_id=<?php echo $main_member_id ?>" class="btn btn-primary btn-sm"><i class="w-1">View Statement</i></a>
+                          </td>
                         </tr>
                         
-                      </thead>
-                      <tbody>
-                      <?php foreach ($view_societies as $row) { ?>
-                        <tr>
-                          <td class="text-center">
-                            <!-- <div class="avatar d-block" style="background-image: url(demo/faces/avatar/avatar-001.jpg)">
-                              <span class="avatar-status bg-green"></span>
-                            </div> -->
-                          </td>
-                          <td>
-                            <div><?php echo $row['society_name']; ?></div>
-                            <div class="small text-muted">
-                              <!-- 82 Bok Street -->
-                            </div>
-                          </td>
-                          <td>
-                            <div class="clearfix">
-                              <div class="float-left">
-                                <strong><?php echo $row['init_capital']; ?></strong>
-                              </div>
-                              <!-- <div class="float-right">
-                                <small class="text-muted">Jun 11, 2019</small>
-                              </div> -->
-                            </div>
-                            <div class="progress progress-xs">
-                              <div class="progress-bar bg-yellow" role="progressbar" style="width: 0%"
-                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </td>
-                          <!-- <td class="text-center">
-                            <i class="payment payment-visa"></i>
-                          </td> -->
-                          <td>
-                            <!-- <div class="small text-muted">Last login</div> -->
-                            <div>
-                                <?php $date=date_create($row['date_inception']);
-                                    echo date_format($date,"d-m-Y"); 
-                                ?>
-                            </div>
-                          </td>
-                          
-                          <td class="text-center">
-                            <div>
-                              <div>
-                                  <?php echo $row['addr1']; ?> <br> 
-                                  <?php echo $row['addr2']; ?> <br> 
-                                  <?php echo $row['addr3']; ?> <br>
-                                  <?php echo $row['addr4']; ?>
-                              </div>
-                          
-                            </div> 
-                          </td> 
-                          <td class="text-center">
-                            <div class="item-action dropdown p-1" >
-                              <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fe fe-more-vertical"></i></a>
-                              <div class="dropdown-menu dropdown-menu-right">
-                                <a href="./view_statements.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-file-text"></i> View Details </a>
-                                <a href="./view_members.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-users"></i> View Members </a>
-                                <a href="./view_package.php?society_id=<?php echo $row['society_id'] ?>" class="dropdown-item"><i class="dropdown-icon fe fe-layers"></i> View Package History</a>
-                                <a href="./deposit.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fa fa-plus-square-o"></i> Deposit </a>
-                                <a href="./withdraw.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fa fa-minus-square-o"></i> Withdraw </a>
-                                <a href="./edit_society.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-edit"></i> Edit Society </a>
-                                <a href="./addMember.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-user-plus"></i> Add Member </a>
-                                <!-- <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-message-square"></i> Something else here</a> -->
-                                <div class="dropdown-divider"></div>
-                                <a onclick ="return confirm('Are you sure you want to delete this society?')" href="./deleteSociety.php?society_id=<?php echo $row['society_id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Remove Society</a>
-
-                                <!-- _using_packageID.php?society_id=<?php //echo $row['society_id'] ?> -->
-
-                              </div>
-                            </div>
-                          </td>
-                        </tr>  
-                        <?php } ?>   
-                        
-                        <?php } ?>
                       </tbody>
                     </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+                  <?php 
+                  }?>
 
                     
 
-                  </div>
-                </div>
+                  
               </div>
               <!-- <div class="col-sm-6 col-lg-4">
                 <div class="card">
@@ -1550,6 +1440,28 @@ if (isset($_POST['submit1']))
             });
         });
     });
+</script>
+
+<!-- Table filter -->
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 1; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
 </script>
 
   </body>

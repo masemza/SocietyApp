@@ -1,9 +1,7 @@
 <?php
 require 'core/init.php';
 $general->logged_in_protect();
-
-
-         
+      
 if (empty($_POST) === false) {
 
 	$email = trim($_POST['email']);
@@ -12,7 +10,7 @@ if (empty($_POST) === false) {
 	if (empty($email) === true || empty($password) === true) {
 		$errors[] = 'Sorry, but we need your email and password.';
 	} else if ($users->user_exists($email) === false) {
-		$errors[] = 'Sorry that email doesn\'t exist, please sign up first';
+		$errors[] = 'Sorry that email doesn\'t exist';
 	//} else if ($users->email_confirmed($username) === false) {
 	//	$errors[] = 'Sorry, but you need to activate your account. 
 	//				 Please check your email.';
@@ -82,40 +80,37 @@ if (empty($_POST) === false) {
               <form class="card" action="" method="post" >
                 <div class="card-body p-6">
                   <div class="card-title">Login to your account</div>
+                  <!-- <?php //if(isset($_POST['submit']) && empty($_POST['email']) === true || empty($_POST['password']) === true ) {?> <span class="form-required">*</span> Required Fields<?php //} ?> -->
+                  <fieldset class="form-fieldset">
                   <div class="form-group">
-                    <label class="form-label">Email address</label>
+                    <label class="form-label">Email address <?php if(isset($_POST['submit']) && empty($_POST['email']) ){ ?><span class="form-required">*</span><?php } ?> </label>
                     <input type="text" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" value="<?php if(isset($_POST['email'])) echo htmlentities($_POST['email']); ?>">
                   </div>
                   <div class="form-group">
                     <label class="form-label">
-                      Password
-                      <a href="./forgot-password.html" class="float-right small">I forgot password</a>
-                    </label>
+                      Password 
+                      <a href="./forgot-password.php" class="float-right small">I forgot password</a>
+                      <?php if(isset($_POST['submit']) && empty($_POST['password']) ){ ?><span class="form-required">*</span><?php } ?></label>
                     <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                   </div>
-                  <div class="form-group">
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" />
-                      <span class="custom-control-label">Remember me</span>
-                    </label>
-                  </div>
+                  </fieldset>
                   <div class="form-footer">
                     <button type="submit" name="submit" class="btn btn-primary btn-block">Sign in</button>
                   </div>
                 </div> 
         
+                <?php 
+			        if(empty($errors) === false)
+                    {
+                        echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
+                    }
+                ?>
+
               </form>
 
-              <br>
-              <?php 
-			          if(empty($errors) === false)
-                {
-                  echo '<p class="text-center">' . implode('</p><p>', $errors) . '</p>';	
-                }
-              ?>
               
               <div class="text-center text-muted">
-                Don't have account yet? <a href="./register.php">Sign up</a>
+                <!-- Don't have account yet? <a href="./register.php">Sign up</a> -->
               </div>
             </div>
           </div>

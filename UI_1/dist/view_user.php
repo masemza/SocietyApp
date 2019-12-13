@@ -3,6 +3,7 @@ require 'core/init.php';
 $general->logged_out_protect();
 $username = htmlentities($user['username']);
 $email = htmlentities($user['email']);
+$usertype = htmlentities($user['type']);
 
 $view_users = $users->get_users();
 global $num;
@@ -28,18 +29,26 @@ global $num;
                   <li class="nav-item">
                     <a href="./index.php" class="nav-link active"><i class="fe fe-home"></i> Home</a>
                   </li>
+
                  
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        <div class="my-3 my-md-5">
+        <div class="my-3 my-md-3">
           <div class="container">
             <div class="page-header">
               <h1 class="page-title">
                 <a href="index.php" style="text-decoration: none;"> <i class="fe fe-arrow-left"></i>Home</a> | User Details
               </h1>
+
+              <?php// if($usertype == 'manager'){?>
+              <div class="card-options col-sm-3 col-lg-3 pull-right">
+                <a href="add_admin.php" class="btn btn-primary btn-block ml-2">Add a new Admin</a>
+              </div>
+            <?php //} ?>
+
             </div>
 
            
@@ -101,7 +110,7 @@ global $num;
                                     </button>
                                     <div class="dropdown-menu">
                                         <a href="./edit_user.php?id=<?php echo $row['id']?>" class="dropdown-item"><i class="dropdown-icon fe fe-edit"></i> Edit User </a>
-                                        <a onclick ="return confirm('Are you sure you want to delete this user?')" href="./delete_user.php?id=<?php echo $row['id']?>" class="dropdown-item" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Delete </a>
+                                        <a onclick ="return confirm('Are you sure you want to delete <?php echo $row['username'] ?>?')" href="./delete_user.php?id=<?php echo $row['id']?>" class="dropdown-item" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Delete </a>
                                     </div>
                                 </div>
                             </div>
